@@ -1,0 +1,121 @@
+gripper,object,category,min_dim_m,mass_kg,fits_by_extent,sampled,from_below,hits_table,tested,held,dropped,blocked,missed,collided,held_firm,robust,held_rate,robust_rate,seconds
+robotiq_2f_85,bolt_QABQ5FUC3Q,bolt,0.0306,0.21,True,200,59,125,16,7,0,4,0,5,7,4,0.438,0.25,142.9
+robotiq_2f_140,bolt_QABQ5FUC3Q,bolt,0.0306,0.21,True,200,59,131,10,5,0,3,0,2,5,4,0.5,0.4,128.8
+robotiq_2f_85,jar_2CKZZHE3PV,jar,0.0727,0.131,True,200,52,60,88,20,2,10,6,50,16,7,0.227,0.08,379.6
+robotiq_2f_140,jar_2CKZZHE3PV,jar,0.0727,0.131,True,200,52,64,84,47,0,5,1,31,46,45,0.56,0.536,569.2
+robotiq_2f_85,clamp_KB0ACUFTEA,clamp,0.0262,0.078,True,200,49,133,18,3,0,4,1,10,3,1,0.167,0.056,68.4
+robotiq_2f_140,clamp_KB0ACUFTEA,clamp,0.0262,0.078,True,200,49,140,11,2,0,5,0,4,2,2,0.182,0.182,56.0
+robotiq_2f_85,wooden_spoon_TNYBL05JJZ,wooden spoon,0.0149,0.096,True,200,41,159,0,0,0,0,0,0,0,0,0.0,0.0,11.3
+robotiq_2f_140,wooden_spoon_TNYBL05JJZ,wooden spoon,0.0149,0.096,True,200,41,159,0,0,0,0,0,0,0,0,0.0,0.0,11.2
+robotiq_2f_85,sausage_2H8HNDTZ0M,sausage,0.0316,0.067,True,200,54,146,0,0,0,0,0,0,0,0,0.0,0.0,11.1
+robotiq_2f_140,sausage_2H8HNDTZ0M,sausage,0.0316,0.067,True,200,54,146,0,0,0,0,0,0,0,0,0.0,0.0,10.9
+robotiq_2f_85,lid_KRPSQZF6KB,lid,0.0323,0.063,True,200,41,151,8,3,0,4,0,1,3,2,0.375,0.25,41.7
+robotiq_2f_140,lid_KRPSQZF6KB,lid,0.0323,0.063,True,200,41,157,2,1,0,0,0,1,1,1,0.5,0.5,21.2
+robotiq_2f_85,rolling_pin_9LNJA6WJF4,rolling pin,0.0341,0.063,True,196,49,142,5,1,0,1,2,1,1,0,0.2,0.0,25.0
+robotiq_2f_140,rolling_pin_9LNJA6WJF4,rolling pin,0.0341,0.063,True,200,51,147,2,1,0,0,0,1,1,1,0.5,0.5,16.5
+robotiq_2f_85,electronics_housing_1TE8ABXGGQ,electronics housing,0.0294,0.088,True,200,42,119,39,13,0,13,2,11,12,9,0.333,0.231,142.1
+robotiq_2f_140,electronics_housing_1TE8ABXGGQ,electronics housing,0.0294,0.088,True,200,42,132,26,13,1,3,1,8,13,11,0.5,0.423,106.1
+robotiq_2f_85,book_1XEPZDW9R2,book,0.0455,0.502,True,132,32,12,88,21,5,8,3,51,10,13,0.239,0.148,188.3
+robotiq_2f_140,book_1XEPZDW9R2,book,0.0455,0.502,True,184,43,19,122,59,10,25,9,19,49,43,0.484,0.352,423.5
+robotiq_2f_85,ball_valve_4PEJRAAP12,ball valve,0.0448,0.309,True,200,56,125,19,1,1,10,4,3,0,0,0.053,0.0,43.8
+robotiq_2f_140,ball_valve_4PEJRAAP12,ball valve,0.0448,0.309,True,200,56,131,13,7,1,5,0,0,7,5,0.538,0.385,69.9
+robotiq_2f_85,toy_block_6MPL7NVFVU,toy block,0.0539,0.122,True,184,45,28,111,82,4,14,4,7,68,69,0.739,0.622,523.3
+robotiq_2f_140,toy_block_6MPL7NVFVU,toy block,0.0539,0.122,True,200,45,47,108,52,47,7,1,1,33,31,0.481,0.287,460.6
+robotiq_2f_85,mug_A07RDPW843,mug,0.061,0.15,True,200,48,81,71,6,10,7,8,40,1,3,0.085,0.042,132.5
+robotiq_2f_140,mug_A07RDPW843,mug,0.061,0.15,True,200,48,92,60,29,6,4,0,21,29,28,0.483,0.467,193.0
+robotiq_2f_85,computer_mouse_62RQ5CXV0E,computer mouse,0.0623,0.081,True,196,58,133,5,2,0,3,0,0,2,1,0.4,0.2,30.4
+robotiq_2f_140,computer_mouse_62RQ5CXV0E,computer mouse,0.0623,0.081,True,200,59,138,3,1,2,0,0,0,1,1,0.333,0.333,20.8
+robotiq_2f_85,lemon_8SUCD6125H,lemon,0.0822,0.346,True,84,27,34,23,6,8,2,0,7,6,2,0.261,0.087,66.7
+robotiq_2f_140,lemon_8SUCD6125H,lemon,0.0822,0.346,True,200,65,82,53,49,0,2,0,2,49,49,0.925,0.925,289.3
+robotiq_2f_85,beer_stein_K58BL2P1CR,beer stein,0.0604,0.175,True,192,44,64,84,51,0,21,2,10,43,34,0.607,0.405,355.5
+robotiq_2f_140,beer_stein_K58BL2P1CR,beer stein,0.0604,0.175,True,200,44,81,75,46,16,12,0,1,35,34,0.613,0.453,335.4
+robotiq_2f_85,toolbox_T8Y8DPBHBJ,toolbox,0.0515,0.792,True,152,20,132,0,0,0,0,0,0,0,0,0.0,0.0,5.6
+robotiq_2f_140,toolbox_T8Y8DPBHBJ,toolbox,0.0515,0.792,True,200,32,146,22,4,10,3,0,5,2,1,0.182,0.045,59.7
+robotiq_2f_85,jewelry_box_SGK1UHE4LG,jewelry box,0.1068,0.218,False,48,11,19,18,0,1,4,0,13,0,0,0.0,0.0,21.8
+robotiq_2f_140,jewelry_box_SGK1UHE4LG,jewelry box,0.1068,0.218,True,172,32,96,44,23,0,7,2,12,17,21,0.523,0.477,157.2
+robotiq_2f_85,figurine_1F2FH7DEVB,figurine,0.1133,0.34,False,16,4,7,5,0,0,0,0,5,0,0,0.0,0.0,8.7
+robotiq_2f_140,figurine_1F2FH7DEVB,figurine,0.1133,0.34,True,164,44,27,93,80,1,10,0,2,74,72,0.86,0.774,397.3
+robotiq_2f_85,drum_YK08LSWKEY,drum,0.1111,0.241,False,116,26,33,57,16,4,9,0,28,16,8,0.281,0.14,133.5
+robotiq_2f_140,drum_YK08LSWKEY,drum,0.1111,0.241,True,200,45,39,116,71,4,12,2,27,55,65,0.612,0.56,383.5
+robotiq_2f_85,bucket_RMK5F7MQ4A,bucket,0.219,0.692,False,196,35,81,80,6,12,0,5,57,2,0,0.075,0.0,116.9
+robotiq_2f_140,bucket_RMK5F7MQ4A,bucket,0.219,0.692,False,200,35,91,74,18,11,6,0,39,8,12,0.243,0.162,154.4
+franka_hand,bolt_QABQ5FUC3Q,bolt,0.0306,0.21,True,200,59,116,25,9,5,6,3,2,6,5,0.36,0.2,110.2
+franka_hand,toy_block_6MPL7NVFVU,toy block,0.0539,0.122,True,184,45,21,118,22,59,3,10,24,8,3,0.186,0.025,244.2
+franka_hand,mug_A07RDPW843,mug,0.061,0.15,True,200,48,80,72,20,7,3,1,41,2,11,0.278,0.153,129.1
+onrobot_rg2,bolt_QABQ5FUC3Q,bolt,0.0306,0.21,True,200,59,129,12,4,4,3,0,1,4,3,0.333,0.25,102.6
+onrobot_rg2,toy_block_6MPL7NVFVU,toy block,0.0539,0.122,True,184,45,27,112,86,15,6,0,5,47,67,0.768,0.598,903.0
+onrobot_rg2,mug_A07RDPW843,mug,0.061,0.15,True,200,48,77,75,31,27,3,0,14,14,22,0.413,0.293,413.7
+onrobot_2fg7,bolt_QABQ5FUC3Q,bolt,0.0306,0.21,True,184,55,116,13,1,4,0,7,1,1,0,0.077,0.0,58.0
+onrobot_2fg7,toy_block_6MPL7NVFVU,toy block,0.0539,0.122,False,48,12,4,32,9,7,2,7,7,2,3,0.281,0.094,102.5
+onrobot_2fg7,mug_A07RDPW843,mug,0.061,0.15,False,188,46,77,65,18,7,6,17,17,6,7,0.277,0.108,216.7
+franka_hand,wooden_spoon_TNYBL05JJZ,wooden spoon,0.0149,0.096,True,200,42,155,3,1,2,0,0,0,1,1,0.333,0.333,21.3
+franka_hand,clamp_KB0ACUFTEA,clamp,0.0262,0.078,True,200,49,123,28,5,10,4,1,8,3,1,0.179,0.036,66.1
+franka_hand,sausage_2H8HNDTZ0M,sausage,0.0316,0.067,True,200,55,138,7,4,3,0,0,0,1,2,0.571,0.286,40.8
+franka_hand,lid_KRPSQZF6KB,lid,0.0323,0.063,True,200,41,141,18,5,5,6,1,1,2,2,0.278,0.111,76.9
+franka_hand,rolling_pin_9LNJA6WJF4,rolling pin,0.0341,0.063,True,192,40,139,13,1,0,0,0,12,0,1,0.077,0.077,22.1
+franka_hand,electronics_housing_1TE8ABXGGQ,electronics housing,0.0294,0.088,True,200,42,111,47,6,14,8,0,19,3,3,0.128,0.064,95.2
+franka_hand,book_1XEPZDW9R2,book,0.0455,0.502,True,132,32,10,90,3,25,0,3,59,1,1,0.033,0.011,73.5
+franka_hand,ball_valve_4PEJRAAP12,ball valve,0.0448,0.309,True,200,56,104,40,11,13,4,1,11,4,5,0.275,0.125,93.2
+franka_hand,computer_mouse_62RQ5CXV0E,computer mouse,0.0623,0.081,True,184,54,122,8,0,7,0,0,1,0,0,0.0,0.0,22.4
+franka_hand,jar_2CKZZHE3PV,jar,0.0727,0.131,True,196,51,54,91,31,13,3,1,43,14,16,0.341,0.176,203.0
+franka_hand,lemon_8SUCD6125H,lemon,0.0822,0.346,False,16,6,5,5,0,1,0,2,2,0,0,0.0,0.0,13.6
+franka_hand,beer_stein_K58BL2P1CR,beer stein,0.0604,0.175,True,184,44,53,87,25,50,1,2,9,11,7,0.287,0.08,239.4
+franka_hand,toolbox_T8Y8DPBHBJ,toolbox,0.0515,0.792,True,152,20,131,1,0,1,0,0,0,0,0,0.0,0.0,5.9
+franka_hand,jewelry_box_SGK1UHE4LG,jewelry box,0.1068,0.218,False,48,11,19,18,0,3,0,0,15,0,0,0.0,0.0,13.6
+franka_hand,figurine_1F2FH7DEVB,figurine,0.1133,0.34,False,8,3,0,5,0,0,1,0,4,0,0,0.0,0.0,8.0
+franka_hand,drum_YK08LSWKEY,drum,0.1111,0.241,False,112,26,27,59,4,13,0,5,37,1,0,0.068,0.0,65.0
+franka_hand,bucket_RMK5F7MQ4A,bucket,0.219,0.692,False,196,35,78,83,3,16,0,0,64,0,0,0.036,0.0,58.2
+onrobot_2fg7,wooden_spoon_TNYBL05JJZ,wooden spoon,0.0149,0.096,True,188,38,148,2,0,0,0,2,0,0,0,0.0,0.0,16.6
+onrobot_2fg7,clamp_KB0ACUFTEA,clamp,0.0262,0.078,True,192,47,126,19,0,2,0,7,10,0,0,0.0,0.0,33.6
+onrobot_2fg7,sausage_2H8HNDTZ0M,sausage,0.0316,0.067,True,200,54,138,8,0,0,0,8,0,0,0,0.0,0.0,27.7
+onrobot_2fg7,lid_KRPSQZF6KB,lid,0.0323,0.063,True,200,41,150,9,4,0,2,0,3,2,2,0.444,0.222,47.0
+onrobot_2fg7,rolling_pin_9LNJA6WJF4,rolling pin,0.0341,0.063,True,180,43,126,11,10,0,0,1,0,10,6,0.909,0.545,95.6
+onrobot_2fg7,electronics_housing_1TE8ABXGGQ,electronics housing,0.0294,0.088,True,200,42,126,32,3,2,4,7,16,2,0,0.094,0.0,75.7
+onrobot_2fg7,book_1XEPZDW9R2,book,0.0455,0.502,False,32,8,6,18,9,3,1,1,4,4,4,0.5,0.222,71.7
+onrobot_2fg7,ball_valve_4PEJRAAP12,ball valve,0.0448,0.309,False,192,54,110,28,0,1,4,13,10,0,0,0.0,0.0,44.6
+onrobot_2fg7,computer_mouse_62RQ5CXV0E,computer mouse,0.0623,0.081,False,80,23,52,5,0,3,0,0,2,0,0,0.0,0.0,13.9
+onrobot_2fg7,jar_2CKZZHE3PV,jar,0.0727,0.131,False,188,51,35,102,55,17,1,11,18,29,27,0.539,0.265,505.7
+onrobot_2fg7,lemon_8SUCD6125H,lemon,0.0822,0.346,False,0,0,0,0,0,0,0,0,0,0,0,0.0,0.0,4.6
+onrobot_2fg7,beer_stein_K58BL2P1CR,beer stein,0.0604,0.175,False,136,31,46,59,30,9,1,3,16,10,18,0.508,0.305,243.5
+onrobot_2fg7,toolbox_T8Y8DPBHBJ,toolbox,0.0515,0.792,False,20,3,17,0,0,0,0,0,0,0,0,0.0,0.0,4.9
+onrobot_2fg7,jewelry_box_SGK1UHE4LG,jewelry box,0.1068,0.218,False,32,8,12,12,3,1,1,1,6,0,3,0.25,0.25,33.4
+onrobot_2fg7,figurine_1F2FH7DEVB,figurine,0.1133,0.34,False,8,3,0,5,0,0,1,1,3,0,0,0.0,0.0,11.3
+onrobot_2fg7,drum_YK08LSWKEY,drum,0.1111,0.241,False,104,25,30,49,12,2,8,1,26,2,5,0.245,0.102,133.1
+onrobot_2fg7,bucket_RMK5F7MQ4A,bucket,0.219,0.692,False,184,34,78,72,8,4,2,4,54,1,1,0.111,0.014,102.0
+onrobot_rg2,wooden_spoon_TNYBL05JJZ,wooden spoon,0.0149,0.096,True,200,41,159,0,0,0,0,0,0,0,0,0.0,0.0,9.1
+onrobot_rg2,clamp_KB0ACUFTEA,clamp,0.0262,0.078,True,200,49,138,13,1,7,4,0,1,1,0,0.077,0.0,64.8
+onrobot_rg2,sausage_2H8HNDTZ0M,sausage,0.0316,0.067,True,200,55,145,0,0,0,0,0,0,0,0,0.0,0.0,9.8
+onrobot_rg2,lid_KRPSQZF6KB,lid,0.0323,0.063,True,200,41,157,2,2,0,0,0,0,1,0,1.0,0.0,37.8
+onrobot_rg2,rolling_pin_9LNJA6WJF4,rolling pin,0.0341,0.063,True,196,47,142,7,1,0,0,0,6,1,0,0.143,0.0,20.9
+onrobot_rg2,electronics_housing_1TE8ABXGGQ,electronics housing,0.0294,0.088,True,200,42,126,32,11,13,8,0,0,7,4,0.344,0.125,239.5
+onrobot_rg2,book_1XEPZDW9R2,book,0.0455,0.502,True,144,33,17,94,64,14,11,0,5,31,50,0.681,0.532,597.3
+onrobot_rg2,ball_valve_4PEJRAAP12,ball valve,0.0448,0.309,True,200,56,131,13,1,4,6,0,2,0,0,0.077,0.0,57.0
+onrobot_rg2,computer_mouse_62RQ5CXV0E,computer mouse,0.0623,0.081,True,196,58,133,5,0,5,0,0,0,0,0,0.0,0.0,29.0
+onrobot_rg2,jar_2CKZZHE3PV,jar,0.0727,0.131,True,200,52,60,88,34,14,29,0,11,12,16,0.386,0.182,501.7
+onrobot_rg2,lemon_8SUCD6125H,lemon,0.0822,0.346,True,196,59,61,76,26,34,3,0,13,2,8,0.342,0.105,356.1
+onrobot_rg2,beer_stein_K58BL2P1CR,beer stein,0.0604,0.175,True,192,44,65,83,65,8,9,0,1,22,46,0.783,0.554,703.8
+onrobot_rg2,toolbox_T8Y8DPBHBJ,toolbox,0.0515,0.792,True,152,20,132,0,0,0,0,0,0,0,0,0.0,0.0,5.2
+onrobot_rg2,jewelry_box_SGK1UHE4LG,jewelry box,0.1068,0.218,False,56,12,23,21,8,6,3,0,4,1,4,0.381,0.19,109.3
+onrobot_rg2,figurine_1F2FH7DEVB,figurine,0.1133,0.34,False,16,4,7,5,1,2,2,0,0,0,0,0.2,0.0,23.1
+onrobot_rg2,drum_YK08LSWKEY,drum,0.1111,0.241,False,132,31,33,68,26,35,6,0,1,5,22,0.382,0.324,368.8
+onrobot_rg2,bucket_RMK5F7MQ4A,bucket,0.219,0.692,False,196,35,81,80,38,5,12,0,25,5,18,0.475,0.225,389.4
+robotiq_hand_e,bolt_QABQ5FUC3Q,bolt,0.0306,0.21,True,188,56,112,20,5,2,3,4,6,4,1,0.25,0.05,96.3
+robotiq_hand_e,toy_block_6MPL7NVFVU,toy block,0.0539,0.122,False,48,12,0,36,7,11,7,4,7,2,4,0.194,0.111,106.1
+robotiq_hand_e,mug_A07RDPW843,mug,0.061,0.15,False,196,47,65,84,12,17,3,5,47,1,0,0.143,0.0,178.7
+robotiq_hand_e,wooden_spoon_TNYBL05JJZ,wooden spoon,0.0149,0.096,True,196,40,153,3,0,0,0,2,1,0,0,0.0,0.0,16.8
+robotiq_hand_e,clamp_KB0ACUFTEA,clamp,0.0262,0.078,True,192,47,114,31,2,7,7,8,7,0,0,0.065,0.0,86.9
+robotiq_hand_e,sausage_2H8HNDTZ0M,sausage,0.0316,0.067,True,200,54,134,12,2,4,0,5,1,2,1,0.167,0.083,50.8
+robotiq_hand_e,lid_KRPSQZF6KB,lid,0.0323,0.063,True,200,41,140,19,3,4,7,1,4,1,1,0.158,0.053,71.2
+robotiq_hand_e,rolling_pin_9LNJA6WJF4,rolling pin,0.0341,0.063,True,180,43,124,13,2,8,0,2,1,1,0,0.154,0.0,52.4
+robotiq_hand_e,electronics_housing_1TE8ABXGGQ,electronics housing,0.0294,0.088,True,200,42,107,51,9,5,14,11,12,5,2,0.176,0.039,174.8
+robotiq_hand_e,book_1XEPZDW9R2,book,0.0455,0.502,True,116,29,7,80,13,13,0,2,52,8,6,0.163,0.075,133.9
+robotiq_hand_e,ball_valve_4PEJRAAP12,ball valve,0.0448,0.309,True,192,54,102,36,10,8,4,5,9,4,1,0.278,0.028,122.1
+robotiq_hand_e,computer_mouse_62RQ5CXV0E,computer mouse,0.0623,0.081,False,84,24,55,5,1,0,0,2,2,0,0,0.2,0.0,18.8
+robotiq_hand_e,jar_2CKZZHE3PV,jar,0.0727,0.131,False,188,51,33,104,15,12,10,0,67,1,3,0.144,0.029,195.8
+robotiq_hand_e,lemon_8SUCD6125H,lemon,0.0822,0.346,False,0,0,0,0,0,0,0,0,0,0,0,0.0,0.0,4.8
+robotiq_hand_e,beer_stein_K58BL2P1CR,beer stein,0.0604,0.175,False,168,40,45,83,41,21,6,2,13,24,25,0.494,0.301,323.8
+robotiq_hand_e,toolbox_T8Y8DPBHBJ,toolbox,0.0515,0.792,False,28,3,24,1,0,0,0,0,1,0,0,0.0,0.0,5.5
+robotiq_hand_e,jewelry_box_SGK1UHE4LG,jewelry box,0.1068,0.218,False,32,8,12,12,1,1,1,0,9,1,0,0.083,0.0,19.4
+robotiq_hand_e,figurine_1F2FH7DEVB,figurine,0.1133,0.34,False,8,3,0,5,0,0,0,0,5,0,0,0.0,0.0,7.8
+robotiq_hand_e,drum_YK08LSWKEY,drum,0.1111,0.241,False,104,25,25,54,4,3,2,0,45,2,0,0.074,0.0,60.3
+robotiq_hand_e,bucket_RMK5F7MQ4A,bucket,0.219,0.692,False,192,35,73,84,4,9,1,4,66,1,1,0.048,0.012,89.9

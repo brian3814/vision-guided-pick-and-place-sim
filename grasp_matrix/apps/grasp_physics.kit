@@ -1,0 +1,67 @@
+[package]
+title = "Grasp matrix (physics only)"
+description = "Isaac Sim trimmed to what the batch grasp trials use: USD, PhysX and the grasp sampler. No RTX renderer, viewport or UI, to save memory. Rendering a trial (render_grasp.py) uses the full Isaac Sim app instead."
+version = "6.2.0"
+keywords = ["experience", "app", "isaacsim"]
+
+[dependencies]
+"isaacsim.common" = { order = -100 }
+"isaacsim.core.deprecation_manager" = { order = -100 }
+"omni.isaac.ml_archive" = { order = -100 }
+"omni.isaac.core_archive" = {}
+"omni.pip.compute" = {}
+"omni.kit.loop-isaac" = {}
+"isaacsim.simulation_app" = {}
+"isaacsim.core.version" = {}
+"isaacsim.core.simulation_manager" = {}
+"isaacsim.core.experimental.utils" = {}
+"isaacsim.robot.schema" = {}
+"isaacsim.replicator.grasping" = {}
+"omni.physics.physx" = {}
+"omni.physics.stageupdate" = {}
+"omni.physx.tensors" = {}
+
+# Settings copied from apps/isaacsim.exp.base.kit, minus renderer, viewport and UI ones.
+[settings]
+foundation.verifyOsVersion.enabled = false
+exts."omni.usd".locking.onClose = false
+physics.autoPopupSimulationOutputWindow = false
+
+[settings.app]
+name = "Grasp matrix"
+version = "6.2.0"
+versionFile = "${kit}/../VERSION"
+content.emptyStageOnStart = true
+fastShutdown = true
+file.ignoreUnsavedStage = true
+settings.persistent = false
+enableDeveloperWarnings = false
+runLoops.main.rateLimitEnabled = false
+runLoops.main.manualModeEnabled = true
+player.useFixedTimeStepping = false
+events.qualifiedNames = true
+hangDetector.enabled = true
+hangDetector.timeout = 120
+
+[settings.app.exts.folders]
+# ${kit} is <isaac sim>/kit, so these match the folders the stock apps search.
+'++' = [
+    "${kit}/../apps",
+    "${kit}/../exts",
+    "${kit}/../extscache",
+    "${kit}/../extsUser",
+    "${kit}/../extsDeprecated",
+]
+
+[settings.persistent]
+app.primCreation.DefaultXformOpOrder = "xformOp:translate, xformOp:orient, xformOp:scale"
+app.primCreation.DefaultXformOpType = "Scale, Orient, Translate"
+app.primCreation.DefaultXformOpPrecision = "Double"
+app.primCreation.DefaultRotationOrder = "ZYX"
+app.primCreation.PrimCreationWithDefaultXformOps = true
+app.stage.timeCodeRange = [0, 1000000]
+app.stage.upAxis = "Z"
+physics.visualizationDisplayJoints = false
+physics.visualizationSimulationOutput = false
+physics.resetOnStop = true
+simulation.defaultMetersPerUnit = 1.0

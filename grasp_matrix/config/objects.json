@@ -1,0 +1,87 @@
+{
+  "_comment": "Objects in the grasp matrix, chosen from data/object_catalog.csv to separate the grippers: some fit all three by their smallest extent, some only the 2F models, some only the 2F-140, and one fits none by extent but has a handle. Which gripper an object fits is computed from the catalog (measured apertures), not stored here. Masses up to 0.8 kg.",
+  "dataset": "ALLSIDES/simready-scanned-objects",
+  "revision": "f164a8ea924d7711fb8be37a8867a67a1d6a1948",
+  "objects": [
+    {
+      "name": "wooden_spoon_TNYBL05JJZ",
+      "why": "thin tool with a long handle"
+    },
+    {
+      "name": "clamp_KB0ACUFTEA",
+      "why": "irregular hand tool"
+    },
+    {
+      "name": "bolt_QABQ5FUC3Q",
+      "why": "small dense metal part"
+    },
+    {
+      "name": "sausage_2H8HNDTZ0M",
+      "why": "slender rounded cylinder"
+    },
+    {
+      "name": "lid_KRPSQZF6KB",
+      "why": "small flat disc"
+    },
+    {
+      "name": "rolling_pin_9LNJA6WJF4",
+      "why": "long cylinder"
+    },
+    {
+      "name": "electronics_housing_1TE8ABXGGQ",
+      "why": "thin box, industrial"
+    },
+    {
+      "name": "book_1XEPZDW9R2",
+      "why": "rectangular block, 0.5 kg"
+    },
+    {
+      "name": "ball_valve_4PEJRAAP12",
+      "why": "irregular industrial part"
+    },
+    {
+      "name": "toy_block_6MPL7NVFVU",
+      "why": "multi-part block toy"
+    },
+    {
+      "name": "mug_A07RDPW843",
+      "why": "wide body with a handle"
+    },
+    {
+      "name": "computer_mouse_62RQ5CXV0E",
+      "why": "smooth rounded shell"
+    },
+    {
+      "name": "jar_2CKZZHE3PV",
+      "why": "cylinder near the 2F-85 limit"
+    },
+    {
+      "name": "lemon_8SUCD6125H",
+      "why": "near-sphere at the 2F-85 limit"
+    },
+    {
+      "name": "beer_stein_K58BL2P1CR",
+      "why": "cylinder with a handle"
+    },
+    {
+      "name": "toolbox_T8Y8DPBHBJ",
+      "why": "handled box, 0.79 kg"
+    },
+    {
+      "name": "jewelry_box_SGK1UHE4LG",
+      "why": "box wider than the 2F-85"
+    },
+    {
+      "name": "figurine_1F2FH7DEVB",
+      "why": "irregular statue"
+    },
+    {
+      "name": "drum_YK08LSWKEY",
+      "why": "wide cylinder"
+    },
+    {
+      "name": "bucket_RMK5F7MQ4A",
+      "why": "too wide for any gripper except by its handle"
+    }
+  ]
+}

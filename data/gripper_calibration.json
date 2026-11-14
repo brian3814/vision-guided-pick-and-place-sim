@@ -1,0 +1,728 @@
+{
+  "robotiq_2f_85": {
+    "joint_type": "revolute",
+    "lower_limit": 0.0,
+    "upper_limit": 47.0,
+    "open_target": 0.0,
+    "close_target": 47.0,
+    "max_aperture_m": 0.0871,
+    "pads_touch_position": 47.0,
+    "pad_height_open_m": 0.1294,
+    "pad_height_closed_m": 0.1428,
+    "checks": {
+      "pad_offset_mm": [
+        0.0,
+        -0.0
+      ],
+      "follow_error_mm": 0.0,
+      "stored_pose_from_open_mm": 0.0,
+      "static_friction": {
+        "/World/Gripper/Robotiq_2F_85/Physics/GripMaterial": 1.0
+      },
+      "warnings": []
+    },
+    "curve": [
+      {
+        "target": 0.0,
+        "joint": 0.0,
+        "gap_m": 0.0871,
+        "pad_height_m": 0.1294
+      },
+      {
+        "target": 3.91667,
+        "joint": 3.84949,
+        "gap_m": 0.0811,
+        "pad_height_m": 0.1318
+      },
+      {
+        "target": 7.83333,
+        "joint": 7.77037,
+        "gap_m": 0.0747,
+        "pad_height_m": 0.134
+      },
+      {
+        "target": 11.75,
+        "joint": 11.69153,
+        "gap_m": 0.068,
+        "pad_height_m": 0.136
+      },
+      {
+        "target": 15.66667,
+        "joint": 15.61296,
+        "gap_m": 0.061,
+        "pad_height_m": 0.1378
+      },
+      {
+        "target": 19.58333,
+        "joint": 19.53465,
+        "gap_m": 0.0538,
+        "pad_height_m": 0.1393
+      },
+      {
+        "target": 23.5,
+        "joint": 23.4566,
+        "gap_m": 0.0464,
+        "pad_height_m": 0.1406
+      },
+      {
+        "target": 27.41667,
+        "joint": 27.37881,
+        "gap_m": 0.0388,
+        "pad_height_m": 0.1416
+      },
+      {
+        "target": 31.33333,
+        "joint": 31.30125,
+        "gap_m": 0.0312,
+        "pad_height_m": 0.1424
+      },
+      {
+        "target": 35.25,
+        "joint": 35.2239,
+        "gap_m": 0.0234,
+        "pad_height_m": 0.1429
+      },
+      {
+        "target": 39.16667,
+        "joint": 39.14679,
+        "gap_m": 0.0156,
+        "pad_height_m": 0.1431
+      },
+      {
+        "target": 43.08333,
+        "joint": 43.06987,
+        "gap_m": 0.0078,
+        "pad_height_m": 0.1431
+      },
+      {
+        "target": 47.0,
+        "joint": 47.0,
+        "gap_m": -0.0001,
+        "pad_height_m": 0.1428
+      }
+    ]
+  },
+  "robotiq_2f_140": {
+    "joint_type": "revolute",
+    "lower_limit": 0.0,
+    "upper_limit": 45.0,
+    "open_target": 0.0,
+    "close_target": 45.0,
+    "max_aperture_m": 0.14,
+    "pads_touch_position": 44.99999,
+    "pad_height_open_m": 0.177,
+    "pad_height_closed_m": 0.2004,
+    "checks": {
+      "pad_offset_mm": [
+        -0.29,
+        0.1
+      ],
+      "follow_error_mm": 0.0,
+      "stored_pose_from_open_mm": 0.0,
+      "static_friction": {
+        "/World/Gripper/Robotiq_2F_140/Physics/GripMaterial": 1.0
+      },
+      "warnings": []
+    },
+    "curve": [
+      {
+        "target": 0.0,
+        "joint": -0.0,
+        "gap_m": 0.14,
+        "pad_height_m": 0.177
+      },
+      {
+        "target": 3.75,
+        "joint": 3.81514,
+        "gap_m": 0.1296,
+        "pad_height_m": 0.1811
+      },
+      {
+        "target": 7.5,
+        "joint": 7.54542,
+        "gap_m": 0.1188,
+        "pad_height_m": 0.1848
+      },
+      {
+        "target": 11.25,
+        "joint": 11.30153,
+        "gap_m": 0.1076,
+        "pad_height_m": 0.1882
+      },
+      {
+        "target": 15.0,
+        "joint": 15.06366,
+        "gap_m": 0.0959,
+        "pad_height_m": 0.1912
+      },
+      {
+        "target": 18.75,
+        "joint": 18.78184,
+        "gap_m": 0.084,
+        "pad_height_m": 0.1937
+      },
+      {
+        "target": 22.5,
+        "joint": 22.525,
+        "gap_m": 0.0717,
+        "pad_height_m": 0.1959
+      },
+      {
+        "target": 26.25,
+        "joint": 26.28963,
+        "gap_m": 0.059,
+        "pad_height_m": 0.1977
+      },
+      {
+        "target": 30.0,
+        "joint": 30.01869,
+        "gap_m": 0.0463,
+        "pad_height_m": 0.1991
+      },
+      {
+        "target": 33.75,
+        "joint": 33.74979,
+        "gap_m": 0.0334,
+        "pad_height_m": 0.2
+      },
+      {
+        "target": 37.5,
+        "joint": 37.50451,
+        "gap_m": 0.0204,
+        "pad_height_m": 0.2006
+      },
+      {
+        "target": 41.25,
+        "joint": 41.26409,
+        "gap_m": 0.0073,
+        "pad_height_m": 0.2007
+      },
+      {
+        "target": 45.0,
+        "joint": 44.99999,
+        "gap_m": -0.0058,
+        "pad_height_m": 0.2004
+      }
+    ]
+  },
+  "robotiq_hand_e": {
+    "joint_type": "prismatic",
+    "lower_limit": 0.0,
+    "upper_limit": 0.02500000037252903,
+    "open_target": 0.0,
+    "close_target": 0.02500000037252903,
+    "max_aperture_m": 0.0496,
+    "pads_touch_position": 0.025,
+    "pad_height_open_m": 0.1316,
+    "pad_height_closed_m": 0.1316,
+    "checks": {
+      "pad_offset_mm": [
+        0.0,
+        0.0
+      ],
+      "follow_error_mm": 0.0,
+      "stored_pose_from_open_mm": 0.0,
+      "static_friction": {
+        "/World/Gripper/Robotiq_Hand_E/Physics/GripMaterial": 1.0
+      },
+      "warnings": []
+    },
+    "curve": [
+      {
+        "target": 0.0,
+        "joint": 0.0,
+        "gap_m": 0.0496,
+        "pad_height_m": 0.1316
+      },
+      {
+        "target": 0.00208,
+        "joint": 0.00208,
+        "gap_m": 0.0454,
+        "pad_height_m": 0.1316
+      },
+      {
+        "target": 0.00417,
+        "joint": 0.00417,
+        "gap_m": 0.0412,
+        "pad_height_m": 0.1316
+      },
+      {
+        "target": 0.00625,
+        "joint": 0.00625,
+        "gap_m": 0.0371,
+        "pad_height_m": 0.1316
+      },
+      {
+        "target": 0.00833,
+        "joint": 0.00833,
+        "gap_m": 0.0329,
+        "pad_height_m": 0.1316
+      },
+      {
+        "target": 0.01042,
+        "joint": 0.01042,
+        "gap_m": 0.0287,
+        "pad_height_m": 0.1316
+      },
+      {
+        "target": 0.0125,
+        "joint": 0.0125,
+        "gap_m": 0.0246,
+        "pad_height_m": 0.1316
+      },
+      {
+        "target": 0.01458,
+        "joint": 0.01458,
+        "gap_m": 0.0204,
+        "pad_height_m": 0.1316
+      },
+      {
+        "target": 0.01667,
+        "joint": 0.01667,
+        "gap_m": 0.0162,
+        "pad_height_m": 0.1316
+      },
+      {
+        "target": 0.01875,
+        "joint": 0.01875,
+        "gap_m": 0.0121,
+        "pad_height_m": 0.1316
+      },
+      {
+        "target": 0.02083,
+        "joint": 0.02083,
+        "gap_m": 0.0079,
+        "pad_height_m": 0.1316
+      },
+      {
+        "target": 0.02292,
+        "joint": 0.02292,
+        "gap_m": 0.0037,
+        "pad_height_m": 0.1316
+      },
+      {
+        "target": 0.025,
+        "joint": 0.025,
+        "gap_m": -0.0004,
+        "pad_height_m": 0.1316
+      }
+    ]
+  },
+  "franka_hand": {
+    "joint_type": "prismatic",
+    "lower_limit": 0.0,
+    "upper_limit": 0.03999999910593033,
+    "open_target": 0.03999999910593033,
+    "close_target": 0.0,
+    "max_aperture_m": 0.0776,
+    "pads_touch_position": 1e-05,
+    "pad_height_open_m": 0.1036,
+    "pad_height_closed_m": 0.1036,
+    "checks": {
+      "pad_offset_mm": [
+        -0.0,
+        0.0
+      ],
+      "follow_error_mm": 0.93,
+      "stored_pose_from_open_mm": 38.83,
+      "static_friction": {},
+      "warnings": [
+        "no physics material on the gripper: contacts use PhysX's default friction, and the low_friction condition scales only the object's side, so it is milder than for other grippers"
+      ]
+    },
+    "curve": [
+      {
+        "target": 0.04,
+        "joint": 0.03883,
+        "gap_m": 0.0776,
+        "pad_height_m": 0.1036
+      },
+      {
+        "target": 0.03667,
+        "joint": 0.03566,
+        "gap_m": 0.0713,
+        "pad_height_m": 0.1036
+      },
+      {
+        "target": 0.03333,
+        "joint": 0.03248,
+        "gap_m": 0.0649,
+        "pad_height_m": 0.1036
+      },
+      {
+        "target": 0.03,
+        "joint": 0.029,
+        "gap_m": 0.058,
+        "pad_height_m": 0.1036
+      },
+      {
+        "target": 0.02667,
+        "joint": 0.02611,
+        "gap_m": 0.0522,
+        "pad_height_m": 0.1036
+      },
+      {
+        "target": 0.02333,
+        "joint": 0.0226,
+        "gap_m": 0.0452,
+        "pad_height_m": 0.1036
+      },
+      {
+        "target": 0.02,
+        "joint": 0.019,
+        "gap_m": 0.038,
+        "pad_height_m": 0.1036
+      },
+      {
+        "target": 0.01667,
+        "joint": 0.01558,
+        "gap_m": 0.0311,
+        "pad_height_m": 0.1036
+      },
+      {
+        "target": 0.01333,
+        "joint": 0.01252,
+        "gap_m": 0.025,
+        "pad_height_m": 0.1036
+      },
+      {
+        "target": 0.01,
+        "joint": 0.00881,
+        "gap_m": 0.0176,
+        "pad_height_m": 0.1036
+      },
+      {
+        "target": 0.00667,
+        "joint": 0.00532,
+        "gap_m": 0.0106,
+        "pad_height_m": 0.1036
+      },
+      {
+        "target": 0.00333,
+        "joint": 0.00266,
+        "gap_m": 0.0053,
+        "pad_height_m": 0.1036
+      },
+      {
+        "target": 0.0,
+        "joint": 1e-05,
+        "gap_m": -0.0,
+        "pad_height_m": 0.1036
+      }
+    ],
+    "open_state": {
+      "joints": {
+        "Physics/fr3_finger_joint1": 0.038828,
+        "Physics/fr3_finger_joint2": 0.038829
+      },
+      "pad_boxes_m": [
+        [
+          [
+            -0.00875,
+            0.03881,
+            0.0944
+          ],
+          [
+            0.00875,
+            0.05401,
+            0.1129
+          ]
+        ],
+        [
+          [
+            -0.00875,
+            -0.05401,
+            0.0944
+          ],
+          [
+            0.00875,
+            -0.03881,
+            0.1129
+          ]
+        ]
+      ]
+    }
+  },
+  "onrobot_rg2": {
+    "joint_type": "revolute",
+    "lower_limit": 0.0,
+    "upper_limit": 70.05999755859375,
+    "open_target": 70.05999755859375,
+    "close_target": 0.0,
+    "max_aperture_m": 0.0977,
+    "pads_touch_position": 0.0,
+    "pad_height_open_m": 0.1823,
+    "pad_height_closed_m": 0.2162,
+    "checks": {
+      "pad_offset_mm": [
+        -0.05,
+        -0.3
+      ],
+      "follow_error_mm": 0.0,
+      "stored_pose_from_open_mm": 8.55,
+      "static_friction": {
+        "/World/Gripper/Physics/fingertip_physics_material": 0.6000000238418579
+      },
+      "warnings": [
+        "measured opening 97.7 mm differs from the datasheet's 110.0 mm by more than 10%"
+      ]
+    },
+    "curve": [
+      {
+        "target": 70.06,
+        "joint": 70.06,
+        "gap_m": 0.0977,
+        "pad_height_m": 0.1823
+      },
+      {
+        "target": 64.22166,
+        "joint": 64.251,
+        "gap_m": 0.0929,
+        "pad_height_m": 0.1874
+      },
+      {
+        "target": 58.38333,
+        "joint": 58.3892,
+        "gap_m": 0.0871,
+        "pad_height_m": 0.1922
+      },
+      {
+        "target": 52.545,
+        "joint": 52.50996,
+        "gap_m": 0.0802,
+        "pad_height_m": 0.1967
+      },
+      {
+        "target": 46.70667,
+        "joint": 46.70717,
+        "gap_m": 0.0727,
+        "pad_height_m": 0.2007
+      },
+      {
+        "target": 40.86833,
+        "joint": 40.88037,
+        "gap_m": 0.0642,
+        "pad_height_m": 0.2044
+      },
+      {
+        "target": 35.03,
+        "joint": 35.01206,
+        "gap_m": 0.0551,
+        "pad_height_m": 0.2077
+      },
+      {
+        "target": 29.19167,
+        "joint": 29.19954,
+        "gap_m": 0.0453,
+        "pad_height_m": 0.2104
+      },
+      {
+        "target": 23.35333,
+        "joint": 23.35166,
+        "gap_m": 0.0351,
+        "pad_height_m": 0.2127
+      },
+      {
+        "target": 17.515,
+        "joint": 17.499,
+        "gap_m": 0.0244,
+        "pad_height_m": 0.2144
+      },
+      {
+        "target": 11.67667,
+        "joint": 11.66856,
+        "gap_m": 0.0134,
+        "pad_height_m": 0.2156
+      },
+      {
+        "target": 5.83833,
+        "joint": 5.81397,
+        "gap_m": 0.0023,
+        "pad_height_m": 0.2162
+      },
+      {
+        "target": 0.0,
+        "joint": 0.0,
+        "gap_m": -0.0089,
+        "pad_height_m": 0.2162
+      }
+    ],
+    "open_state": {
+      "joints": {
+        "Physics/finger_joint": 70.059998,
+        "Physics/right_finger_cover_arm_joint": -70.059998,
+        "Physics/right_finger_cover_joint": 70.060013,
+        "Physics/right_finger_base_joint": -70.060013,
+        "Physics/left_outer_proximal_finger_joint": 70.059982,
+        "Physics/left_finger_cover_arm_joint": -70.060013,
+        "Physics/left_finger_cover_joint": 70.060013,
+        "Physics/left_finger_base_joint": -70.060005,
+        "Physics/right_inner_proximal_finger_joint": 70.060013,
+        "Physics/left_inner_proximal_finger_joint": 70.060013
+      },
+      "pad_boxes_m": [
+        [
+          [
+            0.0488,
+            -0.0104,
+            0.16743
+          ],
+          [
+            0.0602,
+            0.0098,
+            0.19723
+          ]
+        ],
+        [
+          [
+            -0.0603,
+            -0.0104,
+            0.16743
+          ],
+          [
+            -0.0489,
+            0.0098,
+            0.19723
+          ]
+        ]
+      ]
+    }
+  },
+  "onrobot_2fg7": {
+    "joint_type": "prismatic",
+    "lower_limit": 0.0,
+    "upper_limit": 0.01899999938905239,
+    "open_target": 0.01899999938905239,
+    "close_target": 0.0,
+    "max_aperture_m": 0.0446,
+    "pads_touch_position": -0.0,
+    "pad_height_open_m": 0.1339,
+    "pad_height_closed_m": 0.1339,
+    "checks": {
+      "pad_offset_mm": [
+        -0.0,
+        0.0
+      ],
+      "follow_error_mm": 0.0,
+      "stored_pose_from_open_mm": 10.0,
+      "static_friction": {
+        "/World/Gripper/Physics/fingertip_physics_material": 0.6000000238418579
+      },
+      "warnings": [
+        "pads never meet (smallest gap 6.6 mm); a grasp that closes fully is counted as missed only near the closed limit"
+      ]
+    },
+    "curve": [
+      {
+        "target": 0.019,
+        "joint": 0.019,
+        "gap_m": 0.0446,
+        "pad_height_m": 0.1339
+      },
+      {
+        "target": 0.01742,
+        "joint": 0.01742,
+        "gap_m": 0.0414,
+        "pad_height_m": 0.1339
+      },
+      {
+        "target": 0.01583,
+        "joint": 0.01583,
+        "gap_m": 0.0383,
+        "pad_height_m": 0.1339
+      },
+      {
+        "target": 0.01425,
+        "joint": 0.01425,
+        "gap_m": 0.0351,
+        "pad_height_m": 0.1339
+      },
+      {
+        "target": 0.01267,
+        "joint": 0.01267,
+        "gap_m": 0.0319,
+        "pad_height_m": 0.1339
+      },
+      {
+        "target": 0.01108,
+        "joint": 0.01108,
+        "gap_m": 0.0288,
+        "pad_height_m": 0.1339
+      },
+      {
+        "target": 0.0095,
+        "joint": 0.0095,
+        "gap_m": 0.0256,
+        "pad_height_m": 0.1339
+      },
+      {
+        "target": 0.00792,
+        "joint": 0.00792,
+        "gap_m": 0.0224,
+        "pad_height_m": 0.1339
+      },
+      {
+        "target": 0.00633,
+        "joint": 0.00633,
+        "gap_m": 0.0193,
+        "pad_height_m": 0.1339
+      },
+      {
+        "target": 0.00475,
+        "joint": 0.00475,
+        "gap_m": 0.0161,
+        "pad_height_m": 0.1339
+      },
+      {
+        "target": 0.00317,
+        "joint": 0.00317,
+        "gap_m": 0.0129,
+        "pad_height_m": 0.1339
+      },
+      {
+        "target": 0.00158,
+        "joint": 0.00158,
+        "gap_m": 0.0098,
+        "pad_height_m": 0.1339
+      },
+      {
+        "target": 0.0,
+        "joint": -0.0,
+        "gap_m": 0.0066,
+        "pad_height_m": 0.1339
+      }
+    ],
+    "open_state": {
+      "joints": {
+        "Physics/finger_stroke": 0.019,
+        "Physics/left_finger_base_joint": 0.019
+      },
+      "pad_boxes_m": [
+        [
+          [
+            0.0223,
+            -0.01699,
+            0.10889
+          ],
+          [
+            0.0425,
+            0.01699,
+            0.15898
+          ]
+        ],
+        [
+          [
+            -0.0425,
+            -0.01699,
+            0.10889
+          ],
+          [
+            -0.0223,
+            0.01699,
+            0.15898
+          ]
+        ]
+      ]
+    }
+  }
+}

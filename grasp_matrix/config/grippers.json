@@ -1,0 +1,83 @@
+{
+  "_comment": "Per-gripper settings; see 'Adding a gripper' in grasp_matrix/README.md. Paths are relative to the gripper asset's default prim (articulation = where to look for the fingertip bodies). Axes are in the gripper's own frame. Optional: fingertips (the two pad body names, if they do not contain 'fingertip'), coupled_joints (joints driven with the same target as drive_joint), anchor_joint (a fixed root joint with no body0, which pins the base to the world origin; it is re-anchored to the gripper's root prim so the gripper can be placed), pad_shapes (for stepped fingertips: the collision shapes that touch the object, which define the pad). Measured geometry (opening, open/closed joint values, where the pads meet, fingertip standoff) comes from data/gripper_calibration.json, written by tools/calibrate_grippers.py. label, datasheet, source and notes are documentation only and do not affect results.",
+  "robotiq_2f_85": {
+    "label": "2F-85",
+    "usd": "assets/robotiq/Robotiq_2F_85/simready_usd/Robotiq_2F_85.usda",
+    "variants": [["Physics", "Physx_parallel_grip"]],
+    "articulation": "Robotiq_2F_85",
+    "drive_joint": "Robotiq_2F_85/Joints/finger_joint",
+    "joint_type": "revolute",
+    "approach_axis": [0, 0, 1],
+    "closing_axis": [0, 1, 0],
+    "datasheet": {"max_opening_m": 0.085},
+    "source": "huggingface.co/datasets/Robotiq-Official/simready-assets"
+  },
+  "robotiq_2f_140": {
+    "label": "2F-140",
+    "usd": "assets/robotiq/Robotiq_2F_140/simready_usd/Robotiq_2F_140.usda",
+    "variants": [["Physics", "Physx_parallel_grip"]],
+    "articulation": "Robotiq_2F_140",
+    "drive_joint": "Robotiq_2F_140/Joints/finger_joint",
+    "joint_type": "revolute",
+    "approach_axis": [0, 0, 1],
+    "closing_axis": [0, 1, 0],
+    "datasheet": {"max_opening_m": 0.140},
+    "source": "huggingface.co/datasets/Robotiq-Official/simready-assets"
+  },
+  "robotiq_hand_e": {
+    "label": "HAND-E",
+    "usd": "assets/robotiq/Robotiq_Hand_E/simready_usd/Robotiq_Hand_E.usda",
+    "variants": [["Physics", "PhysX"], ["Stroke", "Stroke50"], ["FingertipMount", "Outside"]],
+    "articulation": "Robotiq_Hand_E",
+    "drive_joint": "Robotiq_Hand_E/Joints/left_finger_joint",
+    "pad_shapes": ["hull_0", "hull_2"],
+    "joint_type": "prismatic",
+    "approach_axis": [0, 0, 1],
+    "closing_axis": [0, 1, 0],
+    "datasheet": {"max_opening_m": 0.050},
+    "source": "huggingface.co/datasets/Robotiq-Official/simready-assets",
+    "notes": "Stepped fingertips: hull_1, near the base, reaches 6.6 mm further in than the flat pad face (hull_0, hull_2). Measured between hull_1 the opening is 36.8 mm; between the pad faces 49.6 mm, matching the datasheet. pad_shapes added 2026-11-09; earlier runs used the whole fingertip."
+  },
+  "franka_hand": {
+    "label": "FRANKA",
+    "usd": "assets/franka/franka_hand/simready_usd/franka_hand.usda",
+    "variants": [["PhysX", "Enabled"]],
+    "articulation": "Geometry/fr3_hand",
+    "drive_joint": "Physics/fr3_finger_joint1",
+    "coupled_joints": ["Physics/fr3_finger_joint2"],
+    "anchor_joint": "Physics/root_joint",
+    "fingertips": ["fr3_leftfinger", "fr3_rightfinger"],
+    "pad_shapes": ["box_3"],
+    "joint_type": "prismatic",
+    "approach_axis": [0, 0, 1],
+    "closing_axis": [0, 1, 0],
+    "datasheet": {"max_opening_m": 0.080},
+    "source": "huggingface.co/datasets/frankarobotics/simready-assets",
+    "notes": "Each finger has its own drive (no mimic joint), so both are driven. The fingers are stepped; only box_3 at the tip reaches the object, so it is the pad. The root joint pins the hand to the world origin, so it is re-anchored. No physics material: PhysX default friction."
+  },
+  "onrobot_rg2": {
+    "label": "RG2",
+    "usd": "assets/onrobot/onrobot_rg2/simready_usd/onrobot_rg2.usda",
+    "variants": [["Physics", "physx_parallel_grip"]],
+    "articulation": "Geometry",
+    "drive_joint": "Physics/finger_joint",
+    "fingertips": ["left_finger_tip_link", "right_finger_tip_link"],
+    "joint_type": "revolute",
+    "approach_axis": [0, 0, 1],
+    "closing_axis": [1, 0, 0],
+    "datasheet": {"max_opening_m": 0.110},
+    "source": "huggingface.co/datasets/onrobot/simready-grippers"
+  },
+  "onrobot_2fg7": {
+    "label": "2FG7",
+    "usd": "assets/onrobot/onrobot_2fg7/simready_usd/onrobot_2fg7.usda",
+    "variants": [["Physics", "physx"]],
+    "articulation": "Geometry",
+    "drive_joint": "Physics/finger_stroke",
+    "joint_type": "prismatic",
+    "approach_axis": [0, 0, 1],
+    "closing_axis": [1, 0, 0],
+    "source": "huggingface.co/datasets/onrobot/simready-grippers",
+    "notes": "No datasheet opening: the 2FG7's gripping range depends on how its fingertips are mounted (38 mm stroke)."
+  }
+}

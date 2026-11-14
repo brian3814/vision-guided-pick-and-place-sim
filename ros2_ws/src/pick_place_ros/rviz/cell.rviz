@@ -1,0 +1,113 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+  - Class: rviz_common/Views
+    Name: Views
+Visualization Manager:
+  Class: ""
+  Enabled: true
+  Name: root
+  Value: true
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Enabled: true
+      Cell Size: 0.1
+      Plane Cell Count: 24
+      Reference Frame: <Fixed Frame>
+      Color: 160; 160; 164
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Enabled: true
+      Show Names: false
+      Show Axes: true
+      Show Arrows: true
+      Marker Scale: 0.15
+    - Class: rviz_default_plugins/PointCloud2
+      Name: Object points seen by the camera
+      Enabled: true
+      Topic:
+        Value: /wrist_camera/object_points
+        Depth: 2
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+      Color Transformer: FlatColor
+      Color: 255; 150; 30
+      Style: Points
+      Size (Pixels): 3
+      Decay Time: 0
+    - Class: rviz_default_plugins/PointCloud2
+      Name: Model at the estimated pose
+      Enabled: true
+      Topic:
+        Value: /object_pose/model
+        Depth: 2
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+      Color Transformer: FlatColor
+      Color: 0; 220; 60
+      Style: Points
+      Size (Pixels): 2
+      Decay Time: 0
+    - Class: rviz_default_plugins/Pose
+      Name: Estimated pose
+      Enabled: true
+      Topic:
+        Value: /object_pose
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+      Shape: Axes
+      Axes Length: 0.08
+      Axes Radius: 0.004
+    - Class: rviz_default_plugins/Pose
+      Name: True pose (simulation, for comparison)
+      Enabled: true
+      Topic:
+        Value: /debug/object_true_pose
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+      Shape: Axes
+      Axes Length: 0.12
+      Axes Radius: 0.002
+    - Class: rviz_default_plugins/Image
+      Name: Wrist camera
+      Enabled: true
+      Topic:
+        Value: /wrist_camera/color
+        Depth: 2
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+  Global Options:
+    Fixed Frame: world
+    Background Color: 40; 42; 46
+    Frame Rate: 30
+  Tools:
+    - Class: rviz_default_plugins/Interact
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/FocusCamera
+    - Class: rviz_default_plugins/Measure
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 1.0
+      Focal Point:
+        X: 0.72
+        Y: -0.33
+        Z: 0.2
+      Name: Current View
+      Near Clip Distance: 0.01
+      Pitch: 0.5
+      Target Frame: <Fixed Frame>
+      Value: Orbit (rviz)
+      Yaw: -0.55
+    Saved: ~
+Window Geometry:
+  Height: 900
+  Width: 1500

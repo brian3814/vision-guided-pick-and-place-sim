@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Downloaded assets (SimReady objects, the Isaac Sim UR10, gripper USDs): 5.5 GB, and not ours to
+# redistribute. How to download each is in the step READMEs.
+assets/
+
+# ROS 2 build output (colcon). build/ and log/ also record environment variables, tokens included.
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/
+
+# Run output the scripts write again
+results/logs/
+results/perception/captures/
+results/perception/overlays/
+*.sqlite-wal
+*.sqlite-shm
+
+# Local tool state
+.claude/
+
+# Onboarding material, kept locally: the explainers written to learn the steps and the first Isaac
+# Sim smoke tests on this PC, and a USD inspection tool used to learn the assets
+temp/
+
+# Written again by the scripts when missing: the rest-mount cache, object models for the ROS 2
+# locator, pictures handeye.py makes on every run, single-trial check renders; and the interactive
+# window's own runs
+results/cell_rest_mounts.json
+results/perception/models/
+results/perception/charuco_board.png
+results/perception/handeye_view.png
+results/renders/run*/
+results/pick_place_interactive.sqlite
+
+# Editor settings
+pyrightconfig.json
