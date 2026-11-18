@@ -42,6 +42,7 @@ tracking and contacts for the first N steps of every move.
 | `run_cell.py` | Runs cycles and stores them in `results/pick_place.sqlite` |
 | `cell_app.py` | The cell in a window: choose the gripper and the object, run cycles one at a time (results in `results/pick_place_interactive.sqlite`) |
 | `cell_control.py` | The window's rules without Kit: choices, running and stopping, what it says; the panel draws its state and events (tests: `tests/test_cell_control.py`) |
+| `web_bridge.py` | The window's controller for a web page: the page's requests in, events and state out, over JSON messages (no Kit; tests: `tests/test_web_bridge.py`) |
 | `cell_session.py`, `cell_args.py` | The cell set up for running cycles, and the options, shared by `run_cell.py` and `cell_app.py` |
 | `run_batch.py`, `report.py` | Several objects headless; `results/pick_place_summary.md` |
 | `cell_db.py` | Database schema, and reading robust grasps from the grasp matrix |

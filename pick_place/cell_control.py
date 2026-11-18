@@ -1,8 +1,8 @@
 """The interactive window's rules, apart from Kit: which gripper and object are chosen, the start
 pose, running cycles and stopping, and what the window says about them. cell_app.py's omni.ui panel
-is a view of it: it calls the actions and draws from the events. Another view (a web page) can do
-the same, so views cannot drift apart. Nothing here imports Kit. The cell itself comes in through
-`Cell` (cell_app.KitCell in Isaac Sim, a fake in tests/test_cell_control.py).
+is a view of it: it calls the actions and draws from the events. A web page is another, through
+web_bridge.py, so the two cannot drift apart. Nothing here imports Kit. The cell itself comes in
+through `Cell` (cell_app.KitCell in Isaac Sim, tests/fake_cell.py in the tests).
 
 Actions (choose_gripper, choose_object, set_pose, run, stop) return None when taken, or why not.
 They start the work and return at once; what happens comes as events, to every subscriber, in order:
