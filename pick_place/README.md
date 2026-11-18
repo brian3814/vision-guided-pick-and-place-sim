@@ -43,6 +43,7 @@ tracking and contacts for the first N steps of every move.
 | `cell_app.py` | The cell in a window: choose the gripper and the object, run cycles one at a time (results in `results/pick_place_interactive.sqlite`) |
 | `cell_control.py` | The window's rules without Kit: choices, running and stopping, what it says; the panel draws its state and events (tests: `tests/test_cell_control.py`) |
 | `web_bridge.py` | The window's controller for a web page: the page's requests in, events and state out, over JSON messages (no Kit; tests: `tests/test_web_bridge.py`) |
+| `livestream.py` | `web_bridge.py` on Kit's stream, for `cell_app.py --web`: turns on the WebRTC stream and its messaging (Kit only) |
 | `cell_session.py`, `cell_args.py` | The cell set up for running cycles, and the options, shared by `run_cell.py` and `cell_app.py` |
 | `run_batch.py`, `report.py` | Several objects headless; `results/pick_place_summary.md` |
 | `cell_db.py` | Database schema, and reading robust grasps from the grasp matrix |
@@ -59,6 +60,7 @@ C:\issacsim-6-2\python.bat pick_place\cell_app.py                         # pose
 C:\issacsim-6-2\python.bat pick_place\cell_app.py --perception camera     # from the wrist camera (step 4)
 # step 5: start the locator first (ros2_ws\README.md), and set RMW_IMPLEMENTATION=rmw_fastrtps_cpp
 C:\issacsim-6-2\python.bat pick_place\cell_app.py --perception ros
+C:\issacsim-6-2\python.bat pick_place\cell_app.py --web                   # no window: the viewport streamed for a web page
 ```
 
 Isaac Sim opens with a *Pick-and-place cell* panel (a tab next to *Property*): a gripper list, an
@@ -92,6 +94,12 @@ happen once the cell is built: the first start settles every object offered, for
 keeps the poses in `results/cell_rest_mounts.json`, and later starts read the file. With
 `--perception ros`, the object's model is written to `results/perception/models` for the locator if
 it is not there yet.
+
+`--web` runs Isaac Sim without its window and streams the viewport over WebRTC (signalling on
+49100/TCP, media on 47998/UDP), for a web page that draws the panel itself: `web_bridge.py` answers
+the page, and `livestream.py` puts it on the stream. The log says when the page can connect. Kit's own
+panel runs too, hidden with the rest of Kit's UI (`--/app/window/hideUi=false` streams it with the
+viewport); both draw the same controller, so they agree. Kit streams to one page at a time.
 
 Use the panel, not Isaac Sim's own controls, to run things. The toolbar's Play and Stop, and
 selecting and dragging prims in the viewport, change the simulation under the cycle:

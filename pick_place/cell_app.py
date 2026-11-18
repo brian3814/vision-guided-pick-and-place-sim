@@ -7,6 +7,7 @@ Results go to results/pick_place_interactive.sqlite, apart from the batch result
     C:/issacsim-6-2/python.bat pick_place/cell_app.py
     C:/issacsim-6-2/python.bat pick_place/cell_app.py --perception camera
     (ROS 2: start the locator, set RMW_IMPLEMENTATION=rmw_fastrtps_cpp)  ... cell_app.py --perception ros
+    C:/issacsim-6-2/python.bat pick_place/cell_app.py --web    (the window in a browser, below)
 
 Changing the gripper builds the cell again on a new stage (the gripper becomes part of the arm's
 articulation, and the planner's model of it changes); changing the object only swaps the object.
@@ -17,6 +18,11 @@ own hand-eye calibration (handeye.py --gripper). With ROS 2 the gripper stays th
 The window's rules (what can be chosen when, running and stopping, what it says) are in
 cell_control.py, which knows nothing of Kit; the panel here draws its state and events, and KitCell
 does the work in the stage.
+
+With --web, Isaac Sim runs without its window and streams the viewport over WebRTC, for a web page
+that draws the panel itself: web_bridge.py answers the page, livestream.py puts it on the stream.
+The page connects once the log says so. Kit's own panel is there too, hidden with the rest of Kit's
+UI; add --/app/window/hideUi=false to stream it with the viewport. Kit streams to one page at a time.
 
 Each object's resting pose on the grasp matrix's table, which its grasps refer to, is found by
 letting it settle there (cell.rest_mount(): a separate stage, so it cannot be done once the cell
@@ -45,22 +51,28 @@ parser.add_argument("--grippers", help="comma-separated grippers to offer (defau
 parser.add_argument("--objects", help="comma-separated objects to offer (default: every object with robust grasps)")
 parser.add_argument("--start-pose", type=int, default=0, help="the first cycle's start pose (seeded: the same number, the same start)")
 parser.add_argument("--script", help="steps to run as if clicked (see above)")
+parser.add_argument("--web", action="store_true", help="stream the viewport for a web page that draws the panel (see above)")
 args, _ = parser.parse_known_args()
-app = cell_args.start(args, headless=False)
+app = cell_args.start(args, headless=args.web)
 
 import cell  # noqa: E402
 import cell_control  # noqa: E402
 import cell_db  # noqa: E402
 import cell_session  # noqa: E402
 import gm_config  # noqa: E402
+import livestream  # noqa: E402
 import numpy as np  # noqa: E402
 import omni.kit.app  # noqa: E402
 import omni.timeline  # noqa: E402
 import omni.ui as ui  # noqa: E402
+import web_bridge  # noqa: E402
 from cell_session import log, next_update  # noqa: E402
 from pxr import Gf, UsdGeom  # noqa: E402
 
 from isaacsim.core.simulation_manager import SimulationManager  # noqa: E402
+
+if args.web:
+    livestream.enable()  # the stream is up while the cell is built; the page connects once it is
 
 REST_MOUNTS = gm_config.ROOT / "results/cell_rest_mounts.json"
 GOOD, BAD, DIM = 0xFF7FD67F, 0xFF6A8CFF, 0xFFA0A0A0  # omni.ui colours are 0xAABBGGRR
@@ -367,8 +379,13 @@ async def main() -> None:
     await session.build(first, rests[args.gripper][first])
     control = cell_control.CellControl(KitCell(session, rests), menu, LABELS, args.perception, pose=args.start_pose)
     state["panel"] = Panel(control)
+    if args.web:
+        bridge = state["bridge"] = web_bridge.WebBridge(control)
+        state["disconnect"] = livestream.connect(bridge)
     await control.start()
     log(f"ready: {len(menu)} grippers, {sum(len(o[0]) for o in menu.values())} gripper x object pairs; results go to {args.db}")
+    if args.web:
+        log(f"the web page can connect over the stream (signalling on port {livestream.SIGNAL_PORT})")
     if args.script:
         await run_script(control, args.script.split(","))
 
@@ -382,6 +399,9 @@ try:
     if task.done() and task.exception() is not None:
         raise task.exception()
 finally:
+    if "disconnect" in state:
+        state["disconnect"]()
+        state["bridge"].close()
     if "session" in state:
         state["session"].close()
     app.close()
