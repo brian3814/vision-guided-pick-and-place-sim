@@ -41,6 +41,7 @@ tracking and contacts for the first N steps of every move.
 | `controller.py` | One pick-and-place cycle as a phase machine, stepped once per physics step |
 | `run_cell.py` | Runs cycles and stores them in `results/pick_place.sqlite` |
 | `cell_app.py` | The cell in a window: choose the gripper and the object, run cycles one at a time (results in `results/pick_place_interactive.sqlite`) |
+| `cell_control.py` | The window's rules without Kit: choices, running and stopping, what it says; the panel draws its state and events (tests: `tests/test_cell_control.py`) |
 | `cell_session.py`, `cell_args.py` | The cell set up for running cycles, and the options, shared by `run_cell.py` and `cell_app.py` |
 | `run_batch.py`, `report.py` | Several objects headless; `results/pick_place_summary.md` |
 | `cell_db.py` | Database schema, and reading robust grasps from the grasp matrix |
@@ -117,9 +118,28 @@ Tested on 2026-11-11, scripted:
 
 Tested on 2026-11-14, scripted, with the camera: the 2F-140 on the mug (start pose 0), then the RG2 on
 the toy block, the Franka Hand on the jar, and back to the 2F-140 on the mug at start pose 0. The two
-2F-140 cycles came out identical in every stored column but wall-clock times, so building the cell
-again leaves nothing of the earlier gripper behind. The first start settled the 56 gripper x object
-pairs not yet in `results/cell_rest_mounts.json` in about a minute.
+2F-140 cycles came out identical in every stored column but wall-clock times. The first start settled
+the 56 gripper x object pairs not yet in `results/cell_rest_mounts.json` in about a minute.
+
+The same script, run three more times on 2026-11-18, showed that windowed runs do not always repeat
+exactly. One run matched 2026-11-14 in every column. In another, the Franka cycle came out slightly
+different (same grasp, same outcome; motion 7.27 s against 7.23 s, finger closure 0.772 against
+0.767). In the third, with the code as committed before, the Franka cycle and the final 2F-140 cycle
+differed (placed 2.5 mm from the target, not 1.8 mm). The found poses were identical every time, so
+the variation is in the motion and physics, not the camera; where it comes from is not known yet.
+
+The panel's rules live in `cell_control.py`, which imports nothing of Kit: what can be chosen when,
+running and stopping, and the lines the panel shows. The panel only draws the controller's state and
+events, and its widgets call the controller's actions; `KitCell` in `cell_app.py` does the work in
+the stage. Its tests use a fake cell and need no Isaac Sim:
+
+```powershell
+python -m unittest discover -s pick_place/tests     # any Python 3.10+, standard library only
+```
+
+Moving the rules there (2026-11-18) left the window's results as they were: the script above came out
+identical to 2026-11-14 in every column on one of two runs, and the other differed only in the Franka
+cycle, as the code before the move also did.
 
 The refactoring into `cell_session.py` left `run_cell.py`'s results unchanged: the toy block (3
 cycles, pose from the simulation) and the mug (2 cycles, camera) came out identical before and after,
