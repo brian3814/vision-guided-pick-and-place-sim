@@ -107,14 +107,19 @@ def _quat(R: np.ndarray) -> np.ndarray:
     return q / np.linalg.norm(q)
 
 
-def pose_from_msg(p) -> np.ndarray:
-    w, x, y, z = p.orientation.w, p.orientation.x, p.orientation.y, p.orientation.z
+def _matrix(position, orientation) -> np.ndarray:
+    """A pose from a message's position or translation (x, y, z) and orientation or rotation (unit quaternion)."""
+    w, x, y, z = orientation.w, orientation.x, orientation.y, orientation.z
     T = np.eye(4)
     T[:3, :3] = [[1 - 2 * (y * y + z * z), 2 * (x * y - z * w), 2 * (x * z + y * w)],
                  [2 * (x * y + z * w), 1 - 2 * (x * x + z * z), 2 * (y * z - x * w)],
                  [2 * (x * z - y * w), 2 * (y * z + x * w), 1 - 2 * (x * x + y * y)]]
-    T[:3, 3] = [p.position.x, p.position.y, p.position.z]
+    T[:3, 3] = [position.x, position.y, position.z]
     return T
+
+
+def pose_from_msg(p) -> np.ndarray:
+    return _matrix(p.position, p.orientation)
 
 
 class RosLink:
@@ -147,6 +152,12 @@ class RosLink:
         latched = QoSProfile(depth=1, durability=DurabilityPolicy.TRANSIENT_LOCAL, reliability=ReliabilityPolicy.RELIABLE)
         self.pub_object = self.node.create_publisher(String, "/cell/object", latched)
         self.Image, self.CameraInfo, self.String = Image, CameraInfo, String
+        from tf2_msgs.msg import TFMessage
+
+        self.static_tf: dict = {}  # child frame -> TransformStamped, from /tf_static (the locator's launch file)
+        self.node.create_subscription(TFMessage, "/tf_static", self._on_tf_static,
+                                      QoSProfile(depth=100, durability=DurabilityPolicy.TRANSIENT_LOCAL,
+                                                 reliability=ReliabilityPolicy.RELIABLE))
 
     def publish_object(self, name: str) -> None:
         """Tell the locator which object to look for (latched: a locator started later gets it too)."""
@@ -160,6 +171,29 @@ class RosLink:
             self.spin(0.2)
         self.spin(1.0)  # let it receive /cell/object and the TF tree
         return True
+
+    def _on_tf_static(self, msg) -> None:
+        for t in msg.transforms:
+            self.static_tf[t.child_frame_id] = t
+
+    def check_mount(self, mount_usd: np.ndarray, timeout_s: float = 5.0) -> str | None:
+        """Whether the locator's camera mount (the static transform its launch file publishes from a
+        hand-eye calibration) is this one, the USD camera in the gripper frame. None if it is, else
+        what is wrong: a calibration for another gripper finds the object in the wrong place."""
+        t0 = time.perf_counter()
+        while CAMERA_FRAME not in self.static_tf and time.perf_counter() - t0 < timeout_s:
+            self.spin(0.1)
+        t = self.static_tf.get(CAMERA_FRAME)
+        if t is None:
+            return f"no static transform to {CAMERA_FRAME} on /tf_static (the locator's launch file publishes it)"
+        theirs = _matrix(t.transform.translation, t.transform.rotation)
+        ours = mount_usd @ camera_model.USD_TO_CV
+        off_mm = 1000 * float(np.linalg.norm(theirs[:3, 3] - ours[:3, 3]))
+        off_deg = perception.angle_deg(theirs, ours)
+        if off_mm > 0.5 or off_deg > 0.05:
+            return (f"the object_locator's camera mount ({t.header.frame_id} -> {CAMERA_FRAME}) is {off_mm:.1f} mm, "
+                    f"{off_deg:.2f} deg from this gripper's calibration")
+        return None
 
     def _on_pose(self, msg) -> None:
         self.poses[(msg.header.stamp.sec, msg.header.stamp.nanosec)] = pose_from_msg(msg.pose)

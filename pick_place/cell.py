@@ -64,13 +64,20 @@ def shift(x: float, y: float) -> Gf.Matrix4d:
     return Gf.Matrix4d().SetTranslate(Gf.Vec3d(x, y, 0.0))
 
 
+def is_body(stage: Usd.Stage, targets: list) -> bool:
+    return bool(targets) and stage.GetPrimAtPath(targets[0]).HasAPI(UsdPhysics.RigidBodyAPI)
+
+
 def world_joints(root: Usd.Prim) -> list[Usd.Prim]:
-    """Joints under root that tie a body to the world (one of body0/body1 empty)."""
+    """Joints under root that tie a body to the world: one of body0/body1 is empty, or is not a
+    rigid body (the OnRobot RG2 ties its base to the gripper's root Xform, which PhysX treats as
+    the world)."""
+    stage = root.GetStage()
     out = []
     for p in Usd.PrimRange(root):
         if p.IsA(UsdPhysics.Joint):
             j = UsdPhysics.Joint(p)
-            if not j.GetBody0Rel().GetTargets() or not j.GetBody1Rel().GetTargets():
+            if not (is_body(stage, j.GetBody0Rel().GetTargets()) and is_body(stage, j.GetBody1Rel().GetTargets())):
                 out.append(p)
     return out
 
@@ -98,7 +105,8 @@ def mount_gripper(stage: Usd.Stage) -> Usd.Prim:
     if len(anchors) != 1:
         raise RuntimeError(f"expected one joint tying the gripper to the world, found {[str(p.GetPath()) for p in anchors]}")
     j = UsdPhysics.Joint(anchors[0])
-    base = stage.GetPrimAtPath((j.GetBody1Rel().GetTargets() or j.GetBody0Rel().GetTargets())[0])
+    body1 = j.GetBody1Rel().GetTargets()
+    base = stage.GetPrimAtPath((body1 if is_body(stage, body1) else j.GetBody0Rel().GetTargets())[0])
     anchors[0].SetActive(False)
 
     xc = UsdGeom.XformCache()

@@ -23,15 +23,15 @@ def to_np(m: Gf.Matrix4d) -> np.ndarray:
 
 
 class WristCamera:
-    """The camera prim on the wrist (at camera_model.mount()), its housing (a plain box of the
-    D455's size, visual only), and a render product giving RGB and the renderer's depth (distance
-    to the image plane).
+    """The camera prim on the wrist (at camera_model.mount() for the gripper), its housing (a plain
+    box of the D455's size, visual only), and a render product giving RGB and the renderer's depth
+    (distance to the image plane).
 
     The images come through plain Replicator annotators on the CPU. With Isaac Sim's CameraSensor
     wrapper attached instead (even if never read), creating the second cuMotion optimizer crashed
     Isaac Sim in 3 of 3 runs; with these, 6 of 6 plans went through."""
 
-    def __init__(self, stage: Usd.Stage):
+    def __init__(self, stage: Usd.Stage, gripper: str):
         import omni.replicator.core as rep
         from isaacsim.sensors.experimental.rtx import RtxCamera
 
@@ -39,7 +39,7 @@ class WristCamera:
         prim = stage.GetPrimAtPath(CAMERA)
         xf = UsdGeom.Xformable(prim)
         xf.ClearXformOpOrder()
-        xf.AddTransformOp().Set(to_gf(cm.mount()))
+        xf.AddTransformOp().Set(to_gf(cm.mount(gripper)))
         usd_cam = UsdGeom.Camera(prim)
         usd_cam.CreateFocalLengthAttr(cm.FOCAL_MM)
         usd_cam.CreateHorizontalApertureAttr(cm.H_APERTURE_MM)
@@ -48,7 +48,7 @@ class WristCamera:
 
         housing = UsdGeom.Cube.Define(stage, HOUSING)  # no collision
         housing.CreateSizeAttr(1.0)
-        box = cm.mount()
+        box = cm.mount(gripper)
         box[:3, 3] = (box @ np.array([0.0, 0.0, cm.HOUSING_SIZE[2] / 2, 1.0]))[:3]  # behind the lens
         housing.AddTransformOp().Set(to_gf(box @ np.diag([*cm.HOUSING_SIZE, 1.0])))
         housing.CreateDisplayColorAttr([Gf.Vec3f(0.12, 0.12, 0.14)])
@@ -64,6 +64,13 @@ class WristCamera:
             annotator = rep.AnnotatorRegistry.get_annotator(name, device="cpu")
             annotator.attach(self.render_product)
             self.annotators[name] = annotator
+
+    def close(self) -> None:
+        """Detach the annotators and destroy the render product (before the stage is replaced)."""
+        for annotator in self.annotators.values():
+            annotator.detach()
+        self.annotators = {}
+        self.render_product.destroy()
 
     def read(self) -> tuple[np.ndarray, np.ndarray] | None:
         """(RGB (H, W, 3) uint8, perfect depth (H, W) metres), or None before the first frame."""

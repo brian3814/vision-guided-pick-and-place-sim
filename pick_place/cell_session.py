@@ -1,7 +1,8 @@
 """The pick-and-place cell ready to run cycles, shared by run_cell.py (a batch of cycles on one
-object) and cell_app.py (a window to choose the object and run cycles one at a time): the stage,
-the planner, the robot, and with the camera or ROS 2 the parts that find the object. The object can
-be swapped between cycles (load_object).
+object) and cell_app.py (a window to choose the gripper and object and run cycles one at a time):
+the stage, the planner, the robot, and with the camera or ROS 2 the parts that find the object. The
+object can be swapped between cycles (load_object); the gripper too, by building the cell again
+(build(gripper=...)), except with ROS 2.
 
 Runs inside Isaac Sim; import it only after cell_args.start() (it enables the extensions needed).
 """
@@ -73,6 +74,7 @@ class CellSession:
 
     def __init__(self, args):
         self.args = args
+        self.gripper: str = args.gripper
         self.vision = args.perception in ("camera", "ros")
         self.camera = None
         self.link = None  # ros_link.RosLink with --perception ros
@@ -81,35 +83,76 @@ class CellSession:
         self.settings_extra: dict = {}
 
     # --- building ----------------------------------------------------------------------------
-    async def build(self, object_name: str, rest: Gf.Matrix4d | None = None) -> bool:
-        """Build the cell with this object at the pick spot. `rest` is the object's mount after it
-        settles on the grasp matrix's table (cell.rest_mount(), computed here if not given). False
-        if the object has no robust grasps."""
+    def handeye_path(self, gripper: str) -> pathlib.Path | None:
+        """The hand-eye calibration for the camera on this gripper (--handeye); None: the mount as built."""
+        import camera_model
+
         a = self.args
+        if a.handeye == "none":
+            return None
+        if a.handeye != "auto" and gripper == a.gripper:
+            return gm_config.ROOT / a.handeye
+        return gm_config.ROOT / camera_model.handeye_file(gripper)
+
+    def cannot_use(self, gripper: str) -> str | None:
+        """Why the cell cannot be built with this gripper (with the camera: no hand-eye calibration
+        for it), or None."""
+        if not self.vision:
+            return None
+        path = self.handeye_path(gripper)
+        if path is not None and not path.exists():
+            return (f"no hand-eye calibration for {gripper} ({path.relative_to(gm_config.ROOT).as_posix()}); "
+                    f"run handeye.py --gripper {gripper}")
+        return None
+
+    async def build(self, object_name: str, rest: Gf.Matrix4d | None = None, gripper: str | None = None) -> bool:
+        """Build the cell with this object at the pick spot, and this gripper (default: the current
+        one; at first --gripper). `rest` is the object's mount after it settles on the grasp
+        matrix's table (cell.rest_mount(), computed here if not given). False, and nothing changed,
+        if the object has no robust grasps for the gripper.
+
+        Building again, with another gripper, replaces the stage (the gripper is part of the arm's
+        articulation, and the planner's model of it changes): only while the simulation is stopped,
+        after finish_run(), and not with ROS 2 (the locator's camera mount comes from its launch file)."""
+        a = self.args
+        gripper = gripper or self.gripper
+        if self.link is not None:
+            raise RuntimeError("with ROS 2 the gripper cannot change: the object_locator's camera mount comes from "
+                               "its launch file (start again with --gripper, and the locator with that gripper's handeye)")
+        problem = self.cannot_use(gripper)
+        if problem:
+            raise RuntimeError(problem)
         SimulationManager.switch_physics_engine("physx")
-        self.g = gm_config.load_grippers()[a.gripper]
-        if not self._load_grasps(object_name):
+        g = gm_config.load_grippers()[gripper]
+        if not self._load_grasps(object_name, gripper):
             return False
+        if self.camera is not None:  # built before: its render product goes with the old stage
+            self.camera.close()
+            self.camera = None
+        self.gripper, self.g = gripper, g
         if rest is None:
-            rest = await cell.rest_mount(a.gripper, self.g, object_name)
+            rest = await cell.rest_mount(gripper, g, object_name)
         self.rest = rest
-        self.cell = c = cell.Cell(a.gripper, self.g, object_name, rest * cell.shift(*cell.PICK_XY))
+        self.cell = c = cell.Cell(gripper, g, object_name, rest * cell.shift(*cell.PICK_XY))
         spheres = [(np.array(centre), r) for centre, r in c.tool_spheres()]
         if self.vision:
             import camera_model
             import wrist_camera
 
-            self.camera = wrist_camera.WristCamera(c.stage)
+            self.camera = wrist_camera.WristCamera(c.stage, gripper)
             self._load_model()
-            if a.handeye == "none":
-                self.mount, handeye = camera_model.mount(), {"method": "none (as built)"}
+            path = self.handeye_path(gripper)
+            if path is None:
+                self.mount, handeye = camera_model.mount(gripper), {"method": "none (as built)"}
             else:
-                handeye = json.loads((gm_config.ROOT / a.handeye).read_text(encoding="utf-8"))
+                handeye = json.loads(path.read_text(encoding="utf-8"))
+                if handeye.get("gripper", "robotiq_2f_140") != gripper:  # the first calibration (2F-140) names none
+                    raise RuntimeError(f"{path.name} is the hand-eye calibration of {handeye.get('gripper')}, not {gripper}")
                 self.mount = np.array(handeye["mount_usd"])
                 log(f"camera mount from hand-eye calibration ({handeye['method']}, {handeye['views']} views): "
                     f"{handeye['error_mm']:.2f} mm, {handeye['error_deg']:.3f} deg from the mount as built")
             self.noise = None if a.depth_noise == "perfect" else float(a.depth_noise)
-            spheres += camera_model.tool_spheres()
+            spheres += camera_model.tool_spheres(gripper)
             self.settings_extra = {"depth_noise": a.depth_noise,
                                    "handeye": {k: handeye.get(k) for k in ("method", "views", "error_mm", "error_deg")}}
         else:
@@ -118,7 +161,7 @@ class CellSession:
             if a.look_first or blind:
                 import camera_model
 
-                spheres += camera_model.tool_spheres()
+                spheres += camera_model.tool_spheres(gripper)
                 self.settings_extra["look_first"] = True
         self.planner = pl = planner.Planner(spheres)
         pl.add_cuboid("table", size=[cell.TABLE_X[1] - cell.TABLE_X[0], cell.TABLE_Y[1] - cell.TABLE_Y[0], cell.TABLE_THICKNESS],
@@ -140,7 +183,14 @@ class CellSession:
                 self.link.close()
                 self.link = None
                 raise RuntimeError("no object_locator subscribed to /wrist_camera/depth within 60 s")
-            log("object_locator is listening")
+            problem = self.link.check_mount(self.mount)
+            if problem:
+                self.link.close()
+                self.link = None
+                path = self.handeye_path(gripper)
+                raise RuntimeError(problem + (f"; launch it with handeye:={path.relative_to(gm_config.ROOT).as_posix()}"
+                                              if path else ""))
+            log("object_locator is listening, with this gripper's camera mount")
         if not getattr(a, "headless", False):
             from isaacsim.core.rendering_manager import ViewportManager
 
@@ -150,7 +200,7 @@ class CellSession:
     def load_object(self, object_name: str, rest: Gf.Matrix4d) -> bool:
         """Swap the object for another (only while the simulation is stopped). False, and nothing
         changed, if it has no robust grasps. Finish the current run first (finish_run())."""
-        if not self._load_grasps(object_name):
+        if not self._load_grasps(object_name, self.gripper):
             return False
         self.rest = rest
         self.cell.load_object(object_name, rest * cell.shift(*cell.PICK_XY))
@@ -162,13 +212,12 @@ class CellSession:
             self.link.publish_object(object_name)
         return True
 
-    def _load_grasps(self, object_name: str) -> bool:
-        a = self.args
-        grasp_run, grasps = cell_db.robust_grasps(str(gm_config.ROOT / a.matrix_db), a.gripper, object_name)
+    def _load_grasps(self, object_name: str, gripper: str) -> bool:
+        grasp_run, grasps = cell_db.robust_grasps(str(gm_config.ROOT / self.args.matrix_db), gripper, object_name)
         if not grasps:
-            log(f"{a.gripper} x {object_name}: no robust grasps in the grasp matrix (run {grasp_run}); nothing to do")
+            log(f"{gripper} x {object_name}: no robust grasps in the grasp matrix (run {grasp_run}); nothing to do")
             return False
-        log(f"{a.gripper} x {object_name}: {len(grasps)} robust grasps from grasp-matrix run {grasp_run}")
+        log(f"{gripper} x {object_name}: {len(grasps)} robust grasps from grasp-matrix run {grasp_run}")
         self.object_name, self.grasp_run, self.grasps = object_name, grasp_run, grasps
         self.grasps_matrix = [dict(gr, pose=controller.make_pose(gr["position"], controller.quat_matrix(*gr["quat_wxyz"])))
                               for gr in grasps]
@@ -211,7 +260,7 @@ class CellSession:
         self.run_id = self.conn.execute(
             "INSERT INTO cell_runs (gripper, object, settings, grasp_run_id, robust_grasps, started, isaac_sim_version) "
             "VALUES (?, ?, ?, ?, ?, ?, ?)",
-            (a.gripper, self.object_name, json.dumps(settings), self.grasp_run, len(self.grasps),
+            (self.gripper, self.object_name, json.dumps(settings), self.grasp_run, len(self.grasps),
              datetime.datetime.now().isoformat(timespec="seconds"), version.read_text().strip() if version.exists() else "unknown"),
         ).lastrowid
         self.conn.commit()

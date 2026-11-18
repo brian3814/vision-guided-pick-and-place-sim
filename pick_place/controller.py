@@ -290,7 +290,7 @@ class Cycle:
     def go_look(self):
         """Move to the look pose and wait there (LOOK_WAIT_STEPS)."""
         r, pl = self.result, self.planner
-        target = camera_model.look_tool_pose([*cell.PICK_XY, LOOK_TARGET_Z])
+        target = camera_model.look_tool_pose([*cell.PICK_XY, LOOK_TARGET_Z], self.cell.gripper_name)
         pl.set_enabled("table", True)
         pl.set_enabled("object", False)
         p = self.plan("to look pose", lambda q: pl.plan_pose(q, target))

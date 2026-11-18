@@ -37,7 +37,13 @@ C:\issacsim-6-2\python.bat pick_place\run_cell.py --object mug_A07RDPW843 --perc
 
 To choose objects and run cycles from a window instead (the locator keeps running and follows the
 object): `C:\issacsim-6-2\python.bat pick_place\cell_app.py --perception ros`, with the same two `set`
-lines (see `pick_place/README.md`, "The interactive window").
+lines (see `pick_place/README.md`, "The interactive window"). With ROS 2 the window keeps the gripper
+it started with.
+
+Another gripper (`--gripper onrobot_rg2`, say) carries the camera elsewhere, so the locator needs
+that gripper's hand-eye calibration: `... locator.launch.py handeye:=results/perception/handeye_onrobot_rg2.json`
+(`handeye.py --gripper` writes it). The cell checks at start-up that the mount on `/tf_static` is
+its gripper's calibration, and stops if it is not.
 
 Several objects headless: `set RMW_IMPLEMENTATION=rmw_fastrtps_cpp` then
 `.venv\Scripts\python.exe pick_place\run_batch.py --objects ... --cycles 10 --perception ros`; one
@@ -59,7 +65,7 @@ terminal and run it again.
 | `/clock` | rosgraph_msgs/Clock | Isaac Sim, every physics step (1/60 s) |
 | `/joint_states` | sensor_msgs/JointState | Isaac Sim, every step: arm and gripper |
 | `/tf` | tf2_msgs/TFMessage | Isaac Sim, every step: `world` -> `base_link` -> `shoulder_link` -> ... -> `wrist_3_link` -> the gripper's links (19 frames; the gripper's base is `World_UR10_Gripper_Robotiq_2F_140_base_link`, renamed because `base_link` was taken by the arm) |
-| `/tf_static` | tf2_msgs/TFMessage | launch file: `wrist_3_link` -> `wrist_camera_optical`, from `results/perception/handeye.json` |
+| `/tf_static` | tf2_msgs/TFMessage | launch file: `wrist_3_link` -> `wrist_camera_optical`, from the hand-eye calibration (`handeye:=`, default `results/perception/handeye.json`, the 2F-140's) |
 | `/cell/object` | std_msgs/String (latched) | Isaac Sim: which object to look for |
 | `/wrist_camera/depth` | sensor_msgs/Image, 32FC1 metres, NaN = no depth | Isaac Sim, once per cycle at the look pose (simulated stereo depth) |
 | `/wrist_camera/color`, `/wrist_camera/camera_info` | sensor_msgs/Image rgb8, CameraInfo | Isaac Sim, with the depth |

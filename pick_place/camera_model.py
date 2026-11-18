@@ -36,9 +36,19 @@ import perception
 
 WIDTH, HEIGHT = 640, 400
 FOCAL_MM, H_APERTURE_MM = 1.93, 3.896
-# In the gripper (= wrist_3_link = tool0) frame: 2.5 cm outside the 2F-140's body on its +x side
-# (its fingers close along y), 3 cm out from the flange.
-MOUNT_XYZ = (0.0625, 0.0, 0.03)
+# Where the camera sits on each gripper, in the gripper (= wrist_3_link = tool0) frame: 2.5 cm
+# outside the gripper's base on the side away from its fingers' travel (across the closing axis),
+# 3 cm out from the flange. The base's half-width on that side, from the assets' rigid bodies:
+# 37.5 mm for the three Robotiq grippers (the same base), 32 mm for the Franka Hand, 39 mm for the
+# OnRobot RG2 and 2FG7 (on their -y side: they close along x).
+MOUNT_XYZ = {
+    "robotiq_2f_140": (0.0625, 0.0, 0.03),
+    "robotiq_2f_85": (0.0625, 0.0, 0.03),
+    "robotiq_hand_e": (0.0625, 0.0, 0.03),
+    "franka_hand": (0.057, 0.0, 0.03),
+    "onrobot_rg2": (0.0, -0.064, 0.03),
+    "onrobot_2fg7": (0.0, -0.064, 0.03),
+}
 HOUSING_SIZE = (0.124, 0.029, 0.026)  # along the camera's x (the stereo baseline), y, and depth
 USD_TO_CV = np.diag([1.0, -1.0, -1.0, 1.0])
 # Where the camera looks from before a pick: this far from the pick spot towards the robot's base,
@@ -46,13 +56,25 @@ USD_TO_CV = np.diag([1.0, -1.0, -1.0, 1.0])
 LOOK_BACK_M, LOOK_HEIGHT_M = 0.22, 0.45
 
 
-def mount() -> np.ndarray:
+def mount(gripper: str) -> np.ndarray:
     """The USD camera's pose in the gripper frame, as built: looking along +z (the approach axis),
-    its x axis (the stereo baseline) along the gripper's y (the closing axis)."""
+    its y axis (up in its image) pointing away from the gripper, so its x axis (the stereo
+    baseline) lies along the closing axis."""
+    if gripper not in MOUNT_XYZ:
+        raise KeyError(f"no camera mount for {gripper}; add it to camera_model.MOUNT_XYZ")
+    xyz = np.array(MOUNT_XYZ[gripper], dtype=float)
+    up = np.array([xyz[0], xyz[1], 0.0]) / np.hypot(xyz[0], xyz[1])
+    z = np.array([0.0, 0.0, -1.0])
     m = np.eye(4)
-    m[:3, :3] = np.column_stack([[0.0, 1.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, -1.0]])
-    m[:3, 3] = MOUNT_XYZ
+    m[:3, :3] = np.column_stack([np.cross(up, z), up, z]) + 0.0  # + 0.0: no negative zeros
+    m[:3, 3] = xyz
     return m
+
+
+def handeye_file(gripper: str) -> str:
+    """Where handeye.py writes the gripper's hand-eye calibration (relative to the project). The
+    2F-140's, the first, keeps its original name."""
+    return "results/perception/handeye.json" if gripper == "robotiq_2f_140" else f"results/perception/handeye_{gripper}.json"
 
 
 def intrinsics() -> perception.Intrinsics:
@@ -60,15 +82,15 @@ def intrinsics() -> perception.Intrinsics:
     return perception.Intrinsics(f, f, WIDTH / 2, HEIGHT / 2, WIDTH, HEIGHT)
 
 
-def camera_pose(tool_pose: np.ndarray, mount_pose: np.ndarray | None = None) -> np.ndarray:
+def camera_pose(tool_pose: np.ndarray, mount_pose: np.ndarray) -> np.ndarray:
     """The camera's pose (OpenCV frame) in the world, for the gripper frame at tool_pose; mount_pose
-    is the USD camera in the gripper frame (default: as built; or a hand-eye calibration's)."""
-    return tool_pose @ (mount() if mount_pose is None else mount_pose) @ USD_TO_CV
+    is the USD camera in the gripper frame (as built, mount(), or a hand-eye calibration's)."""
+    return tool_pose @ mount_pose @ USD_TO_CV
 
 
-def look_tool_pose(target, back: float = LOOK_BACK_M, height: float = LOOK_HEIGHT_M) -> np.ndarray:
-    """The gripper pose that puts the camera `back` m from the target, towards the robot's base,
-    and `height` m above the table, looking at the target."""
+def look_tool_pose(target, gripper: str, back: float = LOOK_BACK_M, height: float = LOOK_HEIGHT_M) -> np.ndarray:
+    """The gripper pose that puts the camera (as built on this gripper) `back` m from the target,
+    towards the robot's base, and `height` m above the table, looking at the target."""
     target = np.asarray(target, dtype=float)
     toward_base = -np.array([target[0], target[1], 0.0])
     toward_base /= np.linalg.norm(toward_base)
@@ -81,12 +103,12 @@ def look_tool_pose(target, back: float = LOOK_BACK_M, height: float = LOOK_HEIGH
     T = np.eye(4)
     T[:3, :3] = np.column_stack([x, np.cross(z, x), z])
     T[:3, 3] = cam
-    return T @ np.linalg.inv(mount())
+    return T @ np.linalg.inv(mount(gripper))
 
 
-def tool_spheres() -> list[tuple[np.ndarray, float]]:
-    """Spheres covering the housing, in the gripper frame, for the planner."""
-    m = mount()
+def tool_spheres(gripper: str) -> list[tuple[np.ndarray, float]]:
+    """Spheres covering the housing on this gripper, in the gripper frame, for the planner."""
+    m = mount(gripper)
     centre = (m @ np.array([0.0, 0.0, HOUSING_SIZE[2] / 2, 1.0]))[:3]  # the box sits behind the lens
     r = 0.5 * float(np.hypot(HOUSING_SIZE[1], HOUSING_SIZE[2]))
     half = HOUSING_SIZE[0] / 2 - r

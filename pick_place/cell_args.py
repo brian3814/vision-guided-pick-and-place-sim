@@ -27,8 +27,10 @@ def parser(description: str, db_default: str, headless_option: bool = True) -> a
                         "the camera)")
     p.add_argument("--depth-noise", default="1",
                    help="camera: depth noise as a multiple of camera_model's defaults, or 'perfect'")
-    p.add_argument("--handeye", default="results/perception/handeye.json",
-                   help="camera: the hand-eye calibration to use, or 'none' for the mount as built")
+    p.add_argument("--handeye", default="auto",
+                   help="camera: the hand-eye calibration to use: 'auto', the gripper's own (handeye.py --gripper writes "
+                        "it; results/perception/handeye.json for the 2F-140); a file, for --gripper; or 'none' for the "
+                        "mount as built")
     p.add_argument("--no-slip-correction", action="store_true",
                    help="lower as planned instead of correcting for slip in the hand (always so with the camera)")
     p.add_argument("--look-first", action="store_true",

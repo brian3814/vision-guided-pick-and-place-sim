@@ -1,5 +1,6 @@
 """Hand-eye calibration of the wrist camera (eye-in-hand): where the camera sits on the gripper,
-measured instead of taken from the drawing (camera_model.mount()).
+measured instead of taken from the drawing (camera_model.mount()). Each gripper carries the camera at
+its own place, so each has its own calibration (as a real cell needs one after a tool change).
 
 A ChArUco board lies on the table. The arm shows it to the camera from many viewpoints; at each,
 OpenCV finds the board's corners in the RGB image and its pose relative to the camera (solvePnP),
@@ -10,9 +11,11 @@ can make too, as it needs no ground truth. The comparison with the mount as buil
 separately, as what only the simulation can tell.
 
     C:/issacsim-6-2/python.bat pick_place/handeye.py
+    C:/issacsim-6-2/python.bat pick_place/handeye.py --gripper onrobot_rg2
 
-Writes results/perception/handeye.json (read by run_cell.py --perception camera) and a picture of
-one detection to results/perception/handeye_view.png.
+Writes the gripper's calibration (camera_model.handeye_file(): results/perception/handeye.json for
+the 2F-140, handeye_<gripper>.json for the others; read by run_cell.py and cell_app.py with the
+camera) and a picture of one detection to results/perception/handeye_view.png.
 """
 
 import argparse
@@ -26,7 +29,8 @@ from isaacsim import SimulationApp
 parser = argparse.ArgumentParser()
 parser.add_argument("--views", type=int, default=40, help="viewpoints to try (unreachable ones are skipped)")
 parser.add_argument("--seed", type=int, default=0)
-parser.add_argument("--out", default="results/perception/handeye.json")
+parser.add_argument("--gripper", default="robotiq_2f_140")
+parser.add_argument("--out", help="default: camera_model.handeye_file(gripper)")
 args, _ = parser.parse_known_args()
 
 app = SimulationApp({"headless": True})
@@ -151,7 +155,8 @@ def to_pose(R: np.ndarray, t: np.ndarray) -> np.ndarray:
 
 
 async def main() -> None:
-    out = gm_config.ROOT / args.out
+    gripper = args.gripper
+    out = gm_config.ROOT / (args.out or cm.handeye_file(gripper))
     out.parent.mkdir(parents=True, exist_ok=True)
     board = make_board()
     image_path = out.parent / "charuco_board.png"
@@ -159,14 +164,13 @@ async def main() -> None:
     cv2.imwrite(str(image_path), board.generateImage((w_px, h_px), marginSize=0, borderBits=1))
 
     SimulationManager.switch_physics_engine("physx")
-    gripper = "robotiq_2f_140"
     g = gm_config.load_grippers()[gripper]
     obj = "toy_block_6MPL7NVFVU"  # the cell needs an object; it stays at the pick spot, out of the way
     rest = await cell.rest_mount(gripper, g, obj)
     c = cell.Cell(gripper, g, obj, rest * cell.shift(*cell.PICK_XY))
     add_board(c.stage, image_path)
-    cam = wrist_camera.WristCamera(c.stage)
-    pl = planner.Planner([(np.array(ct), r) for ct, r in c.tool_spheres()] + cm.tool_spheres())
+    cam = wrist_camera.WristCamera(c.stage, gripper)
+    pl = planner.Planner([(np.array(ct), r) for ct, r in c.tool_spheres()] + cm.tool_spheres(gripper))
     pl.add_cuboid("table", size=[cell.TABLE_X[1] - cell.TABLE_X[0], cell.TABLE_Y[1] - cell.TABLE_Y[0], cell.TABLE_THICKNESS],
                   centre=[sum(cell.TABLE_X) / 2, sum(cell.TABLE_Y) / 2, -cell.TABLE_THICKNESS / 2])
     SimulationManager.set_device("cpu")
@@ -188,7 +192,7 @@ async def main() -> None:
     saved_view = False
     for k, view in enumerate(viewpoints(args.views, np.random.default_rng(args.seed))):
         # Aiming uses the mount as built, as an operator jogging the arm would aim roughly by eye.
-        p = pl.plan_pose(q, view @ np.linalg.inv(cm.mount()))
+        p = pl.plan_pose(q, view @ np.linalg.inv(cm.mount(gripper)))
         if p is None:
             log(f"view {k}: unreachable, skipped")
             continue
@@ -233,7 +237,7 @@ async def main() -> None:
 
     R_g2b, t_g2b = zip(*[rt(s[0]) for s in samples])
     R_t2c, t_t2c = zip(*[rt(s[1]) for s in samples])
-    truth = cm.mount() @ cm.USD_TO_CV  # the OpenCV camera frame in the gripper frame, as built
+    truth = cm.mount(gripper) @ cm.USD_TO_CV  # the OpenCV camera frame in the gripper frame, as built
     true_board = board_pose()
     results = {}
     for name, method in METHODS.items():
@@ -254,9 +258,9 @@ async def main() -> None:
     best = min(results, key=lambda n: results[n]["board_spread_mm"])
     X = results[best]["X"]
     record = {
-        "method": best, "views": len(samples), "views_tried": args.views,
+        "gripper": gripper, "method": best, "views": len(samples), "views_tried": args.views,
         "reprojection_px_median": float(np.median([s[2] for s in samples])),
-        "mount_usd": (X @ cm.USD_TO_CV).tolist(),  # the USD camera in the gripper frame, as camera_model.mount()
+        "mount_usd": (X @ cm.USD_TO_CV).tolist(),  # the USD camera in the gripper frame, as camera_model.mount(gripper)
         "camera_cv_in_gripper": X.tolist(),
         **{k: v for k, v in results[best].items() if k != "X"},
         "all_methods": {n: {k: v for k, v in r.items() if k != "X"} for n, r in results.items()},

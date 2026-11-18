@@ -30,7 +30,8 @@ restarting, use `cell_app.py` (see [The interactive window](#the-interactive-win
 Set `OMNI_KIT_ACCEPT_EULA=YES` first, and close large programs (Chrome) before long runs: memory is
 the tight resource on this machine. `--capture <folder>` saves a picture of the window after each
 phase. Another gripper from the matrix can be given with `--gripper` for objects where it has robust
-grasps; only the 2F-140 has been run through whole cycles. `CELL_DEBUG_STEPS=N` prints joint
+grasps; only the 2F-140 has been run in batches, the others through a few trial cycles (see
+[Other grippers](#other-grippers-first-trials-2026-11-14)). `CELL_DEBUG_STEPS=N` prints joint
 tracking and contacts for the first N steps of every move.
 
 | File | What it does |
@@ -39,14 +40,14 @@ tracking and contacts for the first N steps of every move.
 | `planner.py` | cuMotion trajectory optimizer: the UR10 plus collision spheres for the gripper, box obstacles |
 | `controller.py` | One pick-and-place cycle as a phase machine, stepped once per physics step |
 | `run_cell.py` | Runs cycles and stores them in `results/pick_place.sqlite` |
-| `cell_app.py` | The cell in a window: choose the object, run cycles one at a time (results in `results/pick_place_interactive.sqlite`) |
+| `cell_app.py` | The cell in a window: choose the gripper and the object, run cycles one at a time (results in `results/pick_place_interactive.sqlite`) |
 | `cell_session.py`, `cell_args.py` | The cell set up for running cycles, and the options, shared by `run_cell.py` and `cell_app.py` |
 | `run_batch.py`, `report.py` | Several objects headless; `results/pick_place_summary.md` |
 | `cell_db.py` | Database schema, and reading robust grasps from the grasp matrix |
-| `camera_model.py` | Step 4. The wrist camera's optics, mount, look pose and simulated stereo depth (no Isaac Sim needed) |
+| `camera_model.py` | Step 4. The wrist camera's optics, its mount on each gripper, look pose and simulated stereo depth (no Isaac Sim needed) |
 | `wrist_camera.py` | Step 4. The camera in the stage, and the object's model points from its mesh |
 | `perception.py` | Step 4. The object's pose from one depth image (no Isaac Sim needed) |
-| `handeye.py` | Step 4. Hand-eye calibration with a ChArUco board; `results/perception/handeye.json` |
+| `handeye.py` | Step 4. Hand-eye calibration with a ChArUco board, per gripper; `results/perception/handeye.json` (2F-140), `handeye_<gripper>.json` |
 | `capture_views.py`, `perception_eval.py` | Step 4. Save the camera's view of each start pose; measure the perception on them offline |
 
 ### The interactive window
@@ -58,24 +59,35 @@ C:\issacsim-6-2\python.bat pick_place\cell_app.py --perception camera     # from
 C:\issacsim-6-2\python.bat pick_place\cell_app.py --perception ros
 ```
 
-Isaac Sim opens with a *Pick-and-place cell* panel (a tab next to *Property*): an object list,
-the start pose number, *Run 1 cycle*, *Run 5 cycles*, *Stop after this cycle*, the cycle's latest
-step, and the results so far. Choosing another object swaps it in the stage while the simulation is
-stopped; the arm, camera, planner and ROS 2 bridge stay as they are. The start pose is seeded, as in
-the batch runs: start pose 3 is the batch's cycle index 3 (logged there as cycle 4/10). Changing the number moves the object to that
-start, so it can be seen before running.
+Isaac Sim opens with a *Pick-and-place cell* panel (a tab next to *Property*): a gripper list, an
+object list, the start pose number, *Run 1 cycle*, *Run 5 cycles*, *Stop after this cycle*, the
+cycle's latest step, and the results so far. Choosing another object swaps it in the stage while the
+simulation is stopped; the arm, camera, planner and ROS 2 bridge stay as they are. The start pose is
+seeded, as in the batch runs: start pose 3 is the batch's cycle index 3 (logged there as cycle 4/10).
+Changing the number moves the object to that start, so it can be seen before running.
 
-The list offers every object with robust grasps for the gripper, and marks the five run in batches.
-The others were never run through whole cycles: some are larger than the area the camera searches
-(0.18 m around the pick spot), and some have only one or two robust grasps, which the arm cannot
-reach from many start poses.
+Choosing another gripper builds the cell again on a new stage, which takes a few seconds: the
+gripper is merged into the arm's articulation, and the planner's collision model of it changes. The
+object stays if the new gripper has robust grasps for it, otherwise the list's first object is
+taken. With the camera, each gripper carries it at its own place and has its own hand-eye
+calibration (see [the camera](#step-4-the-wrist-camera-eye-in-hand)); a gripper without one is marked
+in the list and cannot be chosen. With `--perception ros` the gripper stays the one given with
+`--gripper`, because the locator's camera mount comes from its launch file; at start-up the cell checks
+that the locator's mount is this gripper's calibration.
 
-The options are `run_cell.py`'s (`--perception`, `--look-first`, `--gripper`, ...), plus
-`--objects` to offer fewer objects and `--script` to run steps as if clicked (for tests and demos;
-see the file's docstring). Results go to `results/pick_place_interactive.sqlite`, not the batch
-database. Each object's resting pose on the grasp matrix's table is found by letting it settle, which
-needs a stage of its own and so cannot happen once the cell is built: the first start settles every
-object and keeps the poses in `results/cell_rest_mounts.json`, and later starts read the file. With
+The gripper list offers every calibrated gripper of the grasp matrix, the object list every object
+with robust grasps for the chosen gripper, and marks the ones run in batches (the five, with the
+2F-140). The others were never run through whole batches: some are larger than the area the camera
+searches (0.18 m around the pick spot), and some have only one or two robust grasps, which the arm
+cannot reach from many start poses.
+
+The options are `run_cell.py`'s (`--perception`, `--look-first`, `--gripper` for the gripper to start
+with, ...), plus `--grippers` and `--objects` to offer fewer, and `--script` to run steps as if
+clicked (for tests and demos; see the file's docstring). Results go to
+`results/pick_place_interactive.sqlite`, not the batch database. Each object's resting pose on the
+grasp matrix's table is found by letting it settle, which needs a stage of its own and so cannot
+happen once the cell is built: the first start settles every object offered, for every gripper, and
+keeps the poses in `results/cell_rest_mounts.json`, and later starts read the file. With
 `--perception ros`, the object's model is written to `results/perception/models` for the locator if
 it is not there yet.
 
@@ -102,6 +114,12 @@ Tested on 2026-11-11, scripted:
   placed, 2.5 and 1.6 mm from the target, and their poses were found 0.2 and 0.5 mm off.
 - ROS 2: the mug, the lemon, the figurine. The locator switched objects with them, read the
   figurine's model that the window had just written, and both cycles were placed.
+
+Tested on 2026-11-14, scripted, with the camera: the 2F-140 on the mug (start pose 0), then the RG2 on
+the toy block, the Franka Hand on the jar, and back to the 2F-140 on the mug at start pose 0. The two
+2F-140 cycles came out identical in every stored column but wall-clock times, so building the cell
+again leaves nothing of the earlier gripper behind. The first start settled the 56 gripper x object
+pairs not yet in `results/cell_rest_mounts.json` in about a minute.
 
 The refactoring into `cell_session.py` left `run_cell.py`'s results unchanged: the toy block (3
 cycles, pose from the simulation) and the mug (2 cycles, camera) came out identical before and after,
@@ -234,7 +252,7 @@ the planner's obstacle and the place target are all computed from the estimate; 
 still read, but only to judge the gates and score the result.
 
 ```powershell
-# once: hand-eye calibration (writes results/perception/handeye.json)
+# once: hand-eye calibration (writes results/perception/handeye.json; another gripper: --gripper onrobot_rg2)
 C:\issacsim-6-2\python.bat pick_place\handeye.py
 # watch it
 C:\issacsim-6-2\python.bat pick_place\run_cell.py --object mug_A07RDPW843 --perception camera
@@ -260,6 +278,12 @@ not turned) and otherwise runs as in the camera mode (from the look pose, no sli
 - **On the gripper**, 2.5 cm outside the 2F-140's body on the side away from its fingers' travel and
   3 cm out from the flange, looking along the approach axis. The fingers show in the bottom corners of
   the image. The housing is a box of the D455's size, visual only; the planner knows it as spheres.
+  The other grippers carry it by the same rule, each beside its own base (`camera_model.MOUNT_XYZ`):
+  the Robotiq 2F-85 and Hand-E where the 2F-140 does (the same base), the Franka Hand 5.5 mm closer
+  in (a narrower hand), the OnRobot RG2 and 2FG7 on their -y side, as they close along x. The RG2's
+  and 2FG7's taller bodies fill the bottom third of the image; the object, in the middle of the image
+  at the look pose, stays in view, and the perception leaves out everything more than 0.30 m above
+  the table, the gripper included.
 - **Depth** is the renderer's perfect depth with the effects of an active stereo camera added
   (`camera_model.simulate_depth`): disparity noise (about 1 mm at 0.45 m; an assumption, not a
   calibration), no depth where the second imager cannot see (beside near edges), on depth steps, or
@@ -285,6 +309,24 @@ Against the mount as built (which only the simulation knows) the calibration is 
 degrees off. The first attempt used 30 mm markers and views up to 0.45 m away: only 5 of 20 views
 found enough corners (3 to 5 pixels per marker bit), and the result was 2.9 mm and 1.0 degree off.
 One degree at 0.45 m is 8 mm on the object.
+
+Each gripper carries the camera at its own place, so each has its own calibration, as a real cell
+needs one after a tool change (`handeye.py --gripper <name>`, about a minute each; the 2F-140's is
+`results/perception/handeye.json`, the others' `handeye_<gripper>.json`). Run on 2026-11-14, the same
+40 viewpoints and the same selection by board spread:
+
+| Gripper | Method kept | Views used | Board spread | Off the mount as built |
+|---|---|---|---|---|
+| 2F-140 | Park | 40 | 0.51 mm, 0.29° | 0.46 mm, 0.24° |
+| 2F-85 | Park | 39 | 0.46 mm, 0.20° | 0.31 mm, 0.04° |
+| Hand-E | Park | 39 | 0.48 mm, 0.23° | 0.29 mm, 0.07° |
+| Franka Hand | Daniilidis | 39 | 0.43 mm, 0.20° | 0.11 mm, 0.05° |
+| RG2 | Horaud | 39 | 0.52 mm, 0.24° | 0.45 mm, 0.07° |
+| 2FG7 | Horaud | 38 | 0.51 mm, 0.24° | 0.87 mm, 0.17° |
+
+Tsai, Park, Horaud and Daniilidis agree within 0.01 mm of board spread on every gripper, and within
+0.2 mm of each other against the mount as built, so which one is kept matters little; Andreff is the
+outlier each time (1.8 to 3.2 mm of spread, 4.9 to 8.9 mm off).
 
 ### Finding the object (`perception.py`)
 
@@ -401,6 +443,37 @@ spot and not turned; everything else is as in the camera mode.
 failed cycle; `results/perception_summary.md` the perception alone on the 50 saved views at other
 noise levels.
 
+### Other grippers: first trials (2026-11-14)
+
+The batches above are all the 2F-140's. The other five grippers were first run through a few cycles
+each, to check that the cell works with them, on an object with robust grasps for each (start poses
+0 to 4; scratch databases, not in `results/`):
+
+| Gripper | Object | Robust grasps | Pose from the simulation (3 cycles) | Camera (5 cycles) | Camera's pose error |
+|---|---|---|---|---|---|
+| 2F-85 | toy block | 69 | 2 placed, 1 tracking | 4 placed, 1 dropped | 0.3 to 1.0 mm |
+| Franka Hand | jar | 16 | 2 placed, 1 tracking | 3 placed, 2 dropped | 0.4 to 0.7 mm |
+| Hand-E | beer stein | 25 | 2 dropped, 1 misplaced | 2 placed, 2 tracking, 1 misplaced | 0.2 to 0.5 mm |
+| RG2 | toy block | 67 | (did not mount, since fixed) | 1 placed, 2 tracking, 1 dropped, 1 misplaced | 0.4 to 1.4 mm |
+| 2FG7 | jar | 27 | 2 tracking, 1 dropped | 3 tracking, 2 dropped | 0.8 to 1.1 mm |
+
+The camera found the object to about a millimetre with every gripper (centre error; the jar is turned
+about its axis by up to 144 degrees in the estimate, which its symmetry hides: ADD-S 1.0 to 1.2 mm).
+What fails is the grasp, and mostly the approach: the arm stops short of the grasp pose (`tracking`,
+3 to 24 mm off) because the fingers meet the object or the table on the way in, or the approach
+pushes the object (12 to 18 mm, the Hand-E's stein) before the fingers close. That is the limit noted
+under step 4, that the grasp matrix starts its gripper at the grasp pose and never simulates the
+approach. It bites harder on these grippers than on the 2F-140, why exactly is not looked into yet;
+the two that open least (Hand-E 50 mm, 2FG7 38 mm of stroke) are among the worst. So the matrix's
+robust rate does not rank the grippers for this cell: the RG2, second in the matrix (33% robust),
+placed 1 of 5. These are a handful of cycles each, enough to see the cell works and where it fails,
+not to rank the grippers.
+
+The RG2 at first did not mount at all: its asset ties its base to the gripper's root Xform, not to
+an empty target, and `cell.mount_gripper()` looked only for the latter. It now treats a joint to a
+prim without a rigid body as a joint to the world too (it finds the same joint as before on the
+other five).
+
 ## Step 5: ROS 2
 
 `run_cell.py --perception ros` makes the cell a ROS 2 system. Isaac Sim plays the robot: through its
@@ -450,4 +523,6 @@ for Windows and Isaac Sim's bundled Jazzy talk on the same PC.
   intrinsics and the arm's kinematics are exact, the images are clean, and there is one object on a
   plain table. The depth noise model is an assumption. Learned pose estimators that handle clutter
   and model mismatch (FoundationPose, in Isaac ROS) fit step 5.
-- One gripper so far; the others can run with `--gripper` where they have robust grasps.
+- Batches with one gripper only. The other five run (`--gripper`, or the window's gripper list), with
+  their own camera mounts and hand-eye calibrations, but have had only a few trial cycles each, and
+  their approaches fail far more often than the 2F-140's.

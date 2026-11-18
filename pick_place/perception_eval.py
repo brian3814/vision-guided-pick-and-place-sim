@@ -70,7 +70,8 @@ def believed_camera_pose(cap: dict, mount_usd: np.ndarray | None) -> np.ndarray:
     same arm pose with a hand-eye calibration's mount instead."""
     if mount_usd is None:
         return cap["T_world_cam"]
-    tool = cap["T_world_cam"] @ np.linalg.inv(camera_model.mount() @ camera_model.USD_TO_CV)
+    gripper = str(cap.get("gripper", "robotiq_2f_140"))  # captures before other grippers name none
+    tool = cap["T_world_cam"] @ np.linalg.inv(camera_model.mount(gripper) @ camera_model.USD_TO_CV)
     return camera_model.camera_pose(tool, mount_usd)
 
 

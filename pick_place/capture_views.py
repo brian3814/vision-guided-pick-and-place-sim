@@ -69,15 +69,15 @@ async def main() -> None:
     g = gm_config.load_grippers()[args.gripper]
     rest = await cell.rest_mount(args.gripper, g, args.object)
     c = cell.Cell(args.gripper, g, args.object, rest * cell.shift(*cell.PICK_XY))
-    cam = wrist_camera.WristCamera(c.stage)
+    cam = wrist_camera.WristCamera(c.stage, args.gripper)
     model, used = wrist_camera.object_model(c.object_body)
     log(f"model: {len(model.points)} points from {used}")
     np.savez_compressed(out / "models" / f"{args.object}.npz", points=model.points, normals=model.normals)
 
-    pl = planner.Planner([(np.array(ct), r) for ct, r in c.tool_spheres()] + camera_model.tool_spheres())
+    pl = planner.Planner([(np.array(ct), r) for ct, r in c.tool_spheres()] + camera_model.tool_spheres(args.gripper))
     pl.add_cuboid("table", size=[cell.TABLE_X[1] - cell.TABLE_X[0], cell.TABLE_Y[1] - cell.TABLE_Y[0], cell.TABLE_THICKNESS],
                   centre=[sum(cell.TABLE_X) / 2, sum(cell.TABLE_Y) / 2, -cell.TABLE_THICKNESS / 2])
-    look = camera_model.look_tool_pose([*cell.PICK_XY, 0.04])
+    look = camera_model.look_tool_pose([*cell.PICK_XY, 0.04], args.gripper)
     p = pl.plan_pose(np.array(cell.HOME_Q), look)
     if p is None:
         raise RuntimeError("no motion to the look pose")
@@ -106,11 +106,12 @@ async def main() -> None:
             frame = cam.read()
         rgb, depth = frame
         q_now = np.asarray(robot.get_dof_positions().numpy(), dtype=float).reshape(-1)[arm_idx]
-        T_wc = camera_model.camera_pose(pl.tool_pose(q_now))
+        T_wc = camera_model.camera_pose(pl.tool_pose(q_now), camera_model.mount(args.gripper))
         obj = controller.body_pose(str(c.object_body.GetPath()))
         name = f"{args.object}_{i}"
         np.savez_compressed(out / "captures" / f"{name}.npz", depth=depth.astype(np.float32), rgb=rgb, T_world_cam=T_wc,
-                            obj_true=obj, q=q_now, yaw=yaw, pick=pick, seed=args.seed, cycle=i, roi_centre=np.array(cell.PICK_XY),
+                            obj_true=obj, q=q_now, gripper=args.gripper, yaw=yaw, pick=pick, seed=args.seed, cycle=i,
+                            roi_centre=np.array(cell.PICK_XY),
                             intrinsics=np.array([intr.fx, intr.fy, intr.cx, intr.cy, intr.width, intr.height]))
         Image.fromarray(rgb).save(out / "captures" / f"{name}.png")
         log(f"{name}: yaw {yaw:+.0f} deg at ({pick[0]:.3f}, {pick[1]:.3f}); "
