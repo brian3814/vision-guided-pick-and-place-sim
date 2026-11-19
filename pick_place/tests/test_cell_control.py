@@ -159,6 +159,7 @@ class ControlTest(unittest.IsolatedAsyncioTestCase):
         self.cell.gate.set()
         await self.control.settled()
         self.assertEqual([c[0] for c in self.cell.calls], ["begin_run", "cycle", "show"])
+        self.assertFalse(self.control.state()["stopping"])
         self.assertEqual(self.control.stop(), "nothing runs")
 
     async def test_a_failing_cycle_says_why_and_leaves_the_window_usable(self):

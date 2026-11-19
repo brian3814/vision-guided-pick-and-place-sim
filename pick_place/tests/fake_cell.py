@@ -28,6 +28,7 @@ class FakeCell:
         self.warnings: list[str] = []  # what the next guard() puts back
         self.fail_cycle: Exception | None = None  # an exception the next cycle raises
         self.gate: asyncio.Event | None = None  # a cycle waits for it
+        self.overrides: dict = {}  # fields of the next results, in place of the camera's (None: not measured)
 
     @property
     def grasp_count(self):
@@ -66,4 +67,5 @@ class FakeCell:
             raise self.fail_cycle
         outcome = self.outcomes.pop(0) if self.outcomes else "placed"
         return {"outcome": outcome, "place_error_m": Scalar(0.0042), "tilt_deg": 0.1, "est_centre_mm": 0.6,
-                "est_rot_deg": 0.8, "grasp_index": 116, "detail": "approach: tool 7.0 mm off", "cycle_s": 15.2}
+                "est_rot_deg": 0.8, "grasp_index": 116, "detail": "approach: tool 7.0 mm off", "cycle_s": 15.2,
+                **self.overrides}

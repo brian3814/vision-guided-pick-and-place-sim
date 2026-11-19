@@ -96,10 +96,12 @@ keeps the poses in `results/cell_rest_mounts.json`, and later starts read the fi
 it is not there yet.
 
 `--web` runs Isaac Sim without its window and streams the viewport over WebRTC (signalling on
-49100/TCP, media on 47998/UDP), for a web page that draws the panel itself: `web_bridge.py` answers
-the page, and `livestream.py` puts it on the stream. The log says when the page can connect. Kit's own
-panel runs too, hidden with the rest of Kit's UI (`--/app/window/hideUi=false` streams it with the
-viewport); both draw the same controller, so they agree. Kit streams to one page at a time.
+49100/TCP, media on 47998/UDP), for a web page that draws the panel itself (`web/`, see its README):
+`web_bridge.py` answers the page, and `livestream.py` puts it on the stream. The log says when the
+page can connect. Kit's own panel runs too, hidden with the rest of Kit's UI
+(`--/app/window/hideUi=false` streams it with the viewport); both draw the same controller, so they
+agree. Kit streams to one page at a time. For now a cycle crashes Isaac Sim while a page is
+connected (in cuMotion; see `web/README.md`), so cycles still run in the window or by `--script`.
 
 Use the panel, not Isaac Sim's own controls, to run things. The toolbar's Play and Stop, and
 selecting and dragging prims in the viewport, change the simulation under the cycle:
@@ -145,6 +147,10 @@ the stage. Its tests use a fake cell and need no Isaac Sim:
 ```powershell
 python -m unittest discover -s pick_place/tests     # any Python 3.10+, standard library only
 ```
+
+`tests/test_web_contract.py` also records one session of the bridge's messages for the web page's
+tests (`web/src/cell/contract.json`), and fails when they change: run it with `--write`, then the
+page's tests.
 
 Moving the rules there (2026-11-18) left the window's results as they were: the script above came out
 identical to 2026-11-14 in every column on one of two runs, and the other differed only in the Franka

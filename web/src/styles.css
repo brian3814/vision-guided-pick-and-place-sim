@@ -107,7 +107,7 @@ button:disabled {
     border-left: 1px solid #111;
     padding: 10px;
     gap: 6px;
-    overflow-y: auto;
+    overflow: hidden;
 }
 
 .panel h1 {
@@ -120,8 +120,93 @@ button:disabled {
     margin: 0;
 }
 
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.controls label {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+select,
+input {
+    font: inherit;
+    color: var(--text);
+    background: #1b1b1b;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 3px 6px;
+}
+
+select:disabled,
+input:disabled {
+    opacity: 0.6;
+}
+
+.pose {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.pose label {
+    flex: none;
+}
+
+.pose input {
+    width: 72px;
+}
+
+.pose span {
+    font-size: 12px;
+    padding-bottom: 4px;
+}
+
+.buttons {
+    display: flex;
+    gap: 6px;
+    padding: 4px 0;
+}
+
+.buttons button {
+    flex: 1;
+    padding: 6px 8px;
+}
+
 .status {
     min-height: 3em;
+}
+
+.good {
+    color: var(--good);
+}
+
+.bad {
+    color: var(--bad);
+}
+
+/* The results so far: the rest of the panel, scrolling. */
+.results {
+    flex: 1;
+    min-height: 80px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-variant-numeric: tabular-nums;
+}
+
+.row {
+    white-space: pre-wrap;
+}
+
+.row.heading {
+    font-size: 16px;
+    padding-top: 6px;
 }
 
 /* Below this width the panel goes under the viewport. */

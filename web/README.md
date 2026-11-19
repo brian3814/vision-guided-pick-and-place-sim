@@ -42,6 +42,24 @@ ports, 49100/TCP and 47998/UDP, must be open there.
 One page at a time: Kit streams to one client. A reload can take up to half a minute to reconnect,
 while Kit closes the previous stream.
 
+## Use it
+
+- **The viewport:** click it to give it the mouse wheel and the keyboard, then use Isaac Sim's
+  controls: Alt + left drag orbits, the wheel zooms. Clicking the panel takes them back; what is
+  typed into the panel never reaches Kit.
+- **The panel:** as Kit's (see `pick_place/README.md`, *The interactive window*): gripper, object,
+  start pose (sent on Enter or when the field is left), *Run 1 cycle*, *Run 5 cycles*, *Stop after
+  this cycle*, the cycle's latest step, and the results so far. While cycles run or the cell is
+  being built, the controls are off; an action Kit refuses says why under the status.
+- **Reloading the page** keeps the results: the page asks Kit for every event of the session so far.
+
+**Known problem (2026-11-20): a cycle crashes Isaac Sim while a page is connected.** The crash is in
+cuMotion, creating a trajectory optimizer for the first re-plan in the middle of a cycle (the
+slip-corrected *lower*, or *retract* with `--no-slip-correction`), with exit code 0xC0000006. It
+happened in all four runs with a page streaming, whether the cycle was started from the page or by
+`--script`, and in none without one: the same scripted cycle placed the object with `--web` and no
+page, and in the window. Choosing grippers, objects and start poses from the page works.
+
 Tested on 2026-11-20, with the cell offering all six grippers: the page, opened before Isaac Sim,
 connected once the stream was up (Kit was ready 40 s after launch) and showed the viewport and Kit's
 status line; the mouse wheel zoomed Kit's camera; a reload reconnected in 32 s and got the state
@@ -50,12 +68,23 @@ again.
 ## Develop
 
 ```sh
-npm test           # vitest
+npm test           # vitest: the link, the results list, and the contract with Kit's bridge
 npm run build      # type-check, and bundle into dist/
 ```
 
 - `src/kit/`: the stream and the link to Kit. `streamer.ts` is the only file that uses NVIDIA's
   library; `link.ts` matches requests to answers; `protocol.ts` lists the messages, after
   `pick_place/web_bridge.py`; `keyboard.ts` keeps what is typed into the page out of the stream.
+- `src/cell/`: `Panel.tsx` draws Kit's state and asks Kit to act; `results.ts` turns Kit's events
+  into the results list, by the rules of Kit's panel.
+- `src/cell/contract.json` is one session of messages recorded from the real bridge and controller
+  (with the tests' fake cell); `contract.test.ts` plays it through the page's link and checks every
+  state, event and answer against `protocol.ts`, field by field. The Python test that writes it
+  fails when the bridge's messages change; then write it again and run the page's tests:
+
+  ```sh
+  python pick_place/tests/test_web_contract.py --write    # from the repo
+  cd web && npm test
+  ```
 - Kit renders at its own size (1280 × 720 by default), which the page scales to fit. The library's
   `fitStreamResolution` is left out: it kept the stream from connecting.

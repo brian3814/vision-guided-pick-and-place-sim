@@ -226,7 +226,7 @@ class CellControl:
         e = None if task.cancelled() else task.exception()
         if e is not None:
             traceback.print_exception(e)
-            self.busy = False
+            self.busy = self.stopping = False
             self._say(f"error: {e}")
 
     async def _locked(self, work: Callable[[], Coroutine]) -> None:
@@ -296,7 +296,7 @@ class CellControl:
                 traceback.print_exc()
                 self.status, failed = f"error: {e}", True
             finally:
-                self.busy = False
+                self.busy = self.stopping = False
                 self._changed()
             if not failed:
                 await self._show()

@@ -1,0 +1,2113 @@
+[
+ {
+  "receive": {
+   "event_type": "cell:event",
+   "payload": {
+    "event": {
+     "type": "heading",
+     "gripper": "robotiq_2f_140",
+     "object": "mug",
+     "text": "2F-140 x mug",
+     "at": 1795000000.0
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "mug",
+     "pose": 0,
+     "busy": false,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "Choose a gripper and an object, and run a cycle.",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "mug",
+     "pose": 0,
+     "busy": false,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "2F-140 x mug (12 robust grasps), start pose 0: turned +0 deg at (0.750, -0.350). Ready.",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "send": {
+   "action": "hello",
+   "request_id": "r1"
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:response",
+   "payload": {
+    "ok": true,
+    "protocol": 1,
+    "log": [
+     {
+      "type": "heading",
+      "gripper": "robotiq_2f_140",
+      "object": "mug",
+      "text": "2F-140 x mug",
+      "at": 1795000000.0
+     }
+    ],
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "mug",
+     "pose": 0,
+     "busy": false,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "2F-140 x mug (12 robust grasps), start pose 0: turned +0 deg at (0.750, -0.350). Ready.",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    },
+    "request_id": "r1"
+   }
+  }
+ },
+ {
+  "send": {
+   "action": "run",
+   "request_id": "r2",
+   "n": 2
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "mug",
+     "pose": 0,
+     "busy": true,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "2F-140 x mug (12 robust grasps), start pose 0: turned +0 deg at (0.750, -0.350). Ready.",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:response",
+   "payload": {
+    "ok": true,
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "mug",
+     "pose": 0,
+     "busy": true,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "2F-140 x mug (12 robust grasps), start pose 0: turned +0 deg at (0.750, -0.350). Ready.",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    },
+    "request_id": "r2"
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:event",
+   "payload": {
+    "event": {
+     "type": "warning",
+     "text": "the wrist camera had been moved in the stage (3.0 mm); put back on its mount",
+     "at": 1795000001.0
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "mug",
+     "pose": 0,
+     "busy": true,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "cycle start pose 0 (1/2): object turned",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:event",
+   "payload": {
+    "event": {
+     "type": "result",
+     "pose": 0,
+     "ok": true,
+     "text": "   0   placed, 4.2 mm from the target; found 0.6 mm / 0.8 deg off; grasp 116",
+     "outcome": "placed",
+     "place_error_m": 0.0042,
+     "tilt_deg": 0.1,
+     "est_centre_mm": 0.6,
+     "est_rot_deg": 0.8,
+     "grasp_index": 116,
+     "detail": "approach: tool 7.0 mm off",
+     "cycle_s": 15.2,
+     "at": 1795000002.0
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "mug",
+     "pose": 1,
+     "busy": true,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "cycle start pose 0 (1/2): object turned",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "mug",
+     "pose": 1,
+     "busy": true,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "cycle start pose 1 (2/2): object turned",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:event",
+   "payload": {
+    "event": {
+     "type": "result",
+     "pose": 1,
+     "ok": false,
+     "text": "   1   dropped_lift, 4.2 mm from the target; found 0.6 mm / 0.8 deg off; grasp 116  (approach: tool 7.0 mm off)",
+     "outcome": "dropped_lift",
+     "place_error_m": 0.0042,
+     "tilt_deg": 0.1,
+     "est_centre_mm": 0.6,
+     "est_rot_deg": 0.8,
+     "grasp_index": 116,
+     "detail": "approach: tool 7.0 mm off",
+     "cycle_s": 15.2,
+     "at": 1795000003.0
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "mug",
+     "pose": 2,
+     "busy": true,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "cycle start pose 1 (2/2): object turned",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "mug",
+     "pose": 2,
+     "busy": false,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "cycle start pose 1 (2/2): object turned",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "mug",
+     "pose": 2,
+     "busy": false,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "2F-140 x mug (12 robust grasps), start pose 2: turned +20 deg at (0.750, -0.350). Ready.",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "send": {
+   "action": "object",
+   "request_id": "r3",
+   "name": "toy"
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:response",
+   "payload": {
+    "ok": true,
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "mug",
+     "pose": 2,
+     "busy": false,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "2F-140 x mug (12 robust grasps), start pose 2: turned +20 deg at (0.750, -0.350). Ready.",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    },
+    "request_id": "r3"
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:event",
+   "payload": {
+    "event": {
+     "type": "heading",
+     "gripper": "robotiq_2f_140",
+     "object": "toy",
+     "text": "2F-140 x toy",
+     "at": 1795000004.0
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "toy",
+     "pose": 2,
+     "busy": false,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "2F-140 x toy (40 robust grasps), start pose 2: turned +20 deg at (0.750, -0.350). Ready.",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "send": {
+   "action": "pose",
+   "request_id": "r4",
+   "pose": 7
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "toy",
+     "pose": 7,
+     "busy": false,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "2F-140 x toy (40 robust grasps), start pose 2: turned +20 deg at (0.750, -0.350). Ready.",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:response",
+   "payload": {
+    "ok": true,
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "toy",
+     "pose": 7,
+     "busy": false,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "2F-140 x toy (40 robust grasps), start pose 2: turned +20 deg at (0.750, -0.350). Ready.",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    },
+    "request_id": "r4"
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "toy",
+     "pose": 7,
+     "busy": false,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "2F-140 x toy (40 robust grasps), start pose 7: turned +70 deg at (0.750, -0.350). Ready.",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "send": {
+   "action": "run",
+   "request_id": "r5",
+   "n": 5
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "toy",
+     "pose": 7,
+     "busy": true,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "2F-140 x toy (40 robust grasps), start pose 7: turned +70 deg at (0.750, -0.350). Ready.",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:response",
+   "payload": {
+    "ok": true,
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "toy",
+     "pose": 7,
+     "busy": true,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "2F-140 x toy (40 robust grasps), start pose 7: turned +70 deg at (0.750, -0.350). Ready.",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    },
+    "request_id": "r5"
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "toy",
+     "pose": 7,
+     "busy": true,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "cycle start pose 7 (1/5): object turned",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "send": {
+   "action": "object",
+   "request_id": "r6",
+   "name": "jar"
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:response",
+   "payload": {
+    "ok": false,
+    "error": "busy: wait until the cycles run, or the cell being built, are done",
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "toy",
+     "pose": 7,
+     "busy": true,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "cycle start pose 7 (1/5): object turned",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    },
+    "request_id": "r6"
+   }
+  }
+ },
+ {
+  "send": {
+   "action": "stop",
+   "request_id": "r7"
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "toy",
+     "pose": 7,
+     "busy": true,
+     "stopping": true,
+     "fixed_gripper": false,
+     "status": "cycle start pose 7 (1/5): object turned  (stopping after this cycle)",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:response",
+   "payload": {
+    "ok": true,
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "toy",
+     "pose": 7,
+     "busy": true,
+     "stopping": true,
+     "fixed_gripper": false,
+     "status": "cycle start pose 7 (1/5): object turned  (stopping after this cycle)",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    },
+    "request_id": "r7"
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:event",
+   "payload": {
+    "event": {
+     "type": "result",
+     "pose": 7,
+     "ok": true,
+     "text": "   7   placed, 4.2 mm from the target; found 0.6 mm / 0.8 deg off; grasp 116",
+     "outcome": "placed",
+     "place_error_m": 0.0042,
+     "tilt_deg": 0.1,
+     "est_centre_mm": 0.6,
+     "est_rot_deg": 0.8,
+     "grasp_index": 116,
+     "detail": "approach: tool 7.0 mm off",
+     "cycle_s": 15.2,
+     "at": 1795000005.0
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "toy",
+     "pose": 8,
+     "busy": true,
+     "stopping": true,
+     "fixed_gripper": false,
+     "status": "cycle start pose 7 (1/5): object turned  (stopping after this cycle)",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "toy",
+     "pose": 8,
+     "busy": false,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "cycle start pose 7 (1/5): object turned  (stopping after this cycle)",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "toy",
+     "pose": 8,
+     "busy": false,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "2F-140 x toy (40 robust grasps), start pose 8: turned +80 deg at (0.750, -0.350). Ready.",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "send": {
+   "action": "gripper",
+   "request_id": "r8",
+   "name": "onrobot_rg2"
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:response",
+   "payload": {
+    "ok": true,
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "toy",
+     "pose": 8,
+     "busy": false,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "2F-140 x toy (40 robust grasps), start pose 8: turned +80 deg at (0.750, -0.350). Ready.",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    },
+    "request_id": "r8"
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "toy",
+     "pose": 8,
+     "busy": true,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "Building the cell with the RG2...",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "onrobot_rg2",
+     "object": "toy",
+     "pose": 8,
+     "busy": false,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "Building the cell with the RG2...",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "toy",
+       "text": "toy   7 grasps"
+      },
+      {
+       "name": "valve",
+       "text": "valve   2 grasps"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:event",
+   "payload": {
+    "event": {
+     "type": "heading",
+     "gripper": "onrobot_rg2",
+     "object": "toy",
+     "text": "RG2 x toy",
+     "at": 1795000006.0
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "onrobot_rg2",
+     "object": "toy",
+     "pose": 8,
+     "busy": false,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "RG2 x toy (7 robust grasps), start pose 8: turned +80 deg at (0.750, -0.350). Ready.",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "toy",
+       "text": "toy   7 grasps"
+      },
+      {
+       "name": "valve",
+       "text": "valve   2 grasps"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "send": {
+   "action": "run",
+   "request_id": "r9",
+   "n": 1
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "onrobot_rg2",
+     "object": "toy",
+     "pose": 8,
+     "busy": true,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "RG2 x toy (7 robust grasps), start pose 8: turned +80 deg at (0.750, -0.350). Ready.",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "toy",
+       "text": "toy   7 grasps"
+      },
+      {
+       "name": "valve",
+       "text": "valve   2 grasps"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:response",
+   "payload": {
+    "ok": true,
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "onrobot_rg2",
+     "object": "toy",
+     "pose": 8,
+     "busy": true,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "RG2 x toy (7 robust grasps), start pose 8: turned +80 deg at (0.750, -0.350). Ready.",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "toy",
+       "text": "toy   7 grasps"
+      },
+      {
+       "name": "valve",
+       "text": "valve   2 grasps"
+      }
+     ]
+    },
+    "request_id": "r9"
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "onrobot_rg2",
+     "object": "toy",
+     "pose": 8,
+     "busy": true,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "cycle start pose 8: object turned",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "toy",
+       "text": "toy   7 grasps"
+      },
+      {
+       "name": "valve",
+       "text": "valve   2 grasps"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:event",
+   "payload": {
+    "event": {
+     "type": "result",
+     "pose": 8,
+     "ok": true,
+     "text": "   8   placed, 4.2 mm from the target; grasp 116",
+     "outcome": "placed",
+     "place_error_m": 0.0042,
+     "tilt_deg": 0.1,
+     "est_centre_mm": null,
+     "est_rot_deg": null,
+     "grasp_index": 116,
+     "detail": null,
+     "cycle_s": 15.2,
+     "at": 1795000007.0
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "onrobot_rg2",
+     "object": "toy",
+     "pose": 9,
+     "busy": true,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "cycle start pose 8: object turned",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "toy",
+       "text": "toy   7 grasps"
+      },
+      {
+       "name": "valve",
+       "text": "valve   2 grasps"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "onrobot_rg2",
+     "object": "toy",
+     "pose": 9,
+     "busy": false,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "cycle start pose 8: object turned",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "toy",
+       "text": "toy   7 grasps"
+      },
+      {
+       "name": "valve",
+       "text": "valve   2 grasps"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:state",
+   "payload": {
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "onrobot_rg2",
+     "object": "toy",
+     "pose": 9,
+     "busy": false,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "RG2 x toy (7 robust grasps), start pose 9: turned +90 deg at (0.750, -0.350). Ready.",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "toy",
+       "text": "toy   7 grasps"
+      },
+      {
+       "name": "valve",
+       "text": "valve   2 grasps"
+      }
+     ]
+    }
+   }
+  }
+ },
+ {
+  "send": {
+   "action": "fly",
+   "request_id": "r10"
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:response",
+   "payload": {
+    "ok": false,
+    "error": "unknown action: 'fly'",
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "onrobot_rg2",
+     "object": "toy",
+     "pose": 9,
+     "busy": false,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "RG2 x toy (7 robust grasps), start pose 9: turned +90 deg at (0.750, -0.350). Ready.",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "toy",
+       "text": "toy   7 grasps"
+      },
+      {
+       "name": "valve",
+       "text": "valve   2 grasps"
+      }
+     ]
+    },
+    "request_id": "r10"
+   }
+  }
+ },
+ {
+  "send": {
+   "action": "hello",
+   "request_id": "r11"
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:response",
+   "payload": {
+    "ok": true,
+    "protocol": 1,
+    "log": [
+     {
+      "type": "heading",
+      "gripper": "robotiq_2f_140",
+      "object": "mug",
+      "text": "2F-140 x mug",
+      "at": 1795000000.0
+     },
+     {
+      "type": "warning",
+      "text": "the wrist camera had been moved in the stage (3.0 mm); put back on its mount",
+      "at": 1795000001.0
+     },
+     {
+      "type": "result",
+      "pose": 0,
+      "ok": true,
+      "text": "   0   placed, 4.2 mm from the target; found 0.6 mm / 0.8 deg off; grasp 116",
+      "outcome": "placed",
+      "place_error_m": 0.0042,
+      "tilt_deg": 0.1,
+      "est_centre_mm": 0.6,
+      "est_rot_deg": 0.8,
+      "grasp_index": 116,
+      "detail": "approach: tool 7.0 mm off",
+      "cycle_s": 15.2,
+      "at": 1795000002.0
+     },
+     {
+      "type": "result",
+      "pose": 1,
+      "ok": false,
+      "text": "   1   dropped_lift, 4.2 mm from the target; found 0.6 mm / 0.8 deg off; grasp 116  (approach: tool 7.0 mm off)",
+      "outcome": "dropped_lift",
+      "place_error_m": 0.0042,
+      "tilt_deg": 0.1,
+      "est_centre_mm": 0.6,
+      "est_rot_deg": 0.8,
+      "grasp_index": 116,
+      "detail": "approach: tool 7.0 mm off",
+      "cycle_s": 15.2,
+      "at": 1795000003.0
+     },
+     {
+      "type": "heading",
+      "gripper": "robotiq_2f_140",
+      "object": "toy",
+      "text": "2F-140 x toy",
+      "at": 1795000004.0
+     },
+     {
+      "type": "result",
+      "pose": 7,
+      "ok": true,
+      "text": "   7   placed, 4.2 mm from the target; found 0.6 mm / 0.8 deg off; grasp 116",
+      "outcome": "placed",
+      "place_error_m": 0.0042,
+      "tilt_deg": 0.1,
+      "est_centre_mm": 0.6,
+      "est_rot_deg": 0.8,
+      "grasp_index": 116,
+      "detail": "approach: tool 7.0 mm off",
+      "cycle_s": 15.2,
+      "at": 1795000005.0
+     },
+     {
+      "type": "heading",
+      "gripper": "onrobot_rg2",
+      "object": "toy",
+      "text": "RG2 x toy",
+      "at": 1795000006.0
+     },
+     {
+      "type": "result",
+      "pose": 8,
+      "ok": true,
+      "text": "   8   placed, 4.2 mm from the target; grasp 116",
+      "outcome": "placed",
+      "place_error_m": 0.0042,
+      "tilt_deg": 0.1,
+      "est_centre_mm": null,
+      "est_rot_deg": null,
+      "grasp_index": 116,
+      "detail": null,
+      "cycle_s": 15.2,
+      "at": 1795000007.0
+     }
+    ],
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "onrobot_rg2",
+     "object": "toy",
+     "pose": 9,
+     "busy": false,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "RG2 x toy (7 robust grasps), start pose 9: turned +90 deg at (0.750, -0.350). Ready.",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "toy",
+       "text": "toy   7 grasps"
+      },
+      {
+       "name": "valve",
+       "text": "valve   2 grasps"
+      }
+     ]
+    },
+    "request_id": "r11"
+   }
+  }
+ }
+]
