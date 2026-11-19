@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Pick-and-place cell</title>
+    </head>
+    <body>
+        <div id="root"></div>
+        <!-- The stream's elements live outside React: the streaming library keeps the elements it was given,
+             so a remount must not replace them. The viewport moves the video into its frame (Viewport.tsx). -->
+        <div id="stream-parking" hidden>
+            <video id="remote-video" autoplay muted playsinline tabindex="-1"></video>
+            <audio id="remote-audio" muted></audio>
+        </div>
+        <script type="module" src="/src/main.tsx"></script>
+    </body>
+</html>
