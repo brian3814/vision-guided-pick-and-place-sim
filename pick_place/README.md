@@ -37,7 +37,8 @@ tracking and contacts for the first N steps of every move.
 | File | What it does |
 |---|---|
 | `cell.py` | Builds the cell: table, UR10, gripper mounted on the flange, object, place marker |
-| `planner.py` | cuMotion trajectory optimizer: the UR10 plus collision spheres for the gripper, box obstacles |
+| `planner.py` | Motion planning, as Kit's processes use it: hands everything to the planning process (cuMotion must not run in Kit's process: `docs/web-stream-cumotion-crash.md`) |
+| `cumotion_planner.py`, `planner_process.py` | cuMotion's trajectory optimizer (the UR10 plus collision spheres for the gripper, box obstacles), and the process it runs in (tests: `tests/test_planner_process.py`) |
 | `controller.py` | One pick-and-place cycle as a phase machine, stepped once per physics step |
 | `run_cell.py` | Runs cycles and stores them in `results/pick_place.sqlite` |
 | `cell_app.py` | The cell in a window: choose the gripper and the object, run cycles one at a time (results in `results/pick_place_interactive.sqlite`) |
@@ -100,8 +101,8 @@ it is not there yet.
 `web_bridge.py` answers the page, and `livestream.py` puts it on the stream. The log says when the
 page can connect. Kit's own panel runs too, hidden with the rest of Kit's UI
 (`--/app/window/hideUi=false` streams it with the viewport); both draw the same controller, so they
-agree. Kit streams to one page at a time. For now a cycle crashes Isaac Sim while a page is
-connected (in cuMotion; see `web/README.md`), so cycles still run in the window or by `--script`.
+agree. Kit streams to one page at a time. Until 2026-11-20 every cycle crashed Isaac Sim while a
+page was connected; the planner now runs in a process of its own (`docs/web-stream-cumotion-crash.md`).
 
 Use the panel, not Isaac Sim's own controls, to run things. The toolbar's Play and Stop, and
 selecting and dragging prims in the viewport, change the simulation under the cycle:
@@ -146,7 +147,12 @@ the stage. Its tests use a fake cell and need no Isaac Sim:
 
 ```powershell
 python -m unittest discover -s pick_place/tests     # any Python 3.10+, standard library only
+C:\issacsim-6-2\python.bat -m unittest discover -s pick_place/tests   # also the planner's (need numpy)
 ```
+
+The planner's tests (`tests/test_planner_process.py`) run Kit's side and the planning process with a
+fake planner instead of cuMotion. They need numpy, so a plain Python skips them; Isaac Sim's
+`python.bat` has it, and runs them without starting Kit.
 
 `tests/test_web_contract.py` also records one session of the bridge's messages for the web page's
 tests (`web/src/cell/contract.json`), and fails when they change: run it with `--write`, then the
@@ -228,7 +234,10 @@ Each of these failed a cycle, or the whole process, until fixed:
    second cuMotion optimizer of a cycle crashed Isaac Sim in 3 of 3 runs. Planning repeatedly with no
    physics never crashed, and with PhysX on the CPU no run has crashed in over 70 cycles. So the cell
    runs PhysX on the CPU. **The matrix and the cell therefore use different PhysX solvers**, which
-   may account for part of any difference between their results.
+   may account for part of any difference between their results. (2026-11-20: very likely CUDA work
+   in Kit's process faulting cuMotion's managed memory, as the web page's stream later did;
+   cuMotion now plans in a process of its own. See `docs/web-stream-cumotion-crash.md`. The
+   physics stays on the CPU, so results stay comparable.)
 5. **Plan the whole cycle before moving.** At first only the motion to the pre-grasp pose was planned
    up front, and each straight move was planned when its turn came. 8 of 30 cycles then failed with
    a move that could not be planned: the planner had picked a grasp whose approach, transport or
@@ -386,7 +395,8 @@ to 6.6 s of computing per image on this PC.
 1. **Plain Replicator annotators, not Isaac Sim's camera wrapper.** With `isaacsim.sensors`'
    `CameraSensor` attached to the camera, even if it was never read, creating the second cuMotion
    optimizer crashed Isaac Sim (3 of 3 runs), the same crash as with GPU physics in step 3. With
-   `omni.replicator` annotators on the CPU it did not (6 of 6 plans, then every cycle since).
+   `omni.replicator` annotators on the CPU it did not (6 of 6 plans, then every cycle since). The
+   cause was very likely the one found on 2026-11-20 (`docs/web-stream-cumotion-crash.md`).
 2. **A search that refines before it judges.** The first version fully refined only the 16 best of
    3000 coarse starts. Starts near the true pose ranked 100th to 450th on the coarse score, and the jar
    came out upside down in most noisy images while the true pose scored 1.0 against 0.6. The coarse

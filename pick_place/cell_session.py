@@ -168,7 +168,10 @@ class CellSession:
                       centre=[sum(cell.TABLE_X) / 2, sum(cell.TABLE_Y) / 2, -cell.TABLE_THICKNESS / 2])
         if controller.DEBUG_STEPS:
             self._report_contacts()
-        # CPU physics: with PhysX on the GPU, creating a second cuMotion optimizer crashed the process.
+        # CPU physics. With PhysX on the GPU, creating a second cuMotion optimizer crashed the process:
+        # very likely CUDA work faulting cuMotion's managed memory (docs/web-stream-cumotion-crash.md).
+        # cuMotion now plans in a process of its own; the physics stays on the CPU so that results
+        # stay comparable with the batches before.
         SimulationManager.set_device("cpu")
         self.robot = Articulation(cell.ROBOT)
         if a.perception == "ros":

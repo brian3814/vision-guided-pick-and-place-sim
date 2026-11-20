@@ -53,12 +53,14 @@ while Kit closes the previous stream.
   being built, the controls are off; an action Kit refuses says why under the status.
 - **Reloading the page** keeps the results: the page asks Kit for every event of the session so far.
 
-**Known problem (2026-11-20): a cycle crashes Isaac Sim while a page is connected.** The crash is in
-cuMotion, creating a trajectory optimizer for the first re-plan in the middle of a cycle (the
-slip-corrected *lower*, or *retract* with `--no-slip-correction`), with exit code 0xC0000006. It
-happened in all four runs with a page streaming, whether the cycle was started from the page or by
-`--script`, and in none without one: the same scripted cycle placed the object with `--web` and no
-page, and in the window. Choosing grippers, objects and start poses from the page works.
+**Fixed on 2026-11-20: cycles crashed Isaac Sim while a page was connected.** The stream's CUDA work
+in Kit's process faulted the planner, cuMotion, whose data lives in CUDA managed memory. cuMotion
+now plans in a process of its own, in every mode. The computation is the same, and so are the results.
+`docs/web-stream-cumotion-crash.md` tells the whole story: the symptom, how it was narrowed down,
+the cause and the fix.
+
+**Still to do:** the plans at the start of a cycle hold up Kit for 5 to 6 s, in which Kit sends no
+frame. A page loses the stream after about 7 s of that, and then needs a reload (up to half a minute).
 
 Tested on 2026-11-20, with the cell offering all six grippers: the page, opened before Isaac Sim,
 connected once the stream was up (Kit was ready 40 s after launch) and showed the viewport and Kit's

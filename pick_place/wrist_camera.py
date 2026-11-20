@@ -29,7 +29,9 @@ class WristCamera:
 
     The images come through plain Replicator annotators on the CPU. With Isaac Sim's CameraSensor
     wrapper attached instead (even if never read), creating the second cuMotion optimizer crashed
-    Isaac Sim in 3 of 3 runs; with these, 6 of 6 plans went through."""
+    Isaac Sim in 3 of 3 runs; with these, 6 of 6 plans went through. That was very likely CUDA work
+    in Kit's process faulting cuMotion's managed memory, as the web page's stream later did
+    (docs/web-stream-cumotion-crash.md); cuMotion now plans in a process of its own (planner.py)."""
 
     def __init__(self, stage: Usd.Stage, gripper: str):
         import omni.replicator.core as rep

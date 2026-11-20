@@ -27,6 +27,7 @@ Next: MoveIt 2, planning the motions in ROS 2 instead of inside Isaac Sim.
 | `pick_place/` | The cell: planner, cycle controller, wrist camera, perception, hand-eye calibration, interactive window |
 | `ros2_ws/` | ROS 2 workspace: the `object_locator` node and its launch file |
 | `tools/` | Gripper calibration and geometry |
+| `docs/` | Write-ups of problems worth keeping: why cuMotion plans in a process of its own |
 | `data/` | Object catalog, gripper calibration |
 | `results/` | Result databases and summaries, the hand-eye calibration, pictures of one cycle |
 
