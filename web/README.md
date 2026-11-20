@@ -59,8 +59,13 @@ now plans in a process of its own, in every mode. The computation is the same, a
 `docs/web-stream-cumotion-crash.md` tells the whole story: the symptom, how it was narrowed down,
 the cause and the fix.
 
-**Still to do:** the plans at the start of a cycle hold up Kit for 5 to 6 s, in which Kit sends no
-frame. A page loses the stream after about 7 s of that, and then needs a reload (up to half a minute).
+**Fixed on 2026-11-20: the page lost the stream at the start of some cycles.** The plans made
+there held up Kit for 5 to 6 s, sometimes more, and Kit sent no frame meanwhile; after about 7 s the
+page lost the stream. Now the simulation pauses while a cycle waits for a plan, and Kit goes on
+drawing frames, about 10 a second, of a still scene.
+
+Tested on 2026-11-20, after that fix: 10 cycles with the page connected throughout, no disconnect,
+and 9 to 18 frames a second while Kit waited for plans.
 
 Tested on 2026-11-20, with the cell offering all six grippers: the page, opened before Isaac Sim,
 connected once the stream was up (Kit was ready 40 s after launch) and showed the viewport and Kit's

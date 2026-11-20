@@ -6,7 +6,8 @@ CUDA *managed memory*, and on Windows the CPU may not touch managed memory while
 the same process runs on the GPU. The WebRTC stream runs CUDA work in Kit's process for every frame
 it sends. The fix: cuMotion now plans in a process of its own (`pick_place/planner.py`,
 `planner_process.py`, `cumotion_planner.py`), in every mode. It computes exactly what it computed
-in Kit, and the cell's results came out the same. Found and fixed on 2026-11-20.
+in Kit, and the cell's results came out the same. Found and fixed on 2026-11-20. A second change
+the same day keeps the stream going while Kit waits for plans (the last section).
 
 ## The symptom
 
@@ -147,10 +148,44 @@ and when Kit was killed it noticed the lost connection and ended within about 10
   - The page lost the stream twice, both times while the plans at the start of a cycle held Kit up
     (below). Kit carried on, and a reload brought the page back with all its results.
 
-## What is left
+## Afterwards: the page lost the stream while Kit waited for plans
 
-Planning still holds up Kit's main thread: the 6 plans at the start of a cycle take 5 to 6 s, in
-which Kit sends no frame. A page loses the stream after about 7 s of that. On 2026-11-20 it happened
-in some runs, and a reload took up to half a minute. Now that the planning runs elsewhere, Kit could
-keep drawing frames while it waits, with the physics paused so results do not change. That is the
-next change.
+With the crash fixed, one problem was left. Kit still waited for each plan without updating: the 6
+plans at the start of a cycle took 5 to 6 s, in which Kit sent no frame. In the live run above, the
+page lost the stream 7.9 s into the start of a cycle whose first grasp was ruled out, so more plans
+were made. Which side gave up first, the page's WebRTC library or Kit's stream server, Kit's log does
+not say.
+
+Kit waited by design: a cycle advances one physics step per Kit update, and plans between two steps,
+so the arm is still where a plan starts when the plan comes, and results do not depend on how long
+planning takes. With cuMotion in Kit's process, Kit could not have drawn anything while it planned
+anyway. Now its main thread only waits for an answer, so it can do something else meanwhile.
+
+The fix, the same day:
+
+- `planner.Pending` runs a planner call on a thread of its own; the thread only waits for the
+  planning process's answer. Plans dropped by Kit's garbage collector on the main thread meanwhile
+  go into a queue that needs no lock.
+- `Cycle.plan` (`controller.py`) yields `PLANNING` until the answer comes, and `run_cycle`
+  (`cell_session.py`) answers by pausing the simulation and letting Kit update: the viewport and the
+  stream get frames, and no physics step is taken. The first step after the plan plays the
+  simulation again. The check that every step advances the simulation by exactly one physics step
+  still holds, so a pause that took effect late would stop the cycle.
+- The first try updated Kit as fast as it could while it waited. The results were the same, but
+  planning took half as long again (4 headless cycles: 54 s instead of 35): Kit's rendering slowed
+  cuMotion down in the other process. Kit now updates at most every 0.1 s while it waits, about 10
+  frames a second of a still scene, and planning took 35.3 s.
+
+Checked the same way as the crash fix:
+
+- **Headless, from the simulation's pose** (4 mug cycles): identical in every stored column but
+  wall-clock times to the runs before this change.
+- **Headless, with the wrist camera** (2 cycles, three runs): two took grasp 180 and one grasp 116,
+  the two outcomes seen before, and each was identical in every column but wall-clock times to a run
+  before this change with the same outcome. Planning took 2 to 5% longer than before, which is
+  what drawing 10 frames a second costs.
+- **The web page** (`cell_app.py --web`, 2F-140, toy block): 10 cycles, start poses 0 to 9, with
+  the page connected throughout: one *Client connected* in Kit's log and no disconnect. The page
+  counted the frames its decoder decoded: 9 to 18 a second in the first 8 s of each cycle, mostly
+  planning, and 52 to 55 while the arm moved. Every result was the same as before: poses 0 to 4 as in
+  the live run above, misplaced 104.7 mm included, and poses 5 to 9 as in batch run 1.

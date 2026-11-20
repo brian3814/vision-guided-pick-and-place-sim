@@ -87,12 +87,25 @@ class OverAPipe(unittest.TestCase):
         self.assertIsNotNone(p.at(0.1))
         k = p._k
         del p
-        self.assertEqual(self.process._dropped, [("plan", k)])
+        self.assertEqual(list(self.process._dropped), [("plan", k)])
         self.pl.tool_pose(Q0)  # the next request takes the drops along
-        self.assertEqual(self.process._dropped, [])
+        self.assertEqual(list(self.process._dropped), [])
         other = planner.Planner([], robot_dir=pathlib.Path("robots/ur10"), process=self.process)
         del other
         self.assertEqual([kind for kind, _ in self.process._dropped], ["planner"])
+
+    def test_a_plan_waited_for_on_another_thread_while_this_one_drops_a_plan(self):
+        old = self.pl.plan_joints(Q0, Q0)
+        k = old._k
+        q1 = np.array(Q0) + 1
+        job = planner.Pending(self.pl.plan_joints, Q0, q1)
+        del old
+        self.assertEqual(job.result().final().tobytes(), q1.tobytes())
+        self.pl.tool_pose(Q0)
+        self.assertEqual(list(self.process._dropped), [])
+        with self.assertRaises(RuntimeError) as raised:  # let go there
+            self.process.call("at", k, 0.1)
+        self.assertIn("KeyError", str(raised.exception))
 
     def test_a_plan_let_go_there_cannot_be_followed(self):
         p = self.pl.plan_joints(Q0, Q0)
@@ -100,6 +113,30 @@ class OverAPipe(unittest.TestCase):
         with self.assertRaises(RuntimeError) as raised:
             p.at(0.1)
         self.assertIn("KeyError", str(raised.exception))
+
+
+@unittest.skipIf(np is None, "needs numpy: run with Isaac Sim's python.bat")
+class APendingCall(unittest.TestCase):
+    """A planner call on a thread of its own, so that Kit can update meanwhile."""
+
+    def test_it_is_done_when_the_call_returns_and_gives_its_answer(self):
+        go = threading.Event()
+        job = planner.Pending(lambda x: go.wait(5) and x * 2, 21)
+        self.assertFalse(job.done())
+        go.set()
+        self.assertEqual(job.result(), 42)
+        self.assertTrue(job.done())
+        self.assertGreater(job.wall_s, 0.0)
+
+    def test_the_calls_error_is_raised_by_result(self):
+        def fails():
+            raise ValueError("no plan here")
+
+        job = planner.Pending(fails)
+        with self.assertRaises(ValueError) as raised:
+            job.result()
+        self.assertEqual(str(raised.exception), "no plan here")
+        self.assertTrue(job.done())
 
 
 @unittest.skipIf(np is None, "needs numpy: run with Isaac Sim's python.bat")

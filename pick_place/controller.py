@@ -1,6 +1,10 @@
 """One pick-and-place cycle as a phase machine, advanced once per physics step. Runs inside Isaac
 Sim; import it only after SimulationApp has started.
 
+While it waits for the planning process, the cycle yields PLANNING instead of a step: its driver
+(cell_session.run_cycle) then keeps Kit updating with the simulation paused, so the viewport and the
+web page's stream go on, and the arm is still where the plan starts when the answer comes.
+
 Phases: settle -> [look] -> to pre-grasp -> approach -> close -> lift -> transport -> lower ->
 release -> retract -> home -> settle. Every phase has a measured gate; a failed gate ends the cycle
 with an outcome naming it, and the rest of the cycle is not run (no release on a timeout).
@@ -59,6 +63,9 @@ PLACE_TOLERANCE_M = 0.02
 MAX_TILT_DEG = 10.0
 LOOK_WAIT_STEPS = 15       # at the look pose: the arm settles, and frames rendered since arrive
 LOOK_TARGET_Z = 0.04       # the camera aims this high above the pick spot
+PLANNING = "planning"      # yielded by Cycle.run() while it waits for a plan: an update, but no physics step
+PLANNING_FRAME_S = 0.1     # while it waits, an update at most this often: with Kit drawing frames flat out,
+                           # cuMotion in the planning process took half as long again (4 cycles: 54 s, not 35)
 
 
 # --- pose helpers (4x4 numpy matrices acting on column vectors) ----------------------------
@@ -206,9 +213,13 @@ class Cycle:
             yield
 
     def plan(self, name: str, fn, q: np.ndarray | None = None):
-        t0 = time.perf_counter()
-        p = fn(self.q() if q is None else q)
-        self.result["plan_wall_s"] += time.perf_counter() - t0
+        """fn's plan (fn: a planner call, given the arm's joints: q, or where the arm is now), or
+        None. Yields PLANNING until the planning process answers, every PLANNING_FRAME_S."""
+        job = planner_mod.Pending(fn, self.q() if q is None else q)
+        while not job.wait(PLANNING_FRAME_S):
+            yield PLANNING
+        p = job.result()
+        self.result["plan_wall_s"] += job.wall_s
         if p is None:
             self.log(f"{name}: no plan")
         return p
@@ -270,9 +281,10 @@ class Cycle:
         return [("approach", grasp, False), ("lift", lifted, False), ("transport", above, True),
                 ("lower", place, False), ("retract", backed(place, PRE_GRASP_M), False)]
 
-    def plan_moves(self, q: np.ndarray, grasp: np.ndarray) -> tuple[str | None, dict]:
+    def plan_moves(self, q: np.ndarray, grasp: np.ndarray):
         """Plan each straight move from the end of the previous one, starting at q. Returns the
-        name of the first that cannot be planned (None if all can) and the plans by name.
+        name of the first that cannot be planned (None if all can) and the plans by name; yields
+        PLANNING meanwhile, as plan() does.
 
         These plans are the ones executed. Re-planning a move from where the arm actually is (a
         fraction of a millimetre away) sometimes failed where this plan had succeeded."""
@@ -280,7 +292,7 @@ class Cycle:
         plans = {}
         for name, target, table in self.moves(grasp):
             self.planner.set_enabled("table", table)
-            p = self.plan(f"plan {name}", lambda q0: self.planner.plan_line(q0, target), q)
+            p = yield from self.plan(f"plan {name}", lambda q0, target=target: self.planner.plan_line(q0, target), q)
             if p is None:
                 return name, plans
             plans[name] = p
@@ -293,7 +305,7 @@ class Cycle:
         target = camera_model.look_tool_pose([*cell.PICK_XY, LOOK_TARGET_Z], self.cell.gripper_name)
         pl.set_enabled("table", True)
         pl.set_enabled("object", False)
-        p = self.plan("to look pose", lambda q: pl.plan_pose(q, target))
+        p = yield from self.plan("to look pose", lambda q: pl.plan_pose(q, target))
         if p is None:
             return self.fail("plan_failed", "look pose")
         yield from self.follow(p, target, "to look pose")
@@ -395,7 +407,9 @@ class Cycle:
             candidates = [i for i in range(len(grasps)) if i not in ruled_out]
             pl.set_enabled("table", True)
             pl.set_enabled("object", True)
-            p = self.plan("to pre-grasp", lambda q: pl.plan_goalset(q, [pre[i] for i in candidates])) if candidates else None
+            p = None
+            if candidates:
+                p = yield from self.plan("to pre-grasp", lambda q: pl.plan_goalset(q, [pre[i] for i in candidates]))
             if p is None or len(ruled_out) >= MAX_GRASP_TRIES:
                 r["rejected_grasps"] = len(ruled_out)
                 if p is not None:
@@ -407,7 +421,7 @@ class Cycle:
                     detail = f"no motion to any of {len(grasps)} robust grasps"
                 return self.fail("unreachable", detail)
             chosen = candidates[p.target_index]
-            blocked, plans = self.plan_moves(p.final(), grasps[chosen])
+            blocked, plans = yield from self.plan_moves(p.final(), grasps[chosen])
             if blocked is None:
                 break
             ruled_out[chosen] = blocked
@@ -474,7 +488,7 @@ class Cycle:
             aim = translation(raised(expected, PLACE_CLEARANCE_M)[:3, 3] - landing[:3, 3]) @ place
             aim[2, 3] = max(aim[2, 3], place[2, 3])
             pl.set_enabled("table", False)
-            p = self.plan("lower", lambda q: pl.plan_line(q, aim))
+            p = yield from self.plan("lower", lambda q: pl.plan_line(q, aim))
             if p is None:  # fall back to the pre-planned move to the nominal place pose
                 p, aim = plans["lower"], place
         else:  # the robot cannot see the object in its hand: lower as planned
@@ -490,7 +504,7 @@ class Cycle:
         yield from self.wait(RELEASE_STEPS)
         self.log(f"released: the object is {np.linalg.norm(self.obj()[:3, 3] - expected[:3, 3]) * 1000:.0f} mm from the target")
         out = backed(aim, PRE_GRASP_M)
-        p = self.plan("retract", lambda q: pl.plan_line(q, out))
+        p = yield from self.plan("retract", lambda q: pl.plan_line(q, out))
         if p is None:  # fall back to the pre-planned move (it starts from the nominal place pose)
             p, out = plans["retract"], moves["retract"]
         yield from self.follow(p, out, "retract")
@@ -501,10 +515,10 @@ class Cycle:
         pl.set_enabled("table", True)
         pl.add_cuboid("object", size=[s + 0.02 for s in size], pose=translation(self.ctrl_shift) @ seen @ translation(list(centre)))
         pl.set_enabled("object", True)
-        p = self.plan("home", lambda q: pl.plan_joints(q, cell.HOME_Q))
+        p = yield from self.plan("home", lambda q: pl.plan_joints(q, cell.HOME_Q))
         if p is None:  # e.g. the gripper starts inside the padded box
             pl.set_enabled("object", False)
-            p = self.plan("home without the placed object", lambda q: pl.plan_joints(q, cell.HOME_Q))
+            p = yield from self.plan("home without the placed object", lambda q: pl.plan_joints(q, cell.HOME_Q))
         if p is None:
             return self.fail("plan_failed", "home")
         yield from self.follow(p, pl.tool_pose(cell.HOME_Q), "home")

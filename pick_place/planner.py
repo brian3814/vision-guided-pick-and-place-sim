@@ -9,9 +9,11 @@ Kit. A plan's joint positions and velocities at a time are evaluated there too (
 round trip of a fraction of a millisecond), so results are the same to the last digit.
 
 One planning process serves every Planner of a session: it is started with the first one, ended at
-exit, and started again if it ended. Inside Isaac Sim, make planners after the
-isaacsim.robot_motion.cumotion extension is on: it puts cuMotion on sys.path and ships the robot's
-configuration.
+exit, and started again if it ended. Pending runs a planner call on a thread of its own, so that Kit
+can keep updating, and the stream keep getting frames, while the planning process works.
+
+Inside Isaac Sim, make planners after the isaacsim.robot_motion.cumotion extension is on: it puts
+cuMotion on sys.path and ships the robot's configuration.
 
 Frames: the robot base is the world origin (cell.py puts it there). Poses are 4x4 numpy matrices
 acting on column vectors.
@@ -27,7 +29,10 @@ import secrets
 import subprocess
 import sys
 import threading
+import time
+from collections import deque
 from multiprocessing.connection import Client, Connection
+from typing import Any, Callable
 
 import numpy as np
 
@@ -68,13 +73,14 @@ def _relay(stream) -> None:
 
 class PlannerProcess:
     """A planning process (planner_process.py) and the connection to it. Requests are answered in
-    order; a planner or plan dropped in Kit is released there with the next request."""
+    order, one at a time, from whichever thread asks (see Pending). A planner or plan dropped in Kit,
+    on any thread, is released there with the next request."""
 
     def __init__(self, conn: Connection, proc: subprocess.Popen | None = None, relay: threading.Thread | None = None):
         self.conn, self.proc, self._relay = conn, proc, relay
         self.closed = False
-        self._dropped: list[tuple[str, int]] = []
-        self._lock = threading.Lock()
+        self._dropped: deque[tuple[str, int]] = deque()  # appended and taken without a lock: a drop can come
+        self._lock = threading.Lock()                     # from the garbage collector in the middle of a call
 
     @classmethod
     def start(cls, backend: str | None = None, paths: list[str] | None = None) -> PlannerProcess:
@@ -114,7 +120,9 @@ class PlannerProcess:
         with self._lock:
             if self.closed:
                 raise PlannerProcessError("the planning process was closed")
-            dropped, self._dropped = self._dropped, []
+            dropped = []
+            while self._dropped:
+                dropped.append(self._dropped.popleft())
             try:
                 self.conn.send((op, args, dropped))
                 status, value = self.conn.recv()
@@ -151,6 +159,42 @@ class PlannerProcess:
                 self._relay.join(timeout=2)  # what the process said last, into the log
             if self.proc.stdout is not None:
                 self.proc.stdout.close()
+
+
+class Pending:
+    """A planner call (e.g. a lambda around Planner.plan_line) running on a thread of its own, so that
+    Kit can go on updating while the planning process works. The thread only waits for the answer:
+    the planning process plans exactly as it does for a call made directly."""
+
+    def __init__(self, call: Callable[..., Any], *args):
+        self.wall_s = 0.0  # how long the call took, once done
+        self._value: Any = None
+        self._error: BaseException | None = None
+        self._finished = threading.Event()
+        threading.Thread(target=self._run, args=(call, args), name="planner call", daemon=True).start()
+
+    def _run(self, call: Callable[..., Any], args: tuple) -> None:
+        t0 = time.perf_counter()
+        try:
+            self._value = call(*args)
+        except BaseException as e:  # noqa: BLE001  raised again by result(), on the thread that waits
+            self._error = e
+        self.wall_s = time.perf_counter() - t0
+        self._finished.set()
+
+    def done(self) -> bool:
+        return self._finished.is_set()
+
+    def wait(self, timeout: float) -> bool:
+        """Wait until the call is done, for timeout seconds at most. Whether it is done."""
+        return self._finished.wait(timeout)
+
+    def result(self) -> Any:
+        """The call's answer, or its error raised here. Waits for it if it is not done."""
+        self._finished.wait()
+        if self._error is not None:
+            raise self._error
+        return self._value
 
 
 _shared: PlannerProcess | None = None

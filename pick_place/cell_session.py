@@ -55,10 +55,27 @@ async def next_update() -> None:
 async def run_cycle(cyc: controller.Cycle) -> None:
     """Advance the cycle once per physics step until it finishes. It runs from the main loop, one
     app update per physics step (checked against the timeline's clock), so planning happens
-    between steps rather than inside PhysX's step callback."""
+    between steps rather than inside PhysX's step callback.
+
+    While the cycle waits for a plan (it yields controller.PLANNING), the simulation is paused and
+    Kit goes on updating: the viewport and the web page's stream keep getting frames, and no physics
+    step is taken, as when planning held up Kit's main loop. Before, a page lost the stream when the
+    plans at a cycle's start held it up for more than about 7 s."""
     timeline = omni.timeline.get_timeline_interface()
     last = timeline.get_current_time()
-    for _ in cyc.run():
+    for step in cyc.run():
+        if step == controller.PLANNING:
+            if timeline.is_playing():
+                timeline.pause()
+                timeline.commit()  # now, not at the next update: that update must take no step
+            await next_update()
+            if timeline.is_stopped():
+                raise RuntimeError("the simulation was stopped while the cycle waited for a plan, not by the cycle "
+                                   "(the toolbar's Stop?); the cycle was abandoned")
+            continue
+        if not timeline.is_playing():  # paused while the cycle waited for a plan
+            timeline.play()
+            timeline.commit()
         await next_update()
         if not timeline.is_playing():
             raise RuntimeError("the simulation was stopped or paused while the cycle ran, not by the cycle "

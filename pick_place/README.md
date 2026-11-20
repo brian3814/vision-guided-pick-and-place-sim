@@ -39,7 +39,7 @@ tracking and contacts for the first N steps of every move.
 | `cell.py` | Builds the cell: table, UR10, gripper mounted on the flange, object, place marker |
 | `planner.py` | Motion planning, as Kit's processes use it: hands everything to the planning process (cuMotion must not run in Kit's process: `docs/web-stream-cumotion-crash.md`) |
 | `cumotion_planner.py`, `planner_process.py` | cuMotion's trajectory optimizer (the UR10 plus collision spheres for the gripper, box obstacles), and the process it runs in (tests: `tests/test_planner_process.py`) |
-| `controller.py` | One pick-and-place cycle as a phase machine, stepped once per physics step |
+| `controller.py` | One pick-and-place cycle as a phase machine, stepped once per physics step; the simulation pauses while it waits for a plan |
 | `run_cell.py` | Runs cycles and stores them in `results/pick_place.sqlite` |
 | `cell_app.py` | The cell in a window: choose the gripper and the object, run cycles one at a time (results in `results/pick_place_interactive.sqlite`) |
 | `cell_control.py` | The window's rules without Kit: choices, running and stopping, what it says; the panel draws its state and events (tests: `tests/test_cell_control.py`) |
@@ -103,10 +103,15 @@ page can connect. Kit's own panel runs too, hidden with the rest of Kit's UI
 (`--/app/window/hideUi=false` streams it with the viewport); both draw the same controller, so they
 agree. Kit streams to one page at a time. Until 2026-11-20 every cycle crashed Isaac Sim while a
 page was connected; the planner now runs in a process of its own (`docs/web-stream-cumotion-crash.md`).
+While a cycle waits for a plan, the simulation pauses and Kit goes on drawing frames, about 10 a
+second, so the page keeps its stream (before, the plans at a cycle's start held Kit up for 5 to 6 s,
+and the page could lose the stream).
 
 Use the panel, not Isaac Sim's own controls, to run things. The toolbar's Play and Stop, and
 selecting and dragging prims in the viewport, change the simulation under the cycle:
-- A Stop or Pause during a cycle abandons the cycle, with a message saying so.
+- A Stop or Pause during a cycle abandons the cycle, with a message saying so. While the cycle
+  waits for a plan, the simulation is paused by the cycle itself (the toolbar shows it): a Stop then
+  abandons the cycle too, and a Pause is undone when the plan comes.
 - A moved wrist camera spoils every estimate after it, by a constant offset: its images stop
   matching the hand-eye calibration. That is the likely cause of a session on 2026-11-11 whose
   estimates went 12, then a steady 40 mm off, whatever the object. A scripted replay of the same
