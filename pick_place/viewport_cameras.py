@@ -9,6 +9,10 @@ product of their own.
 Changing the gripper builds the cell on a new stage. The viewport then goes on looking through the
 camera it looked through, if the new stage has it, and through Perspective if not.
 
+The state also names the stage's unit of length (its metersPerUnit), for the page's legend: as
+Kit's unit box at the viewport's bottom left names it (omni.usd.metrics.assembler.ui), or the
+metres per unit when it is none of the units Kit names.
+
 ViewportCameras knows nothing of Kit: the viewport comes in through `Viewport`. KitViewport is
 Isaac Sim's active viewport; it imports Kit only when made.
 """
@@ -20,6 +24,19 @@ from typing import Protocol
 PERSPECTIVE = "/OmniverseKit_Persp"
 KIT_CAMERAS = {PERSPECTIVE: "Perspective", "/OmniverseKit_Top": "Top", "/OmniverseKit_Front": "Front",
                "/OmniverseKit_Right": "Right"}
+# The units Kit's unit box names, with their metres per unit, and how near a stage's must be (a share of it).
+UNITS = {"mm": 0.001, "cm": 0.01, "dm": 0.1, "m": 1.0, "km": 1000.0, "in": 0.0254, "ft": 0.3048, "mi": 1609.34}
+UNIT_TOLERANCE = 0.02
+
+
+def unit_name(meters_per_unit: float | None) -> str | None:
+    """The name of the unit of length `meters_per_unit` metres long ("m"); None without a stage."""
+    if meters_per_unit is None:
+        return None
+    for name, meters in UNITS.items():
+        if abs(meters_per_unit - meters) < meters * UNIT_TOLERANCE:
+            return name
+    return f"{meters_per_unit:g} m"
 
 
 class Viewport(Protocol):
@@ -33,9 +50,11 @@ class Viewport(Protocol):
 
     def look_through(self, path: str) -> None: ...
 
+    def meters_per_unit(self) -> float | None: ...  # the stage's metersPerUnit (None: no stage)
+
 
 class ViewportCameras:
-    """The viewport's cameras, and switching between them."""
+    """The viewport's cameras, and switching between them; and the unit of the stage it shows."""
 
     def __init__(self, viewport: Viewport):
         self.viewport = viewport
@@ -44,12 +63,12 @@ class ViewportCameras:
 
     def state(self) -> dict:
         """The cameras, each with its path and the name the page shows (Kit's four first, as Kit's
-        menu lists them), and the path of the camera the viewport looks through."""
+        menu lists them), the path of the camera the viewport looks through, and the stage's unit."""
         self._follow_stage()
         paths = self.viewport.cameras()
         cameras = [{"path": p, "name": name} for p, name in KIT_CAMERAS.items() if p in paths]
         cameras += [{"path": p, "name": p.rsplit("/", 1)[-1]} for p in paths if p not in KIT_CAMERAS]
-        return {"camera": self.viewport.camera(), "cameras": cameras}
+        return {"camera": self.viewport.camera(), "cameras": cameras, "unit": unit_name(self.viewport.meters_per_unit())}
 
     def set_camera(self, path: str) -> str | None:
         """Look through the camera at `path`. None when done, or why not."""
@@ -107,3 +126,9 @@ class KitViewport:
         viewport = self._active()
         if viewport is not None:
             viewport.camera_path = path
+
+    def meters_per_unit(self) -> float | None:
+        from pxr import UsdGeom
+
+        stage = self._context.get_stage()
+        return None if stage is None else UsdGeom.GetStageMetersPerUnit(stage)

@@ -81,7 +81,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -155,7 +156,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -172,7 +174,7 @@
    "event_type": "cell:response",
    "payload": {
     "ok": true,
-    "protocol": 2,
+    "protocol": 3,
     "log": [
      {
       "type": "heading",
@@ -246,7 +248,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     },
     "request_id": "r1"
@@ -328,7 +331,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -403,7 +407,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     },
     "request_id": "r2"
@@ -490,7 +495,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -586,7 +592,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -660,7 +667,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -756,7 +764,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -830,7 +839,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -904,7 +914,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -986,7 +997,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     },
     "request_id": "r3"
@@ -1075,7 +1087,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -1156,7 +1169,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -1231,7 +1245,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     },
     "request_id": "r4"
@@ -1306,7 +1321,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -1387,7 +1403,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -1462,7 +1479,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     },
     "request_id": "r5"
@@ -1537,7 +1555,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -1620,7 +1639,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     },
     "request_id": "r6"
@@ -1703,7 +1723,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     },
     "request_id": "r7"
@@ -1784,7 +1805,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -1859,7 +1881,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     },
     "request_id": "r8"
@@ -1956,7 +1979,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -2030,7 +2054,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -2104,7 +2129,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -2186,7 +2212,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     },
     "request_id": "r9"
@@ -2261,7 +2288,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -2331,7 +2359,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -2415,7 +2444,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -2492,7 +2522,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -2563,7 +2594,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     },
     "request_id": "r10"
@@ -2634,7 +2666,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -2726,7 +2759,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -2796,7 +2830,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -2866,7 +2901,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     }
    }
@@ -2945,7 +2981,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     },
     "request_id": "r11"
@@ -3024,7 +3061,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     },
     "request_id": "r12"
@@ -3042,7 +3080,7 @@
    "event_type": "cell:response",
    "payload": {
     "ok": true,
-    "protocol": 2,
+    "protocol": 3,
     "log": [
      {
       "type": "heading",
@@ -3191,7 +3229,8 @@
         "path": "/World/UR10/wrist_3_link/WristCamera",
         "name": "WristCamera"
        }
-      ]
+      ],
+      "unit": "m"
      }
     },
     "request_id": "r13"

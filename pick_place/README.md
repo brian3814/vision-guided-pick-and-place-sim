@@ -45,7 +45,7 @@ tracking and contacts for the first N steps of every move.
 | `cell_control.py` | The window's rules without Kit: choices, running and stopping, what it says; the panel draws its state and events (tests: `tests/test_cell_control.py`) |
 | `web_bridge.py` | The window's controller for a web page: the page's requests in, events and state out, over JSON messages (no Kit; tests: `tests/test_web_bridge.py`) |
 | `livestream.py` | `web_bridge.py` on Kit's stream, for `cell_app.py --web`: turns on the WebRTC stream and its messaging (Kit only) |
-| `viewport_cameras.py` | The viewport's cameras for the web page, which has no Kit menus: which there are, which one it looks through, switching (`KitViewport` in Kit; tests: `tests/test_viewport_cameras.py`) |
+| `viewport_cameras.py` | The viewport's cameras for the web page, which has no Kit menus: which there are, which one it looks through, switching; and the stage's unit, for the page's legend (`KitViewport` in Kit; tests: `tests/test_viewport_cameras.py`) |
 | `cell_session.py`, `cell_args.py` | The cell set up for running cycles, and the options, shared by `run_cell.py` and `cell_app.py` |
 | `run_batch.py`, `report.py` | Several objects headless; `results/pick_place_summary.md` |
 | `cell_db.py` | Database schema, and reading robust grasps from the grasp matrix |

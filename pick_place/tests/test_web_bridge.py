@@ -107,6 +107,7 @@ class BridgeTest(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(state["view"]["camera"], PERSPECTIVE)
             self.assertEqual([c["name"] for c in state["view"]["cameras"]],
                              ["Perspective", "Top", "Front", "Right", "WristCamera"])
+            self.assertEqual(state["view"]["unit"], "m")
 
     async def test_the_camera_action_switches_the_viewports_camera(self):
         answer = self.bridge.handle("camera", {"path": WRIST_CAMERA})

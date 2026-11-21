@@ -10,13 +10,14 @@ WRIST_CAMERA = "/World/UR10/wrist_3_link/WristCamera"
 
 
 class FakeViewport:
-    """A viewport looking through Perspective, on a stage with Kit's cameras and `extra` ones."""
+    """A viewport looking through Perspective, on a stage in metres with Kit's cameras and `extra` ones."""
 
     def __init__(self, extra=(WRIST_CAMERA,)):
         self.key = 1
         self.paths = [*extra, *KIT_CAMERAS]  # Kit's own last, as a stage lists its session layer's prims
         self.looking: str | None = PERSPECTIVE
         self.told: list[str] = []  # the paths it was told to look through
+        self.mpu: float | None = 1.0  # the stage's metersPerUnit
 
     def stage(self):
         return self.key
@@ -30,6 +31,9 @@ class FakeViewport:
     def look_through(self, path):
         self.told.append(path)
         self.looking = path
+
+    def meters_per_unit(self):
+        return self.mpu
 
     def new_stage(self, extra=(WRIST_CAMERA,), looking: str | None = PERSPECTIVE) -> None:
         """Another stage opened, with these cameras; the viewport looks through `looking` on it."""

@@ -16,7 +16,7 @@ events and state, as it does to the omni.ui panel.
 The page has no Kit menus, so it also switches the viewport's camera, as Isaac Sim's camera menu
 does: action camera {path}, taken at any time, even while cycles run, since it only changes what
 the stream shows (viewport_cameras.py). The state carries the cameras, under `view`: which there
-are, and which one the viewport looks through.
+are, and which one the viewport looks through; and the stage's unit of length, for the page's legend.
 
 A page that connects, or reloads, says `hello`. The answer holds the events so far (`log`), so the
 results list comes back as it was, and the state. Every event is stamped with the time it was sent
@@ -39,12 +39,12 @@ from collections import OrderedDict, deque
 from collections.abc import Callable
 from typing import Any
 
-PROTOCOL = 2  # 2: the state carries the viewport's cameras (`view`), and the camera action
+PROTOCOL = 3  # 2: the state carries the viewport's cameras (`view`), and the camera action; 3: `view` names the stage's unit
 REQUEST = "cell:request"
 RESPONSE = "cell:response"
 EVENT = "cell:event"
 STATE = "cell:state"
-NO_VIEW = {"camera": None, "cameras": []}  # the state's `view` without a viewport
+NO_VIEW = {"camera": None, "cameras": [], "unit": None}  # the state's `view` without a viewport
 ANSWERS_KEPT = 64  # answers kept by request id, for a request handed over twice
 LOG_KEPT = 2000  # events a page that connects later gets (about 400 cycles' results)
 

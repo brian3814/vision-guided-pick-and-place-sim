@@ -9,7 +9,7 @@ import unittest
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 from fake_viewport import WRIST_CAMERA, FakeViewport  # noqa: E402
-from viewport_cameras import PERSPECTIVE, ViewportCameras  # noqa: E402
+from viewport_cameras import PERSPECTIVE, ViewportCameras, unit_name  # noqa: E402
 
 TOP = "/OmniverseKit_Top"
 
@@ -24,7 +24,8 @@ class ViewportCamerasTest(unittest.TestCase):
             "camera": PERSPECTIVE,
             "cameras": [{"path": PERSPECTIVE, "name": "Perspective"}, {"path": TOP, "name": "Top"},
                         {"path": "/OmniverseKit_Front", "name": "Front"}, {"path": "/OmniverseKit_Right", "name": "Right"},
-                        {"path": WRIST_CAMERA, "name": "WristCamera"}]})
+                        {"path": WRIST_CAMERA, "name": "WristCamera"}],
+            "unit": "m"})
 
     def test_lists_only_the_cameras_the_stage_has(self):
         self.viewport.paths = [PERSPECTIVE]
@@ -70,6 +71,20 @@ class ViewportCamerasTest(unittest.TestCase):
         self.assertEqual(self.cameras.state()["camera"], WRIST_CAMERA)
         self.viewport.new_stage()
         self.assertEqual(self.cameras.state()["camera"], WRIST_CAMERA)
+
+    def test_the_state_names_the_stages_unit_as_it_is_now(self):
+        self.viewport.mpu = 0.01
+        self.assertEqual(self.cameras.state()["unit"], "cm")
+        self.viewport.mpu = None  # no stage
+        self.assertIsNone(self.cameras.state()["unit"])
+
+    def test_units_are_named_as_kits_unit_box_names_them(self):
+        self.assertEqual([unit_name(m) for m in (0.001, 0.01, 0.1, 1.0, 1000.0, 0.0254, 0.3048, 1609.34)],
+                         ["mm", "cm", "dm", "m", "km", "in", "ft", "mi"])
+        self.assertEqual((unit_name(1.01), unit_name(0.99)), ("m", "m"))  # within 2 %
+
+    def test_a_unit_kit_does_not_name_is_given_in_metres(self):
+        self.assertEqual((unit_name(0.5), unit_name(1.05), unit_name(None)), ("0.5 m", "1.05 m", None))
 
     def test_without_a_viewport_no_camera_is_looked_through(self):
         self.viewport.looking = None

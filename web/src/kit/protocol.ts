@@ -9,10 +9,11 @@
  *     Kit -> page    cell:state      {state}    the controller's state, whenever it changed
  *
  * The state also carries the viewport's cameras (`view`, pick_place/viewport_cameras.py), which the
- * camera action switches between, at any time.
+ * camera action switches between, at any time, and the stage's unit of length.
  */
 
-export const PROTOCOL = 2; // 2: the state carries the viewport's cameras (`view`), and the camera action
+// 2: the state carries the viewport's cameras (`view`), and the camera action; 3: `view` names the stage's unit
+export const PROTOCOL = 3;
 export const REQUEST = 'cell:request';
 export const RESPONSE = 'cell:response';
 export const EVENT = 'cell:event';
@@ -40,12 +41,15 @@ export interface CameraChoice {
     name: string;
 }
 
-/** The viewport's cameras (ViewportCameras.state). */
+/** The viewport's cameras, and the stage's unit (ViewportCameras.state). */
 export interface ViewState {
     /** The path of the camera the viewport looks through; null without a viewport. */
     camera: string | null;
     /** Kit's own four first, then the stage's (the wrist camera, with it). */
     cameras: CameraChoice[];
+    /** The stage's unit of length as Kit's unit box names it ("m"), or "0.5 m" for one it does not
+     * name; null without a stage. */
+    unit: string | null;
 }
 
 /** What the controls show (CellControl.state), and the viewport's cameras. */

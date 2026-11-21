@@ -25,7 +25,7 @@ const STATE = {
     perception: 'string', info: 'string', gripper: 'string', object: 'string', pose: 'number', busy: 'boolean',
     stopping: 'boolean', fixed_gripper: 'boolean', status: 'string', grippers: 'array', objects: 'array', view: 'object',
 } satisfies Record<keyof CellState, Kind>;
-const VIEW = { camera: 'string|null', cameras: 'array' } satisfies Record<keyof ViewState, Kind>;
+const VIEW = { camera: 'string|null', cameras: 'array', unit: 'string|null' } satisfies Record<keyof ViewState, Kind>;
 const CAMERA = { path: 'string', name: 'string' } satisfies Record<keyof CameraChoice, Kind>;
 const GRIPPER = { name: 'string', text: 'string', usable: 'boolean' } satisfies Record<keyof GripperChoice, Kind>;
 const CHOICE = { name: 'string', text: 'string' } satisfies Record<keyof Choice, Kind>;
