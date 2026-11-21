@@ -9,7 +9,8 @@ browser (this folder)                       Isaac Sim: cell_app.py --web
 ┌─────────────────────┬─────────┐
 │ <video>: viewport   │ panel   │ ◄── WebRTC ──►  omni.kit.livestream.app (49100/TCP, 47998/UDP)
 │ mouse/keys → Kit    │         │ ◄── JSON ────►  omni.kit.livestream.messaging
-└─────────────────────┴─────────┘                    livestream.py, web_bridge.py, cell_control.py
+└─────────────────────┴─────────┘                    livestream.py, web_bridge.py, cell_control.py,
+                                                     viewport_cameras.py
 ```
 
 ## Requirements
@@ -115,10 +116,13 @@ npm test           # vitest: the link, the results list, and the contract with K
 npm run build      # type-check, and bundle into dist/
 ```
 
+- `src/App.tsx` lays the page out: the viewport, with its camera menu, and the panel.
 - `src/kit/`: the stream and the link to Kit. `streamer.ts` is the only file that uses NVIDIA's
-  library; `link.ts` matches requests to answers; `protocol.ts` lists the messages, after
-  `pick_place/web_bridge.py`; `keyboard.ts` keeps what is typed into the page out of the stream;
-  `CameraMenu.tsx` switches the viewport's camera.
+  library; `link.ts` matches requests to answers; `useKit.ts` holds the link as React state (the
+  stream's status, Kit's state, the events) and says hello once the stream is live; `protocol.ts`
+  lists the messages, after `pick_place/web_bridge.py`; `keyboard.ts` keeps what is typed into the
+  page out of the stream; `Viewport.tsx` draws the streamed video; `CameraMenu.tsx`, over it,
+  switches the viewport's camera.
 - `src/cell/`: `Panel.tsx` draws Kit's state and asks Kit to act; `results.ts` turns Kit's events
   into the results list, by the rules of Kit's panel.
 - `src/cell/contract.json` is one session of messages recorded from the real bridge and controller

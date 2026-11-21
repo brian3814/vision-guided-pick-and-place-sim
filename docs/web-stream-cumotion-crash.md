@@ -15,7 +15,8 @@ the same day keeps the stream going while Kit waits for plans (the last section)
   cycle, with exit code 3221225478 (0xC0000006, `STATUS_IN_PAGE_ERROR`).
 - Kit's crash reporter put the fault inside `cumotion.dll`: `CreateTrajectoryOptimizer` when a new
   optimizer was made, or cuMotion's SDF code in `plan_to_task_space_target` when an existing one was
-  reused. On the Python side the call was `planner.py`'s `_optimizer` or `plan_line`.
+  reused. On the Python side the call was `planner.py`'s `_optimizer` or `plan_line` (since the fix,
+  in `cumotion_planner.py`).
 - Without a page, the same cycle placed the object (toy block, start pose 0: 0.4 mm from the
   target), with `--web` and in the window alike.
 - Choosing grippers, objects and start poses from the page worked; only planning failed.
@@ -117,9 +118,10 @@ and when Kit was killed it noticed the lost connection and ended within about 10
 
 ## How it was checked
 
-- **Unit tests.** `pick_place/tests/test_planner_process.py` (10 tests) runs Kit's side and the
-  planning process with a fake planner: over a pipe, and as a started process. It checks that the
-  numbers arrive unchanged, that errors and the process's end reach Kit, and that plans are let go.
+- **Unit tests.** `pick_place/tests/test_planner_process.py` (10 tests then, 13 with the change in
+  the last section) runs Kit's side and the planning process with a fake planner: over a pipe, and
+  as a started process. It checks that the numbers arrive unchanged, that errors and the process's
+  end reach Kit, and that plans are let go.
   Run them with Isaac Sim's Python, which has numpy:
   `C:\issacsim-6-2\python.bat -m unittest discover -s pick_place/tests`.
 - **The same plans, byte for byte.** Outside Kit, one scenario was planned with cuMotion in the same
