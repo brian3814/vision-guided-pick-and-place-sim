@@ -57,7 +57,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/OmniverseKit_Persp",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -106,7 +131,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/OmniverseKit_Persp",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -122,7 +172,7 @@
    "event_type": "cell:response",
    "payload": {
     "ok": true,
-    "protocol": 1,
+    "protocol": 2,
     "log": [
      {
       "type": "heading",
@@ -172,7 +222,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/OmniverseKit_Persp",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     },
     "request_id": "r1"
    }
@@ -229,7 +304,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/OmniverseKit_Persp",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -279,7 +379,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/OmniverseKit_Persp",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     },
     "request_id": "r2"
    }
@@ -341,7 +466,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/OmniverseKit_Persp",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -412,7 +562,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/OmniverseKit_Persp",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -461,7 +636,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/OmniverseKit_Persp",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -532,7 +732,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/OmniverseKit_Persp",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -581,7 +806,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/OmniverseKit_Persp",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -630,7 +880,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/OmniverseKit_Persp",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -687,7 +962,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/OmniverseKit_Persp",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     },
     "request_id": "r3"
    }
@@ -751,7 +1051,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/OmniverseKit_Persp",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -807,7 +1132,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/OmniverseKit_Persp",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -857,7 +1207,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/OmniverseKit_Persp",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     },
     "request_id": "r4"
    }
@@ -907,7 +1282,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/OmniverseKit_Persp",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -963,7 +1363,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/OmniverseKit_Persp",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -1013,7 +1438,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/OmniverseKit_Persp",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     },
     "request_id": "r5"
    }
@@ -1063,7 +1513,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/OmniverseKit_Persp",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -1121,7 +1596,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/OmniverseKit_Persp",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     },
     "request_id": "r6"
    }
@@ -1129,8 +1629,91 @@
  },
  {
   "send": {
+   "action": "camera",
+   "request_id": "r7",
+   "path": "/World/UR10/wrist_3_link/WristCamera"
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:response",
+   "payload": {
+    "ok": true,
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "robotiq_2f_140",
+     "object": "toy",
+     "pose": 7,
+     "busy": true,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "cycle start pose 7 (1/5): object turned",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "jar",
+       "text": "jar   3 grasps"
+      },
+      {
+       "name": "mug",
+       "text": "mug   12 grasps   (batch-tested)"
+      },
+      {
+       "name": "toy",
+       "text": "toy   40 grasps   (batch-tested)"
+      }
+     ],
+     "view": {
+      "camera": "/World/UR10/wrist_3_link/WristCamera",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
+    },
+    "request_id": "r7"
+   }
+  }
+ },
+ {
+  "send": {
    "action": "stop",
-   "request_id": "r7"
+   "request_id": "r8"
   }
  },
  {
@@ -1177,7 +1760,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/World/UR10/wrist_3_link/WristCamera",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -1227,9 +1835,34 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/World/UR10/wrist_3_link/WristCamera",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     },
-    "request_id": "r7"
+    "request_id": "r8"
    }
   }
  },
@@ -1299,7 +1932,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/World/UR10/wrist_3_link/WristCamera",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -1348,7 +2006,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/World/UR10/wrist_3_link/WristCamera",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -1397,7 +2080,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/World/UR10/wrist_3_link/WristCamera",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -1405,7 +2113,7 @@
  {
   "send": {
    "action": "gripper",
-   "request_id": "r8",
+   "request_id": "r9",
    "name": "onrobot_rg2"
   }
  },
@@ -1454,9 +2162,34 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/World/UR10/wrist_3_link/WristCamera",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     },
-    "request_id": "r8"
+    "request_id": "r9"
    }
   }
  },
@@ -1504,7 +2237,32 @@
        "name": "toy",
        "text": "toy   40 grasps   (batch-tested)"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/World/UR10/wrist_3_link/WristCamera",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -1549,7 +2307,32 @@
        "name": "valve",
        "text": "valve   2 grasps"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/World/UR10/wrist_3_link/WristCamera",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -1608,7 +2391,32 @@
        "name": "valve",
        "text": "valve   2 grasps"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/World/UR10/wrist_3_link/WristCamera",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -1616,7 +2424,7 @@
  {
   "send": {
    "action": "run",
-   "request_id": "r9",
+   "request_id": "r10",
    "n": 1
   }
  },
@@ -1660,7 +2468,32 @@
        "name": "valve",
        "text": "valve   2 grasps"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/World/UR10/wrist_3_link/WristCamera",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -1706,9 +2539,34 @@
        "name": "valve",
        "text": "valve   2 grasps"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/World/UR10/wrist_3_link/WristCamera",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     },
-    "request_id": "r9"
+    "request_id": "r10"
    }
   }
  },
@@ -1752,7 +2610,32 @@
        "name": "valve",
        "text": "valve   2 grasps"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/World/UR10/wrist_3_link/WristCamera",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -1819,7 +2702,32 @@
        "name": "valve",
        "text": "valve   2 grasps"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/World/UR10/wrist_3_link/WristCamera",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -1864,7 +2772,32 @@
        "name": "valve",
        "text": "valve   2 grasps"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/World/UR10/wrist_3_link/WristCamera",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
@@ -1909,15 +2842,120 @@
        "name": "valve",
        "text": "valve   2 grasps"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/World/UR10/wrist_3_link/WristCamera",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     }
    }
   }
  },
  {
   "send": {
+   "action": "camera",
+   "request_id": "r11",
+   "path": "/World/nothing"
+  }
+ },
+ {
+  "receive": {
+   "event_type": "cell:response",
+   "payload": {
+    "ok": false,
+    "error": "the stage has no camera /World/nothing",
+    "state": {
+     "perception": "camera",
+     "info": "The object's pose from the wrist camera.",
+     "gripper": "onrobot_rg2",
+     "object": "toy",
+     "pose": 9,
+     "busy": false,
+     "stopping": false,
+     "fixed_gripper": false,
+     "status": "RG2 x toy (7 robust grasps), start pose 9: turned +90 deg at (0.750, -0.350). Ready.",
+     "grippers": [
+      {
+       "name": "robotiq_2f_140",
+       "text": "2F-140   3 objects",
+       "usable": true
+      },
+      {
+       "name": "onrobot_rg2",
+       "text": "RG2   2 objects",
+       "usable": true
+      },
+      {
+       "name": "robotiq_hand_e",
+       "text": "HAND-E   1 objects",
+       "usable": true
+      }
+     ],
+     "objects": [
+      {
+       "name": "toy",
+       "text": "toy   7 grasps"
+      },
+      {
+       "name": "valve",
+       "text": "valve   2 grasps"
+      }
+     ],
+     "view": {
+      "camera": "/World/UR10/wrist_3_link/WristCamera",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
+    },
+    "request_id": "r11"
+   }
+  }
+ },
+ {
+  "send": {
    "action": "fly",
-   "request_id": "r10"
+   "request_id": "r12"
   }
  },
  {
@@ -1962,16 +3000,41 @@
        "name": "valve",
        "text": "valve   2 grasps"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/World/UR10/wrist_3_link/WristCamera",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     },
-    "request_id": "r10"
+    "request_id": "r12"
    }
   }
  },
  {
   "send": {
    "action": "hello",
-   "request_id": "r11"
+   "request_id": "r13"
   }
  },
  {
@@ -1979,7 +3042,7 @@
    "event_type": "cell:response",
    "payload": {
     "ok": true,
-    "protocol": 1,
+    "protocol": 2,
     "log": [
      {
       "type": "heading",
@@ -2104,9 +3167,34 @@
        "name": "valve",
        "text": "valve   2 grasps"
       }
-     ]
+     ],
+     "view": {
+      "camera": "/World/UR10/wrist_3_link/WristCamera",
+      "cameras": [
+       {
+        "path": "/OmniverseKit_Persp",
+        "name": "Perspective"
+       },
+       {
+        "path": "/OmniverseKit_Top",
+        "name": "Top"
+       },
+       {
+        "path": "/OmniverseKit_Front",
+        "name": "Front"
+       },
+       {
+        "path": "/OmniverseKit_Right",
+        "name": "Right"
+       },
+       {
+        "path": "/World/UR10/wrist_3_link/WristCamera",
+        "name": "WristCamera"
+       }
+      ]
+     }
     },
-    "request_id": "r11"
+    "request_id": "r13"
    }
   }
  }

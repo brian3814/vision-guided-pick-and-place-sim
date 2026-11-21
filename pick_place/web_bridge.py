@@ -13,6 +13,11 @@ Actions, as the panel's widgets call them: hello, gripper {name}, object {name},
 run {n}, stop. An action starts the work and is answered at once; what the work does comes as
 events and state, as it does to the omni.ui panel.
 
+The page has no Kit menus, so it also switches the viewport's camera, as Isaac Sim's camera menu
+does: action camera {path}, taken at any time, even while cycles run, since it only changes what
+the stream shows (viewport_cameras.py). The state carries the cameras, under `view`: which there
+are, and which one the viewport looks through.
+
 A page that connects, or reloads, says `hello`. The answer holds the events so far (`log`), so the
 results list comes back as it was, and the state. Every event is stamped with the time it was sent
 (`at`, seconds since the epoch).
@@ -22,7 +27,8 @@ extension can then hand a message over twice. So the page puts its own `request_
 request; the answer carries it back, and a request id already answered gets the same answer again
 without running the action a second time.
 
-Nothing here imports Kit: the tests drive it with the real controller and a fake cell.
+Nothing here imports Kit: the tests drive it with the real controller, a fake cell and a fake
+viewport.
 """
 
 from __future__ import annotations
@@ -33,11 +39,12 @@ from collections import OrderedDict, deque
 from collections.abc import Callable
 from typing import Any
 
-PROTOCOL = 1
+PROTOCOL = 2  # 2: the state carries the viewport's cameras (`view`), and the camera action
 REQUEST = "cell:request"
 RESPONSE = "cell:response"
 EVENT = "cell:event"
 STATE = "cell:state"
+NO_VIEW = {"camera": None, "cameras": []}  # the state's `view` without a viewport
 ANSWERS_KEPT = 64  # answers kept by request id, for a request handed over twice
 LOG_KEPT = 2000  # events a page that connects later gets (about 400 cycles' results)
 
@@ -51,10 +58,12 @@ def jsonable(value: Any) -> Any:
 
 class WebBridge:
     """The controller's side of the web page. `send(event_type, payload)` puts a message on the stream;
-    it can be set later (livestream.connect does). `clock` stamps the events."""
+    it can be set later (livestream.connect does). `clock` stamps the events. `view`: the viewport's
+    cameras (viewport_cameras.ViewportCameras)."""
 
-    def __init__(self, control, send: Send | None = None, clock: Callable[[], float] = time.time):
+    def __init__(self, control, send: Send | None = None, clock: Callable[[], float] = time.time, view=None):
         self._c = control
+        self._view = view
         self.send: Send = send or (lambda _type, _payload: None)
         self._clock = clock
         self._log: deque[dict] = deque(maxlen=LOG_KEPT)
@@ -76,8 +85,11 @@ class WebBridge:
         self._log.append(event)
         self.send(EVENT, {"event": event})
 
+    def _with_view(self, state: dict) -> dict:
+        return jsonable({**state, "view": NO_VIEW if self._view is None else self._view.state()})
+
     def _push_state(self, state: dict) -> None:
-        state = jsonable(state)
+        state = self._with_view(state)
         if state != self._state:
             self._state = state
             self.send(STATE, {"state": state})
@@ -106,7 +118,7 @@ class WebBridge:
                 result = method(self, **args)
             except (TypeError, ValueError, KeyError) as e:  # what the page sent does not fit the action
                 result = {"ok": False, "error": f"{action}: {e}"}
-        self._state = jsonable(self._c.state())
+        self._state = self._with_view(self._c.state())
         return {**result, "state": self._state}
 
     @staticmethod
@@ -131,6 +143,11 @@ class WebBridge:
     def _stop(self) -> dict:
         return self._taken(self._c.stop())
 
+    def _camera(self, path: str) -> dict:
+        if self._view is None:
+            return self._taken("no viewport to switch the camera of")
+        return self._taken(self._view.set_camera(str(path)))
+
     _ACTIONS = {
         "hello": _hello,
         "gripper": _gripper,
@@ -138,4 +155,5 @@ class WebBridge:
         "pose": _pose,
         "run": _run_cycles,
         "stop": _stop,
+        "camera": _camera,
     }

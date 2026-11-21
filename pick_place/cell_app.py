@@ -21,6 +21,7 @@ does the work in the stage.
 
 With --web, Isaac Sim runs without its window and streams the viewport over WebRTC, for a web page
 that draws the panel itself: web_bridge.py answers the page, livestream.py puts it on the stream.
+The page switches the viewport's camera too (viewport_cameras.py), having no Kit menus.
 The page connects once the log says so. Kit's own panel is there too, hidden with the rest of Kit's
 UI; add --/app/window/hideUi=false to stream it with the viewport. Kit streams to one page at a time.
 
@@ -65,6 +66,7 @@ import numpy as np  # noqa: E402
 import omni.kit.app  # noqa: E402
 import omni.timeline  # noqa: E402
 import omni.ui as ui  # noqa: E402
+import viewport_cameras  # noqa: E402
 import web_bridge  # noqa: E402
 from cell_session import log, next_update  # noqa: E402
 from pxr import Gf, UsdGeom  # noqa: E402
@@ -380,7 +382,8 @@ async def main() -> None:
     control = cell_control.CellControl(KitCell(session, rests), menu, LABELS, args.perception, pose=args.start_pose)
     state["panel"] = Panel(control)
     if args.web:
-        bridge = state["bridge"] = web_bridge.WebBridge(control)
+        view = viewport_cameras.ViewportCameras(viewport_cameras.KitViewport())
+        bridge = state["bridge"] = web_bridge.WebBridge(control, view=view)
         state["disconnect"] = livestream.connect(bridge)
     await control.start()
     log(f"ready: {len(menu)} grippers, {sum(len(o[0]) for o in menu.values())} gripper x object pairs; results go to {args.db}")

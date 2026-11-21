@@ -7,7 +7,9 @@
 import { describe, expect, it } from 'vitest';
 import { KitLink } from '../kit/link';
 import { PROTOCOL } from '../kit/protocol';
-import type { Action, Answer, CellEvent, CellState, Choice, GripperChoice, HeadingEvent, ResultEvent, WarningEvent } from '../kit/protocol';
+import type {
+    Action, Answer, CameraChoice, CellEvent, CellState, Choice, GripperChoice, HeadingEvent, ResultEvent, ViewState, WarningEvent,
+} from '../kit/protocol';
 import type { OutgoingMessage, StreamCallbacks, StreamOptions, Streamer } from '../kit/streamer';
 import contract from './contract.json';
 import { EMPTY, look, reduce } from './results';
@@ -21,8 +23,10 @@ type Kind = 'string' | 'number' | 'boolean' | 'array' | 'object' | 'number|null'
 
 const STATE = {
     perception: 'string', info: 'string', gripper: 'string', object: 'string', pose: 'number', busy: 'boolean',
-    stopping: 'boolean', fixed_gripper: 'boolean', status: 'string', grippers: 'array', objects: 'array',
+    stopping: 'boolean', fixed_gripper: 'boolean', status: 'string', grippers: 'array', objects: 'array', view: 'object',
 } satisfies Record<keyof CellState, Kind>;
+const VIEW = { camera: 'string|null', cameras: 'array' } satisfies Record<keyof ViewState, Kind>;
+const CAMERA = { path: 'string', name: 'string' } satisfies Record<keyof CameraChoice, Kind>;
 const GRIPPER = { name: 'string', text: 'string', usable: 'boolean' } satisfies Record<keyof GripperChoice, Kind>;
 const CHOICE = { name: 'string', text: 'string' } satisfies Record<keyof Choice, Kind>;
 const HEADING = { type: 'string', gripper: 'string', object: 'string', text: 'string', at: 'number' } satisfies Record<keyof HeadingEvent, Kind>;
@@ -61,6 +65,8 @@ function stateProblems(state: CellState): string[] {
         ...problems(state, STATE),
         ...state.grippers.flatMap((g) => problems(g, GRIPPER)),
         ...state.objects.flatMap((o) => problems(o, CHOICE)),
+        ...problems(state.view, VIEW),
+        ...state.view.cameras.flatMap((c) => problems(c, CAMERA)),
     ];
 }
 
@@ -126,8 +132,12 @@ describe('the page against what the bridge sends (contract.json)', () => {
         expect(hellos.map((a) => a.protocol)).toEqual([PROTOCOL, PROTOCOL]);
         expect(answers.filter((a) => !a.ok).map((a) => a.error)).toEqual([
             'busy: wait until the cycles run, or the cell being built, are done',
+            'the stage has no camera /World/nothing',
             "unknown action: 'fly'",
         ]);
+        const switched = answers.find((_answer, i) => asked[i].action === 'camera' && answers[i].ok)!;
+        expect(switched.state!.busy).toBe(true);
+        expect(switched.state!.view.camera).toBe(asked[answers.indexOf(switched)].path);
     });
 
     it('passes on states that are CellStates', () => {

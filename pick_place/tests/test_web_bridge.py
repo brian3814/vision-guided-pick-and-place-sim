@@ -1,4 +1,4 @@
-"""web_bridge.WebBridge with the real controller and a fake cell: no Isaac Sim needed.
+"""web_bridge.WebBridge with the real controller, a fake cell and a fake viewport: no Isaac Sim needed.
 
     python -m unittest discover -s pick_place/tests
 """
@@ -13,7 +13,9 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 import web_bridge  # noqa: E402
 from cell_control import BUSY, CellControl  # noqa: E402
 from fake_cell import LABELS, MENU, FakeCell  # noqa: E402
-from web_bridge import EVENT, PROTOCOL, STATE, WebBridge  # noqa: E402
+from fake_viewport import WRIST_CAMERA, FakeViewport  # noqa: E402
+from viewport_cameras import PERSPECTIVE, ViewportCameras  # noqa: E402
+from web_bridge import EVENT, NO_VIEW, PROTOCOL, STATE, WebBridge  # noqa: E402
 
 
 class BridgeTest(unittest.IsolatedAsyncioTestCase):
@@ -22,8 +24,9 @@ class BridgeTest(unittest.IsolatedAsyncioTestCase):
         self.control = CellControl(self.cell, MENU, LABELS, "camera")
         self.sent: list[tuple[str, dict]] = []
         self.clock = iter(range(1000, 100000))
+        self.viewport = FakeViewport()
         self.bridge = WebBridge(self.control, lambda kind, payload: self.sent.append((kind, payload)),
-                                clock=lambda: float(next(self.clock)))
+                                clock=lambda: float(next(self.clock)), view=ViewportCameras(self.viewport))
         await self.control.start()
 
     def of(self, kind):
@@ -99,8 +102,47 @@ class BridgeTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(len(self.bridge._answered), web_bridge.ANSWERS_KEPT)
         self.assertNotIn("r0", self.bridge._answered)
 
+    async def test_the_state_carries_the_viewports_cameras(self):
+        for state in [p["state"] for p in self.of(STATE)] + [self.bridge.handle("hello")["state"]]:
+            self.assertEqual(state["view"]["camera"], PERSPECTIVE)
+            self.assertEqual([c["name"] for c in state["view"]["cameras"]],
+                             ["Perspective", "Top", "Front", "Right", "WristCamera"])
+
+    async def test_the_camera_action_switches_the_viewports_camera(self):
+        answer = self.bridge.handle("camera", {"path": WRIST_CAMERA})
+        self.assertEqual((answer["ok"], answer["state"]["view"]["camera"]), (True, WRIST_CAMERA))
+        self.assertEqual(self.viewport.told, [WRIST_CAMERA])
+        answer = self.bridge.handle("camera", {"path": "/World/nothing"})
+        self.assertEqual((answer["ok"], answer["error"]), (False, "the stage has no camera /World/nothing"))
+        self.assertEqual(answer["state"]["view"]["camera"], WRIST_CAMERA)
+
+    async def test_the_camera_can_be_switched_while_cycles_run(self):
+        self.cell.gate = asyncio.Event()
+        self.bridge.handle("run", {"n": 1})
+        answer = self.bridge.handle("camera", {"path": WRIST_CAMERA})
+        self.assertTrue(answer["ok"])
+        self.assertTrue(answer["state"]["busy"])
+        self.cell.gate.set()
+        await self.control.settled()
+
+    async def test_a_state_sent_after_another_stage_opened_shows_its_cameras(self):
+        self.bridge.handle("camera", {"path": WRIST_CAMERA})
+        self.viewport.new_stage(extra=())  # the cell built again, on a stage without the wrist camera
+        self.control.set_pose(4)
+        await self.control.settled()
+        view = self.of(STATE)[-1]["state"]["view"]
+        self.assertEqual((view["camera"], len(view["cameras"])), (PERSPECTIVE, 4))
+
+    async def test_without_a_viewport_there_are_no_cameras_to_switch(self):
+        bridge = WebBridge(self.control)
+        self.assertEqual(bridge.handle("hello")["state"]["view"], NO_VIEW)
+        answer = bridge.handle("camera", {"path": PERSPECTIVE})
+        self.assertEqual((answer["ok"], answer["error"]), (False, "no viewport to switch the camera of"))
+        bridge.close()
+
     async def test_requests_that_do_not_fit_are_answered_with_an_error(self):
         for action, args, error in [("fly", {}, "unknown action: 'fly'"),
+                                    ("camera", {}, "camera: "),
                                     ("run", {}, "run: "),
                                     ("run", {"n": 1, "extra": 2}, "run: "),
                                     ("pose", {"pose": "three"}, "pose: ")]:

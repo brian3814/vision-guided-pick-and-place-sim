@@ -1,13 +1,14 @@
 """The messages a web page gets in one session, kept in web/src/cell/contract.json for the page's tests
-(web/src/cell/contract.test.ts): the real controller and bridge, with a fake cell. This test fails
+(web/src/cell/contract.test.ts): the real controller and bridge, with a fake cell and a fake viewport. This test fails
 when what the bridge sends changes; then write the file again and see that the page's tests pass:
 
     python pick_place/tests/test_web_contract.py --write
     cd web && npm test
 
 The session: hello; two cycles (one dropped, with a warning before it); another object; a start pose;
-a cycle stopped, with a request refused while it runs; another gripper; a cycle with nothing measured
-by the camera; an unknown action; hello again, as a page that reloads.
+a cycle stopped, with a request refused while it runs and the camera switched; another gripper; a
+cycle with nothing measured by the camera; a camera the stage does not have; an unknown action; hello
+again, as a page that reloads.
 """
 
 import asyncio
@@ -20,6 +21,8 @@ import unittest
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 from cell_control import CellControl  # noqa: E402
 from fake_cell import LABELS, MENU, FakeCell  # noqa: E402
+from fake_viewport import WRIST_CAMERA, FakeViewport  # noqa: E402
+from viewport_cameras import ViewportCameras  # noqa: E402
 from web_bridge import RESPONSE, WebBridge  # noqa: E402
 
 CONTRACT = pathlib.Path(__file__).resolve().parents[2] / "web" / "src" / "cell" / "contract.json"
@@ -32,7 +35,7 @@ async def session() -> list[dict]:
     control = CellControl(cell, MENU, LABELS, "camera")
     clock = itertools.count(1_795_000_000)
     bridge = WebBridge(control, lambda kind, payload: steps.append({"receive": {"event_type": kind, "payload": payload}}),
-                       clock=lambda: float(next(clock)))
+                       clock=lambda: float(next(clock)), view=ViewportCameras(FakeViewport()))
     ids = itertools.count(1)
 
     def ask(action: str, **args) -> None:
@@ -57,6 +60,7 @@ async def session() -> list[dict]:
     ask("run", n=5)
     await asyncio.sleep(0)
     ask("object", name="jar")  # refused: busy
+    ask("camera", path=WRIST_CAMERA)  # taken: only what the stream shows
     ask("stop")
     cell.gate.set()
     await done()
@@ -66,6 +70,7 @@ async def session() -> list[dict]:
     cell.overrides = {"est_centre_mm": None, "est_rot_deg": None, "detail": None}
     ask("run", n=1)
     await done()
+    ask("camera", path="/World/nothing")
     ask("fly")
     ask("hello")
     bridge.close()

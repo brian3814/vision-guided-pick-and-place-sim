@@ -7,16 +7,20 @@
  *     Kit -> page    cell:response   {ok, error, state, request_id, ...}  whether the action was taken
  *     Kit -> page    cell:event      {event}    each controller event but state: heading, result, warning
  *     Kit -> page    cell:state      {state}    the controller's state, whenever it changed
+ *
+ * The state also carries the viewport's cameras (`view`, pick_place/viewport_cameras.py), which the
+ * camera action switches between, at any time.
  */
 
-export const PROTOCOL = 1;
+export const PROTOCOL = 2; // 2: the state carries the viewport's cameras (`view`), and the camera action
 export const REQUEST = 'cell:request';
 export const RESPONSE = 'cell:response';
 export const EVENT = 'cell:event';
 export const STATE = 'cell:state';
 
-/** The actions, and what each takes: hello, gripper {name}, object {name}, pose {pose}, run {n}, stop. */
-export type Action = 'hello' | 'gripper' | 'object' | 'pose' | 'run' | 'stop';
+/** The actions, and what each takes: hello, gripper {name}, object {name}, pose {pose}, run {n}, stop,
+ * camera {path}. */
+export type Action = 'hello' | 'gripper' | 'object' | 'pose' | 'run' | 'stop' | 'camera';
 
 export interface Choice {
     name: string;
@@ -29,7 +33,22 @@ export interface GripperChoice extends Choice {
     usable: boolean;
 }
 
-/** What the controls show (CellControl.state). */
+export interface CameraChoice {
+    /** The camera's prim path: what the camera action takes. */
+    path: string;
+    /** As Isaac Sim's camera menu names it: Perspective, Top, Front, Right, or the prim's name. */
+    name: string;
+}
+
+/** The viewport's cameras (ViewportCameras.state). */
+export interface ViewState {
+    /** The path of the camera the viewport looks through; null without a viewport. */
+    camera: string | null;
+    /** Kit's own four first, then the stage's (the wrist camera, with it). */
+    cameras: CameraChoice[];
+}
+
+/** What the controls show (CellControl.state), and the viewport's cameras. */
 export interface CellState {
     perception: 'truth' | 'camera' | 'ros' | 'blind';
     /** Where the object's pose comes from, and why the gripper cannot change if it cannot. */
@@ -47,6 +66,7 @@ export interface CellState {
     grippers: GripperChoice[];
     /** The objects offered with the chosen gripper. */
     objects: Choice[];
+    view: ViewState;
 }
 
 /** Every event carries the time it was sent, in seconds since the epoch. */
