@@ -1,10 +1,11 @@
 /**
  * Kit's viewport, streamed: the video the stream draws into, and what to say while there is
  * none. The stream sends the mouse and keyboard back to Kit while the video has focus, so the
- * viewport is used as in Isaac Sim: click it, then orbit, zoom, select.
+ * viewport is used as in Isaac Sim: click it, then orbit, zoom, select. While the stream is live,
+ * the children (the camera menu) are drawn over the video.
  */
 import { useEffect, useLayoutEffect, useRef } from 'react';
-import type { RefObject } from 'react';
+import type { ReactNode, RefObject } from 'react';
 import type { KitLink, LinkStatus } from './link';
 import type { StreamOptions } from './streamer';
 
@@ -51,6 +52,7 @@ interface Props {
     link: KitLink;
     status: LinkStatus;
     info: string;
+    children?: ReactNode;
 }
 
 /**
@@ -112,7 +114,7 @@ function useParkedVideo(frame: RefObject<HTMLDivElement | null>): void {
     }, [frame]);
 }
 
-export function Viewport({ link, status, info }: Props) {
+export function Viewport({ link, status, info, children }: Props) {
     const frame = useRef<HTMLDivElement>(null);
     useParkedVideo(frame);
     useEffect(() => {
@@ -130,6 +132,7 @@ export function Viewport({ link, status, info }: Props) {
     return (
         <div className="viewport">
             <div className="video-frame" ref={frame} />
+            {status === 'live' && children}
             {status !== 'live' && (
                 <div className="viewport-overlay">
                     <p>{status === 'failed' ? 'No stream from Kit.' : 'Waiting for the stream from Kit…'}</p>

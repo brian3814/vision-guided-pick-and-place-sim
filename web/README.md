@@ -47,6 +47,13 @@ while Kit closes the previous stream.
 - **The viewport:** click it to give it the mouse wheel and the keyboard, then use Isaac Sim's
   controls: Alt + left drag orbits, the wheel zooms. Clicking the panel takes them back; what is
   typed into the panel never reaches Kit.
+- **The camera:** the menu on the viewport's top left chooses the camera Kit's viewport looks
+  through, as Isaac Sim's camera menu does: Perspective, Top, Front, Right, and with
+  `--perception camera` or `ros` the wrist camera. It works at any time, even while cycles run: it
+  changes what the stream shows, not the cycle, nor the wrist camera's images. After another
+  gripper is chosen, the viewport keeps its camera; the wrist camera is on every gripper's cell.
+  Top, Front and Right look at the whole stage from far off, as in Isaac Sim; the wheel zooms them,
+  slowly.
 - **The panel:** as Kit's (see `pick_place/README.md`, *The interactive window*): gripper, object,
   start pose (sent on Enter or when the field is left), *Run 1 cycle*, *Run 5 cycles*, *Stop after
   this cycle*, the cycle's latest step, and the results so far. While cycles run or the cell is
@@ -82,6 +89,20 @@ control used from the page:
 
 No crash, and no Python error in Kit's log.
 
+The camera menu, accepted on 2026-11-21 with the wrist camera:
+- With the page connected, the menu listed Perspective, Top, Front, Right and WristCamera, on
+  Perspective.
+- Top, then WristCamera: the stream showed each. *Run 1 cycle* with the wrist camera; mid-cycle
+  Perspective and back to WristCamera. The cycle placed the toy block 3.4 mm from the target.
+- The RG2, chosen while on the wrist camera: once the cell was built again, the menu and the
+  stream were still on the wrist camera, the RG2's.
+- A reload: the menu came back on WristCamera, with the results.
+- Front, and the wheel: it zoomed, slowly.
+
+Again no Python error in Kit's log, only `NVST_R_BUSY` at the reload. Earlier, headless, two
+cycles looking through the wrist camera gave the same perception results, to the last digit, as
+three that looked through Perspective.
+
 Tested on 2026-11-20, with the cell offering all six grippers: the page, opened before Isaac Sim,
 connected once the stream was up (Kit was ready 40 s after launch) and showed the viewport and Kit's
 status line; the mouse wheel zoomed Kit's camera; a reload reconnected in 32 s and got the state
@@ -96,7 +117,8 @@ npm run build      # type-check, and bundle into dist/
 
 - `src/kit/`: the stream and the link to Kit. `streamer.ts` is the only file that uses NVIDIA's
   library; `link.ts` matches requests to answers; `protocol.ts` lists the messages, after
-  `pick_place/web_bridge.py`; `keyboard.ts` keeps what is typed into the page out of the stream.
+  `pick_place/web_bridge.py`; `keyboard.ts` keeps what is typed into the page out of the stream;
+  `CameraMenu.tsx` switches the viewport's camera.
 - `src/cell/`: `Panel.tsx` draws Kit's state and asks Kit to act; `results.ts` turns Kit's events
   into the results list, by the rules of Kit's panel.
 - `src/cell/contract.json` is one session of messages recorded from the real bridge and controller

@@ -96,6 +96,30 @@ button:disabled {
     margin: 0;
 }
 
+/* Over the video's top left, as Isaac Sim's camera menu. */
+.camera-menu {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: calc(100% - 16px);
+    padding: 4px 8px;
+    background: rgba(31, 31, 31, 0.85);
+    border-radius: 4px;
+}
+
+.camera-menu label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.camera-menu p {
+    margin: 0;
+}
+
 /* ------------------------------------------------------------ panel */
 
 .panel {
