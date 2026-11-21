@@ -67,6 +67,21 @@ drawing frames, about 10 a second, of a still scene.
 Tested on 2026-11-20, after that fix: 10 cycles with the page connected throughout, no disconnect,
 and 9 to 18 frames a second while Kit waited for plans.
 
+Accepted on 2026-11-20 with the wrist camera (`cell_app.py --web --perception camera`), every
+control used from the page:
+- Opened before Isaac Sim, the page connected once the stream was up.
+- *Run 1 cycle* with the 2F-140 and the toy block: placed 2.0 mm from the target.
+- Start pose 3, typed and sent: the block moved to it. The mug, chosen: placed 2.0 mm from the
+  target at that pose.
+- The RG2, chosen: the cell was built again for it, with the RG2's hand-eye calibration.
+- *Run 5 cycles*, then *Stop after this cycle*: one cycle ran. It ended in a tracking failure on the
+  approach, an outcome of that gripper and object, never run together before.
+- The mouse wheel zoomed Kit's camera.
+- A reload reconnected within 2 s, with every result. The next cycle placed the mug 15.1 mm from
+  the target. Kit logged `NVST_R_BUSY` while the previous stream closed, and then connected.
+
+No crash, and no Python error in Kit's log.
+
 Tested on 2026-11-20, with the cell offering all six grippers: the page, opened before Isaac Sim,
 connected once the stream was up (Kit was ready 40 s after launch) and showed the viewport and Kit's
 status line; the mouse wheel zoomed Kit's camera; a reload reconnected in 32 s and got the state

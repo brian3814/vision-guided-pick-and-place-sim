@@ -17,6 +17,9 @@ All results are simulated: read them as comparisons under stated conditions, not
 rates. Every table in the READMEs comes from the SQLite databases in `results/` (summaries:
 `results/summary.md`, `results/pick_place_summary.md`, `results/perception_summary.md`).
 
+The cell's interactive window also runs as a web page (`web/`): Kit's viewport streamed over WebRTC,
+next to the window's panel.
+
 Next: MoveIt 2, planning the motions in ROS 2 instead of inside Isaac Sim.
 
 ## Layout
@@ -26,6 +29,7 @@ Next: MoveIt 2, planning the motions in ROS 2 instead of inside Isaac Sim.
 | `grasp_matrix/` | The gripper x object benchmark: trial protocol, runner, report |
 | `pick_place/` | The cell: planner, cycle controller, wrist camera, perception, hand-eye calibration, interactive window |
 | `ros2_ws/` | ROS 2 workspace: the `object_locator` node and its launch file |
+| `web/` | The interactive window as a web page: Kit's streamed viewport and the panel (React) |
 | `tools/` | Gripper calibration and geometry |
 | `docs/` | Write-ups of problems worth keeping: why cuMotion plans in a process of its own |
 | `data/` | Object catalog, gripper calibration |
@@ -39,5 +43,7 @@ Next: MoveIt 2, planning the motions in ROS 2 instead of inside Isaac Sim.
   Hugging Face (`grasp_matrix/README.md`), the UR10 from NVIDIA's asset server (`pick_place/README.md`).
 - `.venv`: Python 3.12 with `usd-core` (made with uv), for the batch runners and reports.
 - Step 5: ROS 2 Jazzy for Windows (`ros2_ws/README.md`).
+- The web page: Node.js 20 or later, and NVIDIA's WebRTC client library from NVIDIA's npm registry
+  (`web/README.md`).
 - Developed on an RTX 5070 (12 GB) with 32 GB of RAM, below Isaac Sim's published minimum; the
   READMEs note where that shaped the setup.

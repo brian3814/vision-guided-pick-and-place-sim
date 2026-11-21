@@ -12,6 +12,10 @@ ros2_ws/build/
 ros2_ws/install/
 ros2_ws/log/
 
+# Kit's event traces for the web page's stream, written into the working directory when turned on
+# (cell_app.py --web leaves them off unless asked: pick_place/livestream.py)
+*-NvStreamer.etl
+
 # Run output the scripts write again
 results/logs/
 results/perception/captures/
