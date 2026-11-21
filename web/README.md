@@ -55,6 +55,10 @@ while Kit closes the previous stream.
   gripper is chosen, the viewport keeps its camera; the wrist camera is on every gripper's cell.
   Top, Front and Right look at the whole stage from far off, as in Isaac Sim; the wheel zooms them,
   slowly.
+- **The unit:** under the camera menu, the stage's unit of length (`unit m`), from Kit; hovering
+  over it says it in full. It stands in for Kit's unit box at the viewport's bottom left (the `m`),
+  which the stream leaves out. The stream shows neither Kit's grid nor its axes: without its UI Kit
+  hides the axes, and the grid, though in Kit's own pictures of the viewport, is not in the stream.
 - **The panel:** as Kit's (see `pick_place/README.md`, *The interactive window*): gripper, object,
   start pose (sent on Enter or when the field is left), *Run 1 cycle*, *Run 5 cycles*, *Stop after
   this cycle*, the cycle's latest step, and the results so far. While cycles run or the cell is
@@ -104,6 +108,15 @@ Again no Python error in Kit's log, only `NVST_R_BUSY` at the reload. Earlier, h
 cycles looking through the wrist camera gave the same perception results, to the last digit, as
 three that looked through Perspective.
 
+The unit, accepted on 2026-11-21 with the wrist camera:
+- With the page connected: `unit m` under the camera menu, saying "Lengths in the stage are in
+  metres (m)." on hover, and no `m` at the viewport's bottom left.
+- The RG2 chosen, the cell built on a new stage: still `unit m`, and still no box.
+- A reload: the same, with the results.
+
+No Python error in Kit's log, only `NVST_R_BUSY` at the reconnects. Kit's own setting for the box
+was left as it was, so it still shows in the window without `--web`.
+
 Tested on 2026-11-20, with the cell offering all six grippers: the page, opened before Isaac Sim,
 connected once the stream was up (Kit was ready 40 s after launch) and showed the viewport and Kit's
 status line; the mouse wheel zoomed Kit's camera; a reload reconnected in 32 s and got the state
@@ -116,13 +129,13 @@ npm test           # vitest: the link, the results list, and the contract with K
 npm run build      # type-check, and bundle into dist/
 ```
 
-- `src/App.tsx` lays the page out: the viewport, with its camera menu, and the panel.
+- `src/App.tsx` lays the page out: the viewport, with its camera menu and legend, and the panel.
 - `src/kit/`: the stream and the link to Kit. `streamer.ts` is the only file that uses NVIDIA's
   library; `link.ts` matches requests to answers; `useKit.ts` holds the link as React state (the
   stream's status, Kit's state, the events) and says hello once the stream is live; `protocol.ts`
   lists the messages, after `pick_place/web_bridge.py`; `keyboard.ts` keeps what is typed into the
   page out of the stream; `Viewport.tsx` draws the streamed video; `CameraMenu.tsx`, over it,
-  switches the viewport's camera.
+  switches the viewport's camera, and `Legend.tsx`, under the menu, names the stage's unit.
 - `src/cell/`: `Panel.tsx` draws Kit's state and asks Kit to act; `results.ts` turns Kit's events
   into the results list, by the rules of Kit's panel.
 - `src/cell/contract.json` is one session of messages recorded from the real bridge and controller

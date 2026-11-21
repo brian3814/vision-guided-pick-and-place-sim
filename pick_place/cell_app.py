@@ -21,7 +21,8 @@ does the work in the stage.
 
 With --web, Isaac Sim runs without its window and streams the viewport over WebRTC, for a web page
 that draws the panel itself: web_bridge.py answers the page, livestream.py puts it on the stream.
-The page switches the viewport's camera too (viewport_cameras.py), having no Kit menus.
+The page switches the viewport's camera too (viewport_cameras.py), having no Kit menus, and its legend
+names the stage's unit, so the stream leaves out Kit's unit box (the 'm' at the bottom left).
 The page connects once the log says so. Kit's own panel is there too, hidden with the rest of Kit's
 UI; add --/app/window/hideUi=false to stream it with the viewport. Kit streams to one page at a time.
 
@@ -382,7 +383,10 @@ async def main() -> None:
     control = cell_control.CellControl(KitCell(session, rests), menu, LABELS, args.perception, pose=args.start_pose)
     state["panel"] = Panel(control)
     if args.web:
-        view = viewport_cameras.ViewportCameras(viewport_cameras.KitViewport())
+        kit_viewport = viewport_cameras.KitViewport()
+        if not kit_viewport.hide_unit_box():
+            log("Kit's unit box was not found to hide; the stream shows it beside the page's legend")
+        view = viewport_cameras.ViewportCameras(kit_viewport)
         bridge = state["bridge"] = web_bridge.WebBridge(control, view=view)
         state["disconnect"] = livestream.connect(bridge)
     await control.start()

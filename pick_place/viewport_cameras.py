@@ -11,7 +11,8 @@ camera it looked through, if the new stage has it, and through Perspective if no
 
 The state also names the stage's unit of length (its metersPerUnit), for the page's legend: as
 Kit's unit box at the viewport's bottom left names it (omni.usd.metrics.assembler.ui), or the
-metres per unit when it is none of the units Kit names.
+metres per unit when it is none of the units Kit names. The legend says it in words, so the stream
+leaves the box out (KitViewport.hide_unit_box).
 
 ViewportCameras knows nothing of Kit: the viewport comes in through `Viewport`. KitViewport is
 Isaac Sim's active viewport; it imports Kit only when made.
@@ -132,3 +133,18 @@ class KitViewport:
 
         stage = self._context.get_stage()
         return None if stage is None else UsdGeom.GetStageMetersPerUnit(stage)
+
+    def hide_unit_box(self) -> bool:
+        """Hide Kit's unit box (the 'm' at the viewport's bottom left) through its viewport layer, as
+        Kit hides the viewport's axis and menu bar when its UI is hidden. Not through the box's own
+        setting: Kit keeps that for later starts, those with a window too. The layer stays hidden on
+        a new stage. False when the viewport has no unit box."""
+        from omni.kit.viewport.utility import get_active_viewport_window
+
+        window = get_active_viewport_window()
+        # Kit's own name for the layer lookup that its hidden UI uses; no public one.
+        layer = None if window is None else window._find_viewport_layer("MetricsAssembler", "hud")
+        if layer is None:
+            return False
+        layer.visible = False
+        return True

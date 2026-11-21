@@ -102,7 +102,8 @@ it is not there yet.
 `web_bridge.py` answers the page, and `livestream.py` puts it on the stream. The log says when the
 page can connect. Kit's own panel runs too, hidden with the rest of Kit's UI
 (`--/app/window/hideUi=false` streams it with the viewport); both draw the same controller, so they
-agree. Having no Kit menus, the page switches the viewport's camera through `viewport_cameras.py`.
+agree. Having no Kit menus, the page switches the viewport's camera through `viewport_cameras.py`,
+and names the stage's unit itself, so the stream leaves out Kit's unit box (the `m`).
 Kit streams to one page at a time. Until 2026-11-20 every cycle crashed Isaac Sim while a
 page was connected; the planner now runs in a process of its own (`docs/web-stream-cumotion-crash.md`).
 While a cycle waits for a plan, the simulation pauses and Kit goes on drawing frames, about 10 a

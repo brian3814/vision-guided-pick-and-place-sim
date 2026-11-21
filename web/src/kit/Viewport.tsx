@@ -2,7 +2,7 @@
  * Kit's viewport, streamed: the video the stream draws into, and what to say while there is
  * none. The stream sends the mouse and keyboard back to Kit while the video has focus, so the
  * viewport is used as in Isaac Sim: click it, then orbit, zoom, select. While the stream is live,
- * the children (the camera menu) are drawn over the video.
+ * the children (the camera menu and the legend) are drawn over the video.
  */
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import type { ReactNode, RefObject } from 'react';
