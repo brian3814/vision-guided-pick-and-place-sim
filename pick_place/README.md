@@ -45,6 +45,7 @@ tracking and contacts for the first N steps of every move.
 | `cell_control.py` | The window's rules without Kit: choices, running and stopping, what it says; the panel draws its state and events (tests: `tests/test_cell_control.py`) |
 | `web_bridge.py` | The window's controller for a web page: the page's requests in, events and state out, over JSON messages (no Kit; tests: `tests/test_web_bridge.py`) |
 | `livestream.py` | `web_bridge.py` on Kit's stream, for `cell_app.py --web`: turns on the WebRTC stream and its messaging (Kit only) |
+| `remote_python.py` | Kit's Python from outside while the cell runs: `cell_app.py --dev` turns on Isaac Sim's Python server, and the script sends it code (the client needs only the standard library; tests: `tests/test_remote_python.py`) |
 | `viewport_cameras.py` | The viewport's cameras for the web page, which has no Kit menus: which there are, which one it looks through, switching; and the stage's unit, for the page's legend (`KitViewport` in Kit; tests: `tests/test_viewport_cameras.py`) |
 | `cell_session.py`, `cell_args.py` | The cell set up for running cycles, and the options, shared by `run_cell.py` and `cell_app.py` |
 | `run_batch.py`, `report.py` | Several objects headless; `results/pick_place_summary.md` |
@@ -63,6 +64,7 @@ C:\issacsim-6-2\python.bat pick_place\cell_app.py --perception camera     # from
 # step 5: start the locator first (ros2_ws\README.md), and set RMW_IMPLEMENTATION=rmw_fastrtps_cpp
 C:\issacsim-6-2\python.bat pick_place\cell_app.py --perception ros
 C:\issacsim-6-2\python.bat pick_place\cell_app.py --web                   # no window: the viewport streamed for a web page
+C:\issacsim-6-2\python.bat pick_place\cell_app.py --dev                   # with any of these: Kit's Python, from outside
 ```
 
 Isaac Sim opens with a *Pick-and-place cell* panel (a tab next to *Property*): a gripper list, an
@@ -109,6 +111,36 @@ page was connected; the planner now runs in a process of its own (`docs/web-stre
 While a cycle waits for a plan, the simulation pauses and Kit goes on drawing frames, about 10 a
 second, so the page keeps its stream (before, the plans at a cycle's start held Kit up for 5 to 6 s,
 and the page could lose the stream).
+
+`--dev` turns on Isaac Sim's Python server (`isaacsim.code_editor.python_server`, the one Isaac
+Sim's agent skills talk to), so that the running cell can be looked into from outside, without
+starting Isaac Sim again for each question:
+
+```powershell
+python pick_place\remote_python.py -c "omni.usd.get_context().get_stage_url()"
+python pick_place\remote_python.py probe.py        # a file of code
+```
+
+What is sent runs in Kit's Python, between the cell's steps, and can do anything the cell's own code
+can. Looking is harmless; changing the stage while a cycle runs changes the cycle, and its result
+then says nothing about the cell. The server listens on 127.0.0.1 only and runs only code that
+carries the token `cell_app.py` makes at each start; the log says when it listens. The token is
+left, with the port, in a file in the user's temp folder (`remote_python.connection_file`) for the
+client, and the file is removed at exit. Kit also prints the token in its log. For two Isaac Sims
+with `--dev`, give one another port: `--/exts/isaacsim.code_editor.python_server/port=8227`, and
+`--port 8227` for the client.
+
+Tested on 2026-11-23 with `--web --dev`, *Run 1 cycle* scripted on the toy block:
+- The server listened once Kit had started, before the cell was built. Mid-cycle, the client read
+  the stage's prims and the timeline, in about 0.2 s an answer.
+- A name defined in one request was there in the next. A top-level `await` of Kit's next update
+  worked, and an error came back as its traceback.
+- A wrong token and no token were both refused, and the code did not run. The server listened
+  on 127.0.0.1:8226 only.
+- `post_quit()`, sent through the client, closed Isaac Sim cleanly, and the file was gone.
+- Started again with the port already taken, the server could not listen: the log said so and why,
+  and no file was left. The same cycle then came out identical, in every stored column but
+  wall-clock times, to the first run's, which had been looked into mid-cycle.
 
 Use the panel, not Isaac Sim's own controls, to run things. The toolbar's Play and Stop, and
 selecting and dragging prims in the viewport, change the simulation under the cycle:

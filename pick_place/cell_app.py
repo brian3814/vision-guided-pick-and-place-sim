@@ -32,6 +32,9 @@ is built). The first start settles every object offered, for every gripper, and 
 results/cell_rest_mounts.json; later starts read the file. Delete the file after changing the
 objects' assets or the grasp matrix's settling.
 
+--dev turns on Kit's Python server, so that remote_python.py can look into the running cell from
+outside, without restarting Isaac Sim (on 127.0.0.1, with a token made at each start; see there).
+
 --script runs steps as if clicked, then stays open (or quits with a 'quit' step):
     --script "mug_A07RDPW843:1,gripper:onrobot_rg2,toy_block_6MPL7NVFVU:2,shot:results/app.png,quit"
 <object>:<n> chooses the object and runs n cycles; gripper:<name> chooses the gripper; pose:<n>
@@ -54,6 +57,7 @@ parser.add_argument("--objects", help="comma-separated objects to offer (default
 parser.add_argument("--start-pose", type=int, default=0, help="the first cycle's start pose (seeded: the same number, the same start)")
 parser.add_argument("--script", help="steps to run as if clicked (see above)")
 parser.add_argument("--web", action="store_true", help="stream the viewport for a web page that draws the panel (see above)")
+parser.add_argument("--dev", action="store_true", help="turn on Kit's Python server, for remote_python.py (see above)")
 args, _ = parser.parse_known_args()
 app = cell_args.start(args, headless=args.web)
 
@@ -67,6 +71,7 @@ import numpy as np  # noqa: E402
 import omni.kit.app  # noqa: E402
 import omni.timeline  # noqa: E402
 import omni.ui as ui  # noqa: E402
+import remote_python  # noqa: E402
 import viewport_cameras  # noqa: E402
 import web_bridge  # noqa: E402
 from cell_session import log, next_update  # noqa: E402
@@ -76,6 +81,7 @@ from isaacsim.core.simulation_manager import SimulationManager  # noqa: E402
 
 if args.web:
     livestream.enable()  # the stream is up while the cell is built; the page connects once it is
+token = remote_python.enable() if args.dev else None  # it listens while the cell is built
 
 REST_MOUNTS = gm_config.ROOT / "results/cell_rest_mounts.json"
 GOOD, BAD, DIM = 0xFF7FD67F, 0xFF6A8CFF, 0xFFA0A0A0  # omni.ui colours are 0xAABBGGRR
@@ -353,6 +359,9 @@ state: dict = {}
 
 
 async def main() -> None:
+    if token is not None:
+        state["published"], message = await remote_python.publish(token, next_update)
+        log(message)
     SimulationManager.switch_physics_engine("physx")
     calibrated = gm_config.load_grippers()
     if args.gripper not in calibrated:
@@ -411,4 +420,6 @@ finally:
         state["bridge"].close()
     if "session" in state:
         state["session"].close()
+    if state.get("published") is not None:
+        remote_python.withdraw(state["published"])
     app.close()
